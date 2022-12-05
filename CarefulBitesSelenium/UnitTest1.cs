@@ -35,8 +35,6 @@ public class UnitTest1
         chromeOptions.DebuggerAddress = "localhost:44215";
 
         chromeOptions.AddArgument("--remote-debugging-port=44215");
-        chromeOptions.AddArgument("--no-sandbox");
-        chromeOptions.AddArgument("--privileged");
 
 #if DEBUG
         _driver = new ChromeDriver(DriverDirectory, chromeOptions); // fast
@@ -49,7 +47,6 @@ public class UnitTest1
         //_driver = new EdgeDriver(DriverDirectory); //  not working ...
 #endif
 
-        
         _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
         //var url = "https://carefulbitesfrontend.azurewebsites.net/";
