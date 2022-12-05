@@ -39,7 +39,8 @@ jobs:
           ./scripts/InstallChrome.sh
         
     - name: Test
-      run: dotnet test --configuration Release
+      run: cd CarefulBitesSelenium
+        dotnet test --configuration Release
 
     - name: Upload artifact for deployment job
       uses: actions/upload-artifact@v3
