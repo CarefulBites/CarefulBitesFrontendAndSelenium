@@ -31,21 +31,21 @@ public class UnitTest1
     public static void Setup(TestContext context)
     {
 
-#if DEBUG
-        _driver = new ChromeDriver(DriverDirectory); // fast
-        //_driver = new FirefoxDriver(DriverDirectory); // slow
-        //_driver = new EdgeDriver(DriverDirectory); //  not working ...
-#endif
-#if RELEASE
-        _driver = new ChromeDriver(DriverDirectory); // fast
-        //_driver = new FirefoxDriver(DriverDirectory); // slow
-        //_driver = new EdgeDriver(DriverDirectory); //  not working ...
-#endif
-
         var chromeOptions = new ChromeOptions();
 
         chromeOptions.AddArgument("--remote-debugging-port=7000");
 
+#if DEBUG
+        _driver = new ChromeDriver(chromeOptions); // fast
+        //_driver = new FirefoxDriver(DriverDirectory); // slow
+        //_driver = new EdgeDriver(DriverDirectory); //  not working ...
+#endif
+#if RELEASE
+        _driver = new ChromeDriver(chromeOptions); // fast
+        //_driver = new FirefoxDriver(DriverDirectory); // slow
+        //_driver = new EdgeDriver(DriverDirectory); //  not working ...
+#endif
+        
         _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
         //var url = "https://carefulbitesfrontend.azurewebsites.net/";
