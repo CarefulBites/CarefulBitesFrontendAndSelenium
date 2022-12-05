@@ -22,7 +22,7 @@ public class UnitTest1
     // http://chromedriver.chromium.org/downloads
 #endif
 #if RELEASE
-    private static readonly string DriverDirectory = "google-chrome-stable";
+    private static readonly string DriverDirectory = "chromedriver";
 #endif
 
     private static IWebDriver? _driver;
@@ -30,16 +30,16 @@ public class UnitTest1
     [ClassInitialize]
     public static void Setup(TestContext context)
     {
-        var chromeOptions = new ChromeOptions();
+        //var chromeOptions = new ChromeOptions();
 
-        chromeOptions.DebuggerAddress = "localhost:44215";
+        //chromeOptions.DebuggerAddress = "localhost:44215";
 
-        chromeOptions.AddArgument("--whitelisted-ips=\"\"");
-        chromeOptions.AddArgument("--no-sandbox");
-        chromeOptions.AddArgument("--remote-debugging-port=44215");
+        //chromeOptions.AddArgument("--whitelisted-ips=\"\"");
+        //chromeOptions.AddArgument("--no-sandbox");
+        //chromeOptions.AddArgument("--remote-debugging-port=44215");
 
 #if DEBUG
-        _driver = new ChromeDriver(DriverDirectory, chromeOptions); // fast
+        _driver = new ChromeDriver(DriverDirectory); // fast
         //_driver = new FirefoxDriver(DriverDirectory); // slow
         //_driver = new EdgeDriver(DriverDirectory); //  not working ...
 #endif
