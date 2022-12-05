@@ -55,7 +55,7 @@ public class UnitTest1
         var url = "https://carefulbitesfrontend.azurewebsites.net/";
 #endif
 #if RELEASE
-        var url = "../CarefulBites_Front-end/index.html";
+        var url = "./../CarefulBites_Front-end/index.html";
 #endif
 
         _driver.Navigate().GoToUrl(url);
