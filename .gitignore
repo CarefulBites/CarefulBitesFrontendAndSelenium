@@ -1,0 +1,8 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/CarefulBitesSelenium/.vs/CarefulBitesSelenium
+/CarefulBitesSelenium/bin/Debug/net6.0/cs
+/CarefulBitesSelenium/bin/Debug/net6.0
+/CarefulBitesSelenium/obj
