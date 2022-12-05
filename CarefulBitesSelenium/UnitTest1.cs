@@ -48,6 +48,7 @@ public class UnitTest1
         //_driver = new FirefoxDriver(DriverDirectory); // slow
         //_driver = new EdgeDriver(DriverDirectory); //  not working ...
 #endif
+
         
         _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
