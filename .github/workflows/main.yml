@@ -1,12 +1,14 @@
-on:
-  push:
-    branches: [ "master" ]
-  workflow_dispatch:
+name: Run Selenium tests and publish web-app
 
 env:
   AZURE_WEBAPP_NAME: CarefulBitesFrontEnd
   AZURE_WEBAPP_PACKAGE_PATH: './CarefulBites_Front-end'
   DOTNET_VERSION: '6.0.403'
+
+on:
+  push:
+    branches: [ "master" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
