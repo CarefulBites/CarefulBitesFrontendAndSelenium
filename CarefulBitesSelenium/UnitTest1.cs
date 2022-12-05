@@ -42,6 +42,10 @@ public class UnitTest1
         //_driver = new EdgeDriver(DriverDirectory); //  not working ...
 #endif
 
+        var chromeOptions = new ChromeOptions();
+
+        chromeOptions.AddArgument("--remote-debugging-port=7000");
+
         _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
         //var url = "https://carefulbitesfrontend.azurewebsites.net/";
