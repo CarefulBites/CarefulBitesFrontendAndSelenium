@@ -36,10 +36,11 @@ jobs:
     - name:  Install Google Chrome 
       run: |
         chmod +x ./scripts/InstallChrome.sh
-          ./scripts/InstallChrome.sh
+        ./scripts/InstallChrome.sh
         
     - name: Test
-      run: cd CarefulBitesSelenium
+      run: |
+        cd CarefulBitesSelenium
         dotnet test --configuration Release
 
     - name: Upload artifact for deployment job
