@@ -55,7 +55,7 @@ public class UnitTest1
         var url = "https://carefulbitesfrontend.azurewebsites.net/";
 #endif
 #if RELEASE
-        var url = "http://runner/work/CarefulBitesFrontendAndSelenium/CarefulBitesFrontendAndSelenium/CarefulBites_Front-end/index.html";
+        var url = "http://127.0.0.1:9000/runner/work/CarefulBitesFrontendAndSelenium/CarefulBitesFrontendAndSelenium/CarefulBites_Front-end/index.html";
 #endif
 
         _driver.Navigate().GoToUrl(url);
