@@ -34,6 +34,7 @@ public class UnitTest1
 
         chromeOptions.DebuggerAddress = "localhost:44215";
 
+        chromeOptions.AddArgument("--whitelisted-ips=\"\"");
         chromeOptions.AddArgument("--no-sandbox");
         chromeOptions.AddArgument("--remote-debugging-port=44215");
 
