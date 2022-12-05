@@ -44,7 +44,7 @@ public class UnitTest1
         //_driver = new EdgeDriver(DriverDirectory); //  not working ...
 #endif
 #if RELEASE
-        _driver = new ChromeDriver(DriverDirectory, chromeOptions); // fast
+        _driver = new ChromeDriver(DriverDirectory); // fast
         //_driver = new FirefoxDriver(DriverDirectory); // slow
         //_driver = new EdgeDriver(DriverDirectory); //  not working ...
 #endif
