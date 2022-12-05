@@ -32,8 +32,8 @@ public class UnitTest1
     {
 
 #if DEBUG
-        //_driver = new ChromeDriver(DriverDirectory); // fast
-        _driver = new FirefoxDriver(DriverDirectory); // slow
+        _driver = new ChromeDriver(DriverDirectory); // fast
+        //_driver = new FirefoxDriver(DriverDirectory); // slow
         //_driver = new EdgeDriver(DriverDirectory); //  not working ...
 #endif
 #if RELEASE
@@ -44,8 +44,8 @@ public class UnitTest1
 
         _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
-        var url = "https://carefulbitesfrontend.azurewebsites.net/";
-        //string url = "http://127.0.0.1:5500/index.html";
+        //var url = "https://carefulbitesfrontend.azurewebsites.net/";
+        var url = "file://home/runner/work/CarefulBitesFrontendAndSelenium/CarefulBitesFrontendAndSelenium/CarefulBites_Front-end/index.html";
 
         _driver.Navigate().GoToUrl(url);
         Thread.Sleep(3000);
@@ -54,7 +54,7 @@ public class UnitTest1
     [ClassCleanup]
     public static void TearDown()
     {
-        _driver.Dispose();
+        _driver?.Dispose();
     }
 
     [TestMethod]
