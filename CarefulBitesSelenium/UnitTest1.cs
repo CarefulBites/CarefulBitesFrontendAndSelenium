@@ -32,6 +32,8 @@ public class UnitTest1
     {
         var chromeOptions = new ChromeOptions();
 
+        chromeOptions.DebuggerAddress = "localhost:44215";
+
         chromeOptions.AddArgument("--remote-debugging-port=44215");
         chromeOptions.AddArgument("--no-sandbox");
         chromeOptions.AddArgument("--privileged");
