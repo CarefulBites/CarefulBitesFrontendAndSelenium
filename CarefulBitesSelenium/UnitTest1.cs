@@ -22,7 +22,7 @@ public class UnitTest1
     // http://chromedriver.chromium.org/downloads
 #endif
 #if RELEASE
-    private static readonly string DriverDirectory = "google-chrome-stable:44215";
+    private static readonly string DriverDirectory = "google-chrome-stable";
 #endif
 
     private static IWebDriver? _driver;
