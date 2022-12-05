@@ -25,7 +25,7 @@ public class UnitTest1
     private static readonly string DriverDirectory = "google-chrome-stable";
 #endif
 
-    private static IWebDriver _driver;
+    private static IWebDriver? _driver;
 
     [ClassInitialize]
     public static void Setup(TestContext context)
