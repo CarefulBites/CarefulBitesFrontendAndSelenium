@@ -34,7 +34,7 @@ jobs:
           ${{ runner.os }}-nuget-
             
     - name: Build with dotnet
-      run: dotnet build --project "./CarefulBitesSelenium" --configuration Release
+      run: dotnet build --configuration Release
         
     - name:  Install Google Chrome 
       run: |
