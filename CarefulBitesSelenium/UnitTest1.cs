@@ -33,6 +33,7 @@ public class UnitTest1
         var chromeOptions = new ChromeOptions();
 
         chromeOptions.AddArgument("--remote-debugging-port=7000");
+        chromeOptions.AddArgument("--no-sandbox");
 
 #if DEBUG
         _driver = new ChromeDriver(DriverDirectory, chromeOptions); // fast
