@@ -51,8 +51,12 @@ public class UnitTest1
 
         _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
-        //var url = "https://carefulbitesfrontend.azurewebsites.net/";
-        var url = "file://home/runner/work/CarefulBitesFrontendAndSelenium/CarefulBitesFrontendAndSelenium/CarefulBites_Front-end/index.html";
+#if DEBUG
+        var url = "https://carefulbitesfrontend.azurewebsites.net/";
+#endif
+#if RELEASE
+        var url = "file://home/runner/work/CarefulBitesFrontendAndSelenium/CarefulBitesFrontendAndSelenium/CarefulBites_Front-end/index300.html";
+#endif
 
         _driver.Navigate().GoToUrl(url);
         Thread.Sleep(3000);
