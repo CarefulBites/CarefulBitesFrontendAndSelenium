@@ -30,18 +30,17 @@ public class UnitTest1
     [ClassInitialize]
     public static void Setup(TestContext context)
     {
-
         var chromeOptions = new ChromeOptions();
 
         chromeOptions.AddArgument("--remote-debugging-port=7000");
 
 #if DEBUG
-        _driver = new ChromeDriver(chromeOptions); // fast
+        _driver = new ChromeDriver(DriverDirectory, chromeOptions); // fast
         //_driver = new FirefoxDriver(DriverDirectory); // slow
         //_driver = new EdgeDriver(DriverDirectory); //  not working ...
 #endif
 #if RELEASE
-        _driver = new ChromeDriver(chromeOptions); // fast
+        _driver = new ChromeDriver(DriverDirectory, chromeOptions); // fast
         //_driver = new FirefoxDriver(DriverDirectory); // slow
         //_driver = new EdgeDriver(DriverDirectory); //  not working ...
 #endif
