@@ -123,5 +123,3 @@ const ItemStore = new DevExpress.data.CustomStore({
   function GetCurrentUser() {
     return sessionStorage.getItem('CurrentUser')
   }
-
-
