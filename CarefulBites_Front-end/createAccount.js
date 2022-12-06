@@ -88,7 +88,7 @@ $(() => {
       horizontalAlignment: 'left',
       buttonOptions: {
         text: 'Register',
-        type: 'success',
+        type: 'default',
         useSubmitBehavior: true,
       },
     }],

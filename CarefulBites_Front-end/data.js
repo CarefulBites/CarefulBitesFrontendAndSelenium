@@ -7,7 +7,6 @@ const ItemStore = new DevExpress.data.CustomStore({
     load(loadOptions) {
       const deferred = $.Deferred();
       const args = {};
-
       [
         'skip',
         'take',
@@ -110,6 +109,19 @@ const ItemStore = new DevExpress.data.CustomStore({
   });
 
   const userForm = [{
-    Username: '',
-    Password: '',
+    username: '',
+    password: '',
   }]
+
+  function IsLoggedIn() {
+    if (sessionStorage.getItem('LoggedIn')) {
+      return true
+    }
+    else
+      return false 
+  }
+  function GetCurrentUser() {
+    return sessionStorage.getItem('CurrentUser')
+  }
+
+
