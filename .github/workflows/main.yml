@@ -53,6 +53,10 @@ jobs:
         ls
         cd ..
         ls
+        cd ..
+        ls
+        cd /home/runner/work/CarefulBitesFrontendAndSelenium/CarefulBitesFrontendAndSelenium
+        ls
         python -m http.server --bind 127.0.0.1 9000 &
         dotnet test './CarefulBitesSelenium/' --configuration Release
 
