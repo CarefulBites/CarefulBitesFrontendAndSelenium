@@ -3,7 +3,7 @@ name: Run Selenium tests and publish web-app
 env:
   AZURE_WEBAPP_NAME: CarefulBitesFrontEnd
   AZURE_WEBAPP_PACKAGE_PATH: './CarefulBites_Front-end'
-  DOTNET_VERSION: '6.0.403'
+  DOTNET_VERSION: '7.0.100'
 
 on:
   push:
