@@ -2,3 +2,20 @@
   padding-top: 0;
   padding-bottom: 0;
 }
+
+.menu {
+  margin: 20px;
+  padding: 30px;
+  background-color: darkblue;
+  /*display: inline-block;
+  cursor: pointer;*/
+
+  border: none;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 10%;
+  font-size: 24px;
+
+
+}
