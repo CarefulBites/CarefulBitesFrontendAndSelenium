@@ -52,6 +52,9 @@ public class UnitTest1 {
     public void Test1GetLogo() {
         _driver?.SwitchTo().ActiveElement();
         var sort = _driver?.FindElement(By.ClassName("logo"));
+
+        Assert.IsNotNull(sort);
+
         sort?.Click();
     }
 
@@ -59,6 +62,9 @@ public class UnitTest1 {
     public void Test2ChangeTheme() {
         _driver?.SwitchTo().ActiveElement();
         var theme = _driver?.FindElement(By.Id("theme-button"));
+
+        Assert.IsNotNull(theme);
+
         theme?.Click();
         theme?.Click();
     }
@@ -67,6 +73,9 @@ public class UnitTest1 {
     public void Test3GetSort() {
         _driver?.SwitchTo().ActiveElement();
         var sort = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Column Amount')]"));
+
+        Assert.IsNotNull(sort);
+
         sort?.Click();
     }
 
@@ -74,9 +83,15 @@ public class UnitTest1 {
     public void Test4GetSearch() {
         _driver?.SwitchTo().ActiveElement();
         var search = _driver?.FindElement(By.ClassName("dx-texteditor-input"));
+
+        Assert.IsNotNull(search);
+
         search?.SendKeys("appelsiner2");
         
         var clearInput = _driver?.FindElement(By.ClassName("dx-icon-clear"));
+
+        Assert.IsNotNull(clearInput);
+
         clearInput?.Click();
     }
 
@@ -84,6 +99,9 @@ public class UnitTest1 {
     public void Test5GetLoginModal() {
         _driver?.SwitchTo().ActiveElement();
         var loginButton = _driver?.FindElement(By.Id("popup-button"));
+
+        Assert.IsNotNull(loginButton);
+
         loginButton?.Click();
     }
 
@@ -91,6 +109,9 @@ public class UnitTest1 {
     public void Test6GetAccountPage() {
         _driver?.SwitchTo().ActiveElement();
         var loginButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
+
+        Assert.IsNotNull(loginButton);
+
         loginButton?.Click();
     }
 }
