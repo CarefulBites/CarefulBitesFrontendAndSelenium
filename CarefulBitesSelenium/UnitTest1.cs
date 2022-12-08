@@ -41,7 +41,6 @@ public class UnitTest1 {
 #endif
 
         _driver.Navigate().GoToUrl(url);
-        Thread.Sleep(3000);
     }
 
     [ClassCleanup]
@@ -54,7 +53,6 @@ public class UnitTest1 {
         _driver?.SwitchTo().ActiveElement();
         var sort = _driver?.FindElement(By.ClassName("logo"));
         sort?.Click();
-        Thread.Sleep(1000);
     }
 
     [TestMethod]
@@ -62,9 +60,7 @@ public class UnitTest1 {
         _driver?.SwitchTo().ActiveElement();
         var theme = _driver?.FindElement(By.Id("theme-button"));
         theme?.Click();
-        Thread.Sleep(3000);
         theme?.Click();
-        Thread.Sleep(3000);
     }
 
     [TestMethod]
@@ -72,7 +68,6 @@ public class UnitTest1 {
         _driver?.SwitchTo().ActiveElement();
         var sort = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Column Amount')]"));
         sort?.Click();
-        Thread.Sleep(1000);
     }
 
     [TestMethod]
@@ -80,13 +75,9 @@ public class UnitTest1 {
         _driver?.SwitchTo().ActiveElement();
         var search = _driver?.FindElement(By.ClassName("dx-texteditor-input"));
         search?.SendKeys("appelsiner2");
-
-        Thread.Sleep(1000);
-
+        
         var clearInput = _driver?.FindElement(By.ClassName("dx-icon-clear"));
         clearInput?.Click();
-
-        Thread.Sleep(1000);
     }
 
     [TestMethod]
@@ -94,8 +85,6 @@ public class UnitTest1 {
         _driver?.SwitchTo().ActiveElement();
         var loginButton = _driver?.FindElement(By.Id("popup-button"));
         loginButton?.Click();
-
-        Thread.Sleep(1000);
     }
 
     [TestMethod]
@@ -103,7 +92,5 @@ public class UnitTest1 {
         _driver?.SwitchTo().ActiveElement();
         var loginButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
         loginButton?.Click();
-
-        Thread.Sleep(2000);
     }
 }
