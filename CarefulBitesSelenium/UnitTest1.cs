@@ -1,13 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Runtime.ConstrainedExecution;
 using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Chrome;
+//using OpenQA.Selenium.Firefox;
+//using OpenQA.Selenium.Edge;
 
 namespace CarefulBitesSelenium;
 
@@ -54,61 +51,58 @@ public class UnitTest1 {
 
     [TestMethod]
     public void Test1GetLogo() {
-        _driver.SwitchTo().ActiveElement();
-        var sort = _driver.FindElement(By.ClassName("logo"));
-        sort.Click();
+        _driver?.SwitchTo().ActiveElement();
+        var sort = _driver?.FindElement(By.ClassName("logo"));
+        sort?.Click();
         Thread.Sleep(1000);
     }
 
     [TestMethod]
     public void Test2ChangeTheme() {
-        _driver.SwitchTo().ActiveElement();
-        var theme = _driver.FindElement(By.Id("theme-button"));
-        theme.Click();
+        _driver?.SwitchTo().ActiveElement();
+        var theme = _driver?.FindElement(By.Id("theme-button"));
+        theme?.Click();
         Thread.Sleep(3000);
-        theme.Click();
+        theme?.Click();
         Thread.Sleep(3000);
     }
 
     [TestMethod]
     public void Test3GetSort() {
-        _driver.SwitchTo().ActiveElement();
-        var sort = _driver.FindElement(By.XPath("//*[contains(@aria-label,'Column Amount')]"));
-        sort.Click();
+        _driver?.SwitchTo().ActiveElement();
+        var sort = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Column Amount')]"));
+        sort?.Click();
         Thread.Sleep(1000);
     }
 
     [TestMethod]
     public void Test4GetSearch() {
-        _driver.SwitchTo().ActiveElement();
-        var search = _driver.FindElement(By.ClassName("dx-texteditor-input"));
-        search.SendKeys("appelsiner2");
+        _driver?.SwitchTo().ActiveElement();
+        var search = _driver?.FindElement(By.ClassName("dx-texteditor-input"));
+        search?.SendKeys("appelsiner2");
 
         Thread.Sleep(1000);
 
-        var itemTable = _driver.FindElement(By.XPath("//*[contains(@aria-rowindex, '1')]"));
-        var col = itemTable.FindElement(By.XPath("//*[contains(@aria-colindex, '2')]"));
-
-        var clearInput = _driver.FindElement(By.ClassName("dx-icon-clear"));
-        clearInput.Click();
+        var clearInput = _driver?.FindElement(By.ClassName("dx-icon-clear"));
+        clearInput?.Click();
 
         Thread.Sleep(1000);
     }
 
     [TestMethod]
     public void Test5GetLoginModal() {
-        _driver.SwitchTo().ActiveElement();
-        var loginButton = _driver.FindElement(By.Id("popup-button"));
-        loginButton.Click();
+        _driver?.SwitchTo().ActiveElement();
+        var loginButton = _driver?.FindElement(By.Id("popup-button"));
+        loginButton?.Click();
 
         Thread.Sleep(1000);
     }
 
     [TestMethod]
     public void Test6GetAccountPage() {
-        _driver.SwitchTo().ActiveElement();
-        var loginButton = _driver.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
-        loginButton.Click();
+        _driver?.SwitchTo().ActiveElement();
+        var loginButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
+        loginButton?.Click();
 
         Thread.Sleep(2000);
     }
