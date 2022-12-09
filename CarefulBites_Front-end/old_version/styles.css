@@ -1,0 +1,72 @@
+/* Full-width input fields */
+input[id=username],
+input[id=password] {
+   width: 100%;
+   padding: 12px 20px;
+   margin: 8px 0;
+   display: inline-block;
+   border: 1px solid #ccc;
+   box-sizing: border-box;
+}
+
+span.psw {
+
+   display: block;
+   float: none;
+}
+
+body {
+   min-height: 100vh;
+}
+
+.logo {
+   width: 100px;
+   height: 100px;
+}
+
+.caption {
+   font-size: 16px;
+   padding-bottom: 3px;
+   padding-left: 10px;
+   justify-content: left;
+}
+
+.logo-div {
+   font-size: 30px;
+}
+
+@media (max-width: 575.98px) {
+   .logo-div {
+      font-size: 15px;
+   }
+
+   .logo {
+      width: 50px;
+      height: 50px;
+   }
+
+   .navbar-button {
+      margin-right: 0px;
+      align-items: flex-end;
+   }
+}
+
+@media (min-width: 575.98px) {
+   #contact {
+      font-size: 20px;
+      padding-left: 0px !important;
+   }
+}
+
+nav {
+   margin-bottom: 5%;
+}
+
+.navbar-button {
+   margin-right: 10px;
+}
+
+#itemDiv {
+   width: 100%;
+   padding-left: 20px;
+}
