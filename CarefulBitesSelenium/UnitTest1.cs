@@ -1,5 +1,4 @@
 using System;
-using System.Threading;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -70,7 +69,17 @@ public class UnitTest1 {
     }
 
     [TestMethod]
-    public void Test3GetSort() {
+    public void Test3AGetStorageGroup() {
+        _driver?.SwitchTo().ActiveElement();
+        var group = _driver?.FindElement(By.XPath("//*[@id=\"itemGrid\"]/div/div[6]/div/table/tbody/tr[1]/td[1]/div"));
+
+        Assert.IsNotNull(group);
+
+        group?.Click();
+    }
+
+    [TestMethod]
+    public void Test3BGetSort() {
         _driver?.SwitchTo().ActiveElement();
         var sort = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Column Amount')]"));
 
@@ -87,7 +96,7 @@ public class UnitTest1 {
         Assert.IsNotNull(search);
 
         search?.SendKeys("appelsiner2");
-        
+
         var clearInput = _driver?.FindElement(By.ClassName("dx-icon-clear"));
 
         Assert.IsNotNull(clearInput);
