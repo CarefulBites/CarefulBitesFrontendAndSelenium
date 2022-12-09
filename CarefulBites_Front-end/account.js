@@ -26,7 +26,7 @@ function LoginUser(users) {
         if (users[0].username == userForm.username && users[0].password == userForm.password) {
             sessionStorage.setItem(currentUser, users[0].username)
             sessionStorage.setItem('LoggedIn', true)
-
+            sessionStorage.setItem('CurrentUserId', users[0].userId)
         }
         else {
             alert('User not found')
@@ -188,7 +188,7 @@ $(() => {
             location.href = "./index.html"
         }
     }
-    if (lastPathSegment == 'index.html') {
+    if (lastPathSegment == 'index.html' || lastPathSegment == '') {
         if (IsLoggedIn()) {
             location.href = './main_page.html'
         }

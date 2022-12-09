@@ -104,7 +104,106 @@ const ItemStore = new DevExpress.data.CustomStore({
 
 });
 
+let itemStorageForm = {
+    name: '',
+    userId: -1
+}
+
+const popupContentTemplateItemStorageForm = function () {
+    return $('<div>').append(
+      $('<div />').attr('id', 'ITEMSTORAGE-FORM-ID').dxForm({
+        labelMode: 'floating',
+        formData: itemStorageForm,
+        readOnly: false,
+        showColonAfterLabel: true,
+        labelLocation: 'left',
+        minColWidth: 300,
+        colCount: 1,
+        items: 
+        [
+          {
+            dataField: 'name',
+            caption: 'Name',
+            validationRules: [{
+              type: 'required',
+              message: 'Name is required'
+            }],
+
+          },
+          {
+            dataField: 'userId',
+            dataType: 'Number',
+            caption: 'UserId',
+            visible: false,
+            editorOptions: { value: parseInt(sessionStorage.getItem('CurrentUserId')) },
+          },
+          {
+            itemType: 'button',
+            horizontalAlignment: 'center',
+            buttonOptions: {
+              text: 'Create',
+              type: 'default',
+              useSubmitBehavior: false,
+              onClick() {
+                DevExpress.ui.notify({
+                  message: 'You have submitted the form',
+                  position: {
+                    my: 'center top',
+                    at: 'center top',
+                  },
+                }, 'success', 3000);
+                itemStorageForm
+                console.log(itemStorageForm)
+                newItemStorage = {
+                  name: itemStorageForm.name,
+                  userId: parseInt(sessionStorage.getItem('CurrentUserId'))
+                }
+                $.ajax({
+                  url: baseURL + "/itemStorages",
+                  dataType: 'json',
+                  method: "POST",
+                  async: false,
+                  data: JSON.stringify(newItemStorage),
+                  contentType: "application/json; charset=utf-8",
+                })
+                location.reload()
+              }
+            },
+          },
+        ]
+      })
+    );
+  };
+
 $(() => {
+    ItemStorageDict = []
+    NewItemStorageDict = []
+    $.ajax({
+      url: baseURL + "/itemStorages/",
+      method: 'GET',
+      contentType: "application/json; charset=utf-8",
+      async:false,
+      success: function(data) {
+        ItemStorageDict = data.reduce((obj, item) => {
+          obj[item.itemStorageId] = item.name;
+          return obj;
+        }, {});
+      }
+    })
+  
+    $.ajax({
+      url: baseURL + "/itemStorages/",
+      method: 'GET',
+      contentType: "application/json; charset=utf-8",
+      async:false,
+      success: function(data) {
+        NewItemStorageDict = data.map(item => ({
+          name: item.name,
+          itemStorageId: item.itemStorageId
+        }));
+      }
+    })
+
     $('#itemGrid').dxDataGrid({
         dataSource: ItemStore,
         keyExpr: 'itemId',
@@ -154,6 +253,12 @@ $(() => {
             },
             {
                 dataField: 'itemStorageId',
+                caption: 'Storage',
+                lookup: {
+                  dataSource: NewItemStorageDict,
+                  displayExpr: 'name',
+                  valueExpr: 'itemStorageId',
+                }
             },
             {
                 dataField: 'caloriesPer',
@@ -179,7 +284,15 @@ $(() => {
                     }
 
                 }
-            },],
+            },
+            {
+                caption: 'Storage',
+                groupIndex: 0,
+                calculateCellValue: function(rowData) {
+                  return ItemStorageDict[rowData.itemStorageId]
+                }
+            }
+        ],
         showBorders: true,
     })
 
@@ -194,4 +307,26 @@ $(() => {
             }
         }
     });
+
+    itemStoragePopUp = $('#POPUP-ITEMSTORAGE').dxPopup({
+        contentTemplate: popupContentTemplateItemStorageForm,
+        width: 500,
+        height: 500,
+        container: '.dx-viewport',
+        showTitle: true,
+        title: 'Log In',
+        visible: false,
+        dragEnabled: false,
+        hideOnOutsideClick: true,
+        showCloseButton: false,
+      }).dxPopup('instance');
+      $("#POPUP-ITEMSTORAGE-BUTTON").dxButton({
+        styling: 'contained',
+        icon: 'user',
+        text: 'ItemStorage Management',
+        onClick: () => {
+          console.log(itemStoragePopUp)
+          itemStoragePopUp.show();
+        }
+      });
 });
