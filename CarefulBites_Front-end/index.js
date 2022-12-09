@@ -12,8 +12,7 @@ $(() => {
       }, {});
     }
   })
-
-  grid = $('#itemGrid').dxDataGrid({
+  $('#itemGrid').dxDataGrid({
     dataSource: ItemStore,
     keyExpr: 'itemId',
     padding: 100,
@@ -74,14 +73,14 @@ $(() => {
       {
         dataField: 'daysAfterOpen',
         dataType: 'number',
-        calculateCellValue: function(rowData) {
+        calculateCellValue: function (rowData) {
           if (rowData.openDate) {
             currentDate = new Date()
             openDate = new Date(Date.parse(rowData.openDate))
             daysAfterOpenResult = Math.trunc((currentDate - openDate) / (1000 * 3600 * 24))
             return daysAfterOpenResult == 1 ? daysAfterOpenResult + ' day' : daysAfterOpenResult + ' days'
           }
-          
+
         }
       },
       {
@@ -131,17 +130,17 @@ $(() => {
       showCloseButton: false,
       toolbarItems: [{
         widget: 'dxButton',
-        toolbar:'bottom',
+        toolbar: 'bottom',
         location: 'center',
         options: {
           text: 'Log Out',
           stylingMode: 'contained',
           type: 'default',
-          onClick: ()=> {
+          onClick: () => {
             LogoutUser()
             location.reload()
           }
-        } 
+        }
       },]
     }).dxPopup('instance');
 
@@ -191,21 +190,19 @@ $(() => {
     }
   });
 });
-function LoginUser (users) {
+function LoginUser(users) {
   if (users.length == 1) {
-    if (users[0].username == userForm.username && users[0].password == userForm.password) 
-    {
+    if (users[0].username == userForm.username && users[0].password == userForm.password) {
       sessionStorage.setItem('CurrentUser', users[0].username)
       sessionStorage.setItem('CurrentUserId', users[0].userId)
       sessionStorage.setItem('LoggedIn', true)
     }
-    else
-    {
+    else {
       alert('User not found')
     }
   }
 }
-function LogoutUser () {
+function LogoutUser() {
   sessionStorage.removeItem('CurrentUser')
   sessionStorage.removeItem('CurrentUserId')
   sessionStorage.removeItem('LoggedIn')
