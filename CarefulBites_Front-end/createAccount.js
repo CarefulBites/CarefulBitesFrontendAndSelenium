@@ -65,24 +65,7 @@ $(() => {
           },
         }],
       }],
-    }, 
-    // {
-    //   itemType: 'group',
-    //   items: [{
-    //     dataField: 'Accepted',
-    //     label: {
-    //       visible: false,
-    //     },
-    //     editorOptions: {
-    //       text: 'I agree to the Terms and Conditions',
-    //     },
-    //     validationRules: [{
-    //       type: 'compare',
-    //       comparisonTarget() { return true; },
-    //       message: 'You must agree to the Terms and Conditions',
-    //     }],
-    //   }],
-    // }, 
+    },
     {
       itemType: 'button',
       horizontalAlignment: 'left',
