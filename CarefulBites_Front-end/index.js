@@ -1,5 +1,6 @@
 $(() => {
   ItemStorageDict = []
+  NewItemStorageDict = []
   $.ajax({
     url: baseURL + "/itemStorages/",
     method: 'GET',
@@ -12,7 +13,23 @@ $(() => {
       }, {});
     }
   })
-  $('#itemGrid').dxDataGrid({
+
+  $.ajax({
+    url: baseURL + "/itemStorages/",
+    method: 'GET',
+    contentType: "application/json; charset=utf-8",
+    async:false,
+    success: function(data) {
+      NewItemStorageDict = data.map(item => ({
+        name: item.name,
+        itemStorageId: item.itemStorageId
+      }));
+    }
+  })
+
+  console.log(ItemStorageDict)
+
+  grid = $('#itemGrid').dxDataGrid({
     dataSource: ItemStore,
     keyExpr: 'itemId',
     padding: 100,
@@ -56,7 +73,12 @@ $(() => {
       },
       {
         dataField: 'itemStorageId',
-        caption: ''
+        caption: 'Storage',
+        lookup: {
+          dataSource: NewItemStorageDict,
+          displayExpr: 'name',
+          valueExpr: 'itemStorageId',
+        }
       },
       {
         dataField: 'caloriesPer',
@@ -73,14 +95,14 @@ $(() => {
       {
         dataField: 'daysAfterOpen',
         dataType: 'number',
-        calculateCellValue: function (rowData) {
+        calculateCellValue: function(rowData) {
           if (rowData.openDate) {
             currentDate = new Date()
             openDate = new Date(Date.parse(rowData.openDate))
             daysAfterOpenResult = Math.trunc((currentDate - openDate) / (1000 * 3600 * 24))
             return daysAfterOpenResult == 1 ? daysAfterOpenResult + ' day' : daysAfterOpenResult + ' days'
           }
-
+          
         }
       },
       {
@@ -123,24 +145,24 @@ $(() => {
       height: 300,
       container: '.dx-viewport',
       showTitle: true,
-      title: 'Log In',
+      title: 'Log Out',
       visible: false,
       dragEnabled: false,
       hideOnOutsideClick: true,
       showCloseButton: false,
       toolbarItems: [{
         widget: 'dxButton',
-        toolbar: 'bottom',
+        toolbar:'bottom',
         location: 'center',
         options: {
           text: 'Log Out',
           stylingMode: 'contained',
           type: 'default',
-          onClick: () => {
+          onClick: ()=> {
             LogoutUser()
             location.reload()
           }
-        }
+        } 
       },]
     }).dxPopup('instance');
 
@@ -190,19 +212,21 @@ $(() => {
     }
   });
 });
-function LoginUser(users) {
+function LoginUser (users) {
   if (users.length == 1) {
-    if (users[0].username == userForm.username && users[0].password == userForm.password) {
+    if (users[0].username == userForm.username && users[0].password == userForm.password) 
+    {
       sessionStorage.setItem('CurrentUser', users[0].username)
       sessionStorage.setItem('CurrentUserId', users[0].userId)
       sessionStorage.setItem('LoggedIn', true)
     }
-    else {
+    else
+    {
       alert('User not found')
     }
   }
 }
-function LogoutUser() {
+function LogoutUser () {
   sessionStorage.removeItem('CurrentUser')
   sessionStorage.removeItem('CurrentUserId')
   sessionStorage.removeItem('LoggedIn')
