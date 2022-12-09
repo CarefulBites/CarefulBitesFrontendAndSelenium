@@ -113,6 +113,165 @@ const ItemStore = new DevExpress.data.CustomStore({
     password: '',
   }]
 
+  const popupContentTemplateLoggedIn = function () {
+    return $('<div>').append(
+      $(`<p style="font-size: medium;"> Username: <span>${GetCurrentUser()}</span></p>`)
+    );
+  };
+  const popupContentTemplate = function () {
+    return $('<div>').append(
+      $('<div />').attr('id', 'login-form').dxForm({
+        labelMode: 'floating',
+        formData: userForm,
+        readOnly: false,
+        showColonAfterLabel: true,
+        labelLocation: 'left',
+        minColWidth: 300,
+        colCount: 1,
+        items: [
+          {
+            dataField: 'username',
+            caption: 'Username',
+            validationRules: [{
+              type: 'required',
+              message: 'Username is required'
+            }],
+
+          },
+          {
+            dataField: 'password',
+            caption: 'Password',
+            editorOptions: { mode: 'password' },
+            validationRules: [{
+              type: 'required',
+              message: 'Password is required'
+            }],
+          },
+          {
+            itemType: 'group',
+            colCount: 2,
+            items:
+              [
+                {
+                  itemType: 'button',
+                  horizontalAlignment: 'left',
+                  buttonOptions: {
+                    text: 'Log In',
+                    type: 'default',
+                    useSubmitBehavior: false,
+                    onClick() {
+                      DevExpress.ui.notify({
+                        message: 'You have submitted the form',
+                        position: {
+                          my: 'center top',
+                          at: 'center top',
+                        },
+                      }, 'success', 3000);
+                      console.log(userForm)
+                      users = $.ajax({
+                        url: baseURL + "/users?username=" + encodeURIComponent(userForm.username),
+                        dataType: 'json',
+                        method: "GET",
+                        async: false,
+                        contentType: "application/json; charset=utf-8",
+                      })
+                      users = users.responseJSON
+                      LoginUser(users)
+                      location.reload()
+                    }
+                  },
+                },
+                {
+                  itemType: 'button',
+                  horizontalAlignment: 'right',
+                  buttonOptions: {
+                    text: 'Create Account',
+                    type: 'default',
+                    useSubmitBehavior: false,
+                    onClick() {
+                      location.href = '/CreateAccount.html'
+                    }
+                  },
+                },
+              ]
+          },
+
+        ]
+      })
+    );
+  };
+
+  let itemStorageForm = {
+    name: '',
+    userId: -1
+  }
+
+  const popupContentTemplateItemStorageForm = function () {
+    return $('<div>').append(
+      $('<div />').attr('id', 'ITEMSTORAGE-FORM-ID').dxForm({
+        labelMode: 'floating',
+        formData: itemStorageForm,
+        readOnly: false,
+        showColonAfterLabel: true,
+        labelLocation: 'left',
+        minColWidth: 300,
+        colCount: 1,
+        items: 
+        [
+          {
+            dataField: 'name',
+            caption: 'Name',
+            validationRules: [{
+              type: 'required',
+              message: 'Name is required'
+            }],
+
+          },
+          {
+            dataField: 'userId',
+            dataType: 'Number',
+            caption: 'UserId',
+            visible: false,
+            editorOptions: { value: parseInt(sessionStorage.getItem('CurrentUserId')) },
+          },
+          {
+            itemType: 'button',
+            horizontalAlignment: 'center',
+            buttonOptions: {
+              text: 'Create',
+              type: 'default',
+              useSubmitBehavior: false,
+              onClick() {
+                DevExpress.ui.notify({
+                  message: 'You have submitted the form',
+                  position: {
+                    my: 'center top',
+                    at: 'center top',
+                  },
+                }, 'success', 3000);
+                itemStorageForm
+                console.log(itemStorageForm)
+                newItemStorage = {
+                  name: itemStorageForm.name,
+                  userId: parseInt(sessionStorage.getItem('CurrentUserId'))
+                }
+                $.ajax({
+                  url: baseURL + "/itemStorages",
+                  dataType: 'json',
+                  method: "POST",
+                  async: false,
+                  data: JSON.stringify(newItemStorage),
+                  contentType: "application/json; charset=utf-8",
+                })
+                // location.reload()
+              }
+            },
+          },
+        ]
+      })
+    );
+  };
+
   function IsLoggedIn() {
     if (sessionStorage.getItem('LoggedIn')) {
       return true

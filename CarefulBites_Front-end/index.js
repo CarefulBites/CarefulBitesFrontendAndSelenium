@@ -1,8 +1,22 @@
 $(() => {
+  ItemStorageDict = []
+  $.ajax({
+    url: baseURL + "/itemStorages/",
+    method: 'GET',
+    contentType: "application/json; charset=utf-8",
+    async:false,
+    success: function(data) {
+      ItemStorageDict = data.reduce((obj, item) => {
+        obj[item.itemStorageId] = item.name;
+        return obj;
+      }, {});
+    }
+  })
 
-  $('#itemGrid').dxDataGrid({
+  grid = $('#itemGrid').dxDataGrid({
     dataSource: ItemStore,
     keyExpr: 'itemId',
+    padding: 100,
     filterRow: {
       visible: true,
       applyFilter: 'auto',
@@ -27,7 +41,8 @@ $(() => {
     columns: [
       {
         dataField: 'itemId',
-        dataType: 'number'
+        dataType: 'number',
+        visible: false,
       },
       {
         dataField: 'name',
@@ -42,6 +57,7 @@ $(() => {
       },
       {
         dataField: 'itemStorageId',
+        caption: ''
       },
       {
         dataField: 'caloriesPer',
@@ -67,100 +83,42 @@ $(() => {
           }
           
         }
-      },],
+      },
+      {
+        caption: 'Storage',
+        groupIndex: 0,
+        calculateCellValue: function(rowData) {
+          return ItemStorageDict[rowData.itemStorageId]
+        }
+      }
+    ],
     showBorders: true,
   })
-  
-    const popupContentTemplateLoggedIn = function () {
-      return $('<div>').append(
-        $(`<p style="font-size: medium;"> Username: <span>${GetCurrentUser()}</span></p>`)
-      );
-    };
-  const popupContentTemplate = function () {
-    return $('<div>').append(
-      $('<div />').attr('id', 'login-form').dxForm({
-        labelMode: 'floating',
-        formData: userForm,
-        readOnly: false,
-        showColonAfterLabel: true,
-        labelLocation: 'left',
-        minColWidth: 300,
-        colCount: 1,
-        items: [
-          {
-            dataField: 'username',
-            caption: 'Username',
-            validationRules: [{
-              type: 'required',
-              message: 'Username is required'
-            }],
 
-          },
-          {
-            dataField: 'password',
-            caption: 'Password',
-            editorOptions: { mode: 'password' },
-            validationRules: [{
-              type: 'required',
-              message: 'Password is required'
-            }],
-          },
-          {
-            itemType: 'group',
-            colCount: 2,
-            items:
-              [
-                {
-                  itemType: 'button',
-                  horizontalAlignment: 'left',
-                  buttonOptions: {
-                    text: 'Log In',
-                    type: 'default',
-                    useSubmitBehavior: false,
-                    onClick() {
-                      DevExpress.ui.notify({
-                        message: 'You have submitted the form',
-                        position: {
-                          my: 'center top',
-                          at: 'center top',
-                        },
-                      }, 'success', 3000);
-                      console.log(userForm)
-                      users = $.ajax({
-                        url: baseURL + "/users?username=" + encodeURIComponent(userForm.username),
-                        dataType: 'json',
-                        method: "GET",
-                        async: false,
-                        contentType: "application/json; charset=utf-8",
-                      })
-                      users = users.responseJSON
-                      LoginUser(users)
-                      location.reload()
-                    }
-                  },
-                },
-                {
-                  itemType: 'button',
-                  horizontalAlignment: 'right',
-                  buttonOptions: {
-                    text: 'Create Account',
-                    type: 'default',
-                    useSubmitBehavior: false,
-                    onClick() {
-                      location.href = '/CreateAccount.html'
-                    }
-                  },
-                },
-              ]
-          },
-
-        ]
-      })
-    );
-  };
+  itemStoragePopUp = $('#POPUP-ITEMSTORAGE').dxPopup({
+    contentTemplate: popupContentTemplateItemStorageForm,
+    width: 500,
+    height: 500,
+    container: '.dx-viewport',
+    showTitle: true,
+    title: 'Log In',
+    visible: false,
+    dragEnabled: false,
+    hideOnOutsideClick: true,
+    showCloseButton: false,
+  }).dxPopup('instance');
+  $("#POPUP-ITEMSTORAGE-BUTTON").dxButton({
+    styling: 'contained',
+    icon: 'user',
+    text: 'ItemStorage Management',
+    onClick: () => {
+      console.log(itemStoragePopUp)
+      itemStoragePopUp.show();
+    }
+  });
 
   if (IsLoggedIn()) {
-    const popup = $('#popup-login').dxPopup({
+    popup = $('#popup-login').dxPopup({
       contentTemplate: popupContentTemplateLoggedIn,
       width: 425,
       height: 300,
@@ -197,7 +155,7 @@ $(() => {
     });
 
   } else {
-    const popup = $('#popup-login').dxPopup({
+    popup = $('#popup-login').dxPopup({
       contentTemplate: popupContentTemplate,
       width: 425,
       height: 300,
@@ -238,6 +196,7 @@ function LoginUser (users) {
     if (users[0].username == userForm.username && users[0].password == userForm.password) 
     {
       sessionStorage.setItem('CurrentUser', users[0].username)
+      sessionStorage.setItem('CurrentUserId', users[0].userId)
       sessionStorage.setItem('LoggedIn', true)
     }
     else
@@ -248,5 +207,9 @@ function LoginUser (users) {
 }
 function LogoutUser () {
   sessionStorage.removeItem('CurrentUser')
+  sessionStorage.removeItem('CurrentUserId')
   sessionStorage.removeItem('LoggedIn')
+}
+function GetItemStorageByID(id){
+  AllItemStorages
 }
