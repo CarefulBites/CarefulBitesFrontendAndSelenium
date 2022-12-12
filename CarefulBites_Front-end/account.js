@@ -307,4 +307,43 @@ $(() => {
         return deferred.promise();
     });
 
+    //cards
+let Cards = []
+
+function GetMealByName(ingredient) {
+    $.ajax({
+      type: "GET",
+      dataType: "json",
+      url: "https://carefulbitesapi20221128134821.azurewebsites.net/Meal?ingredient=" + ingredient,
+      async: true,
+      success: function (data) {
+          Cards = data;
+          GetCards();
+      },
+      error: function (error) {
+  
+          jsonValue = jQuery.parseJSON(error.responseText);
+          alert("error" + error.responseText);
+      }
+  });
+}
+  
+let CardsById = "";
+
+function GetMealById(id) {
+  $.ajax({
+    type: "GET",
+    dataType: "json",
+    url: "https://carefulbitesapi20221128134821.azurewebsites.net/Meal/foodById?id=" + id,
+    async: false,
+    success: function (data) {
+        CardsById = data;
+    },
+    error: function (error) {
+        jsonValue = jQuery.parseJSON(error.responseText);
+        alert("error" + error.responseText);
+    }
+  });
+}
+
 });
