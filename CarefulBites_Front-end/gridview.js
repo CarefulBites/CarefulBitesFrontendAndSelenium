@@ -364,10 +364,6 @@ function GetCards() {
       resizeEnabled: true,
       hideOnOutsideClick: true,
       showCloseButton: false,
-      position: {
-        at: 'bottom',
-        my: 'center',
-      },
       toolbarItems: [{
         widget: 'dxButton',
         toolbar: 'bottom',
@@ -397,7 +393,6 @@ function GetCards() {
               GetMealById(currentCard.idMeal)
               popup.option({
                 contentTemplate: () => popupContentTemplate(),
-                'position.of': `#image${currentCard.idMeal}`,
               });
               popup.show();
             },
