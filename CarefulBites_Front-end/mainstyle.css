@@ -11,8 +11,10 @@
   text-decoration: none;
   border-radius: 10%;
   font-size: 24px;
+}
 
-
+.jumbotron {
+  margin: 15px;
 }
 
 .dx-field-item-label-location-top {
@@ -114,8 +116,10 @@ nav {
 
 .dx-field-label {
   font-size: 20px;
+  min-width: 200px;
 }
 
 #ingredientSelection {
-  width: 10%;
+  width: 15%;
+  min-width: 200px;
 }
