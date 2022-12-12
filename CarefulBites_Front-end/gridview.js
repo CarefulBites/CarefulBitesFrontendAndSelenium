@@ -416,16 +416,6 @@ function GetCards() {
             popup.hide();
           },
         },
-        toolbarItems: [{
-            widget: 'dxButton',
-            toolbar: 'bottom',
-            location: 'after',
-            options: {
-                text: 'Close',
-                onClick() {
-                    popup.hide();
-                },
-            },
         }],
     }).dxPopup('instance');
 
