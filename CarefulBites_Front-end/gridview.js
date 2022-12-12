@@ -111,97 +111,139 @@ let itemStorageForm = {
 
 const popupContentTemplateItemStorageForm = function () {
     return $('<div>').append(
-      $('<div />').attr('id', 'ITEMSTORAGE-FORM-ID').dxForm({
-        labelMode: 'floating',
-        formData: itemStorageForm,
-        readOnly: false,
-        showColonAfterLabel: true,
-        labelLocation: 'left',
-        minColWidth: 300,
-        colCount: 1,
-        items: 
-        [
-          {
-            dataField: 'name',
-            caption: 'Name',
-            validationRules: [{
-              type: 'required',
-              message: 'Name is required'
-            }],
+        $('<div />').attr('id', 'ITEMSTORAGE-FORM-ID').dxForm({
+            labelMode: 'floating',
+            formData: itemStorageForm,
+            readOnly: false,
+            showColonAfterLabel: true,
+            labelLocation: 'left',
+            minColWidth: 300,
+            colCount: 1,
+            items: [{
+                itemType: 'group',
+                caption: 'Create',
+                items:
+                    [
+                        {
+                            dataField: 'name',
+                            caption: 'Name',
+                            validationRules: [{
+                                type: 'required',
+                                message: 'Name is required'
+                            }],
 
-          },
-          {
-            dataField: 'userId',
-            dataType: 'Number',
-            caption: 'UserId',
-            visible: false,
-            editorOptions: { value: parseInt(sessionStorage.getItem('CurrentUserId')) },
-          },
-          {
-            itemType: 'button',
-            horizontalAlignment: 'center',
-            buttonOptions: {
-              text: 'Create',
-              type: 'default',
-              useSubmitBehavior: false,
-              onClick() {
-                DevExpress.ui.notify({
-                  message: 'You have submitted the form',
-                  position: {
-                    my: 'center top',
-                    at: 'center top',
-                  },
-                }, 'success', 3000);
-                itemStorageForm
-                console.log(itemStorageForm)
-                newItemStorage = {
-                  name: itemStorageForm.name,
-                  userId: parseInt(sessionStorage.getItem('CurrentUserId'))
-                }
-                $.ajax({
-                  url: baseURL + "/itemStorages",
-                  dataType: 'json',
-                  method: "POST",
-                  async: false,
-                  data: JSON.stringify(newItemStorage),
-                  contentType: "application/json; charset=utf-8",
-                })
-                location.reload()
-              }
+                        },
+                        {
+                            dataField: 'userId',
+                            dataType: 'Number',
+                            caption: 'UserId',
+                            visible: false,
+                            editorOptions: { value: parseInt(sessionStorage.getItem('CurrentUserId')) },
+                        },
+                        {
+                            itemType: 'button',
+                            horizontalAlignment: 'center',
+                            buttonOptions: {
+                                text: 'Create',
+                                type: 'success',
+                                useSubmitBehavior: false,
+                                onClick() {
+                                    DevExpress.ui.notify({
+                                        message: 'You have submitted the form',
+                                        position: {
+                                            my: 'center top',
+                                            at: 'center top',
+                                        },
+                                    }, 'success', 3000);
+                                    itemStorageForm
+                                    console.log(itemStorageForm)
+                                    newItemStorage = {
+                                        name: itemStorageForm.name,
+                                        userId: parseInt(sessionStorage.getItem('CurrentUserId'))
+                                    }
+                                    $.ajax({
+                                        url: baseURL + "/itemStorages",
+                                        dataType: 'json',
+                                        method: "POST",
+                                        async: false,
+                                        data: JSON.stringify(newItemStorage),
+                                        contentType: "application/json; charset=utf-8",
+                                    })
+                                    location.reload()
+                                }
+                            },
+                        },
+                    ]
             },
-          },
-        ]
-      })
+            {
+                itemType: 'group',
+                caption: 'Delete',
+                items:
+                    [
+                        {
+                            caption: 'Name',
+                            editorType: "dxLookup",
+                            editorOptions: {
+                                placeholder: 'Select a value',
+                                dataSource: Object.values(ItemStorageDict),
+                                displayExpr: 'name',
+                                valueExpr: 'itemStorageId',
+                                onValueChanged: function(e) {
+                                    key = e.value;
+                                }
+                            },
+
+                        },
+                        {
+                            dataField: 'userId',
+                            dataType: 'Number',
+                            caption: 'UserId',
+                            visible: false,
+                            editorOptions: { value: parseInt(sessionStorage.getItem('CurrentUserId')) },
+                        },
+                        {
+                            itemType: 'button',
+                            horizontalAlignment: 'center',
+                            buttonOptions: {
+                                text: 'Delete',
+                                type: 'danger',
+                                useSubmitBehavior: false,
+                                onClick() {
+                                    console.log()
+                                    if (confirm('Are you sure you wish to delete this item?')) {
+                                        $.ajax({
+                                            url: baseURL + "/itemStorages/" + encodeURIComponent(key),
+                                            dataType: 'json',
+                                            method: "DELETE",
+                                            async: false,
+                                            contentType: "application/json; charset=utf-8",
+                                        })
+                                    }
+                                    
+                                    location.reload()
+                                }
+                            },
+                        },
+                    ]
+            }]
+
+        })
     );
-  };
+};
 
 $(() => {
     ItemStorageDict = []
-    NewItemStorageDict = []
     $.ajax({
-      url: baseURL + "/itemStorages/",
-      method: 'GET',
-      contentType: "application/json; charset=utf-8",
-      async:false,
-      success: function(data) {
-        ItemStorageDict = data.reduce((obj, item) => {
-          obj[item.itemStorageId] = item.name;
-          return obj;
-        }, {});
-      }
-    })
-  
-    $.ajax({
-      url: baseURL + "/itemStorages/",
-      method: 'GET',
-      contentType: "application/json; charset=utf-8",
-      async:false,
-      success: function(data) {
-        NewItemStorageDict = data.map(item => ({
-          name: item.name,
-          itemStorageId: item.itemStorageId
-        }));
-      }
+        url: baseURL + "/itemStorages/",
+        method: 'GET',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        success: function (data) {
+            ItemStorageDict = data.reduce((obj, item) => {
+                obj[item.itemStorageId] = item;
+                return obj;
+            }, {});
+        }
     })
 
     $('#itemGrid').dxDataGrid({
@@ -255,9 +297,9 @@ $(() => {
                 dataField: 'itemStorageId',
                 caption: 'Storage',
                 lookup: {
-                  dataSource: NewItemStorageDict,
-                  displayExpr: 'name',
-                  valueExpr: 'itemStorageId',
+                    dataSource: Object.values(ItemStorageDict),
+                    displayExpr: 'name',
+                    valueExpr: 'itemStorageId',
                 }
             },
             {
@@ -288,8 +330,8 @@ $(() => {
             {
                 caption: 'Storage',
                 groupIndex: 0,
-                calculateCellValue: function(rowData) {
-                  return ItemStorageDict[rowData.itemStorageId]
+                calculateCellValue: function (rowData) {
+                    return ItemStorageDict[rowData.itemStorageId].name
                 }
             }
         ],
@@ -319,105 +361,106 @@ $(() => {
         dragEnabled: false,
         hideOnOutsideClick: true,
         showCloseButton: false,
-      }).dxPopup('instance');
-      $("#POPUP-ITEMSTORAGE-BUTTON").dxButton({
+    }).dxPopup('instance');
+    $("#POPUP-ITEMSTORAGE-BUTTON").dxButton({
         styling: 'contained',
         icon: 'user',
         text: 'ItemStorage Management',
         onClick: () => {
-          console.log(itemStoragePopUp)
-          itemStoragePopUp.show();
+            console.log(itemStoragePopUp)
+            itemStoragePopUp.show();
         }
-      });
+    });
 });
 
 function GetCards() {
     const popupContentTemplate = function () {
-      
-      const scrollView = $('<div />');
+
+        const scrollView = $('<div />');
         scrollView.append(
-        $(`<p>Meal: <span>${CardsById.strMeal}</span></p>`),
-        $(`<p>Origin: <span>${CardsById.strArea}</span></p>`),
-        $(`<p>Tags: <span>${CardsById.strTags}<span></p>`),
-        $(`<p>Category: <span>${CardsById.strCategory}<span></p>`),
-        $(`<p>Video: <span>${CardsById.strYoutube}<span></p>`),
-        $(`<p>Source: <span>${CardsById.strSource}</span></p>`),
-        $(`<p>Ingredients: <span>${CardsById.strIngredient1}<span><span>${" " + CardsById.strMeasure1}<span><span>${" " + CardsById.strIngredient2}<span><span>${" " + CardsById.strMeasure2}<span><span>${" " + CardsById.strIngredient3}<span><span>${" " + CardsById.strMeasure3}<span><span>${" " + CardsById.strIngredient4}<span><span>${" " + CardsById.strMeasure4}<span><span>${" " + CardsById.strIngredient5}<span><span>${" " + CardsById.strMeasure5}<span><span>${" " + CardsById.strIngredient6}<span><span>${" " + CardsById.strMeasure6}<span><span>${" " + CardsById.strIngredient7}<span><span>${" " + CardsById.strMeasure7}<span><span>${" " + CardsById.strIngredient8}<span><span>${" " + CardsById.strMeasure8}<span><span>${" " + CardsById.strIngredient9}<span><span>${" " + CardsById.strMeasure9}<span><span>${" " + CardsById.strIngredient10}<span><span>${" " + CardsById.strMeasure10}<span><span>${" " + CardsById.strIngredient11}<span><span>${" " + CardsById.strMeasure11}<span><span>${" " + CardsById.strIngredient12}<span><span>${" " + CardsById.strMeasure12}<span><span>${" " + CardsById.strIngredient13}<span><span>${" " + CardsById.strMeasure13}<span><span>${" " + CardsById.strIngredient14}<span><span>${" " + CardsById.strMeasure14}<span><span>${" " + CardsById.strIngredient15}<span><span>${" " + CardsById.strMeasure15}<span><span>${" " + CardsById.strIngredient16}<span><span>${" " + CardsById.strMeasure16}<span><span>${" " + CardsById.strIngredient17}<span><span>${" " + CardsById.strMeasure17}<span><span>${" " + CardsById.strIngredient18}<span><span>${" " + CardsById.strMeasure18}<span><span>${" " + CardsById.strIngredient19}<span><span>${" " + CardsById.strMeasure19}<span><span>${" " + CardsById.strIngredient20}<span><span>${" " + CardsById.strMeasure20}<span>`),
-        $(`<p>Instructions: <span>${CardsById.strInstructions}<span></p>`),
-      );
-      scrollView.dxScrollView({
-        width: '100%',
-        height: '100%',
-      });
-  
-      return scrollView;
+            $(`<p>Meal: <span>${CardsById.strMeal}</span></p>`),
+            $(`<p>Origin: <span>${CardsById.strArea}</span></p>`),
+            $(`<p>Tags: <span>${CardsById.strTags}<span></p>`),
+            $(`<p>Category: <span>${CardsById.strCategory}<span></p>`),
+            $(`<p>Video: <span>${CardsById.strYoutube}<span></p>`),
+            $(`<p>Source: <span>${CardsById.strSource}</span></p>`),
+            $(`<p>Ingredients: <span>${CardsById.strIngredient1}<span><span>${" " + CardsById.strMeasure1}<span><span>${" " + CardsById.strIngredient2}<span><span>${" " + CardsById.strMeasure2}<span><span>${" " + CardsById.strIngredient3}<span><span>${" " + CardsById.strMeasure3}<span><span>${" " + CardsById.strIngredient4}<span><span>${" " + CardsById.strMeasure4}<span><span>${" " + CardsById.strIngredient5}<span><span>${" " + CardsById.strMeasure5}<span><span>${" " + CardsById.strIngredient6}<span><span>${" " + CardsById.strMeasure6}<span><span>${" " + CardsById.strIngredient7}<span><span>${" " + CardsById.strMeasure7}<span><span>${" " + CardsById.strIngredient8}<span><span>${" " + CardsById.strMeasure8}<span><span>${" " + CardsById.strIngredient9}<span><span>${" " + CardsById.strMeasure9}<span><span>${" " + CardsById.strIngredient10}<span><span>${" " + CardsById.strMeasure10}<span><span>${" " + CardsById.strIngredient11}<span><span>${" " + CardsById.strMeasure11}<span><span>${" " + CardsById.strIngredient12}<span><span>${" " + CardsById.strMeasure12}<span><span>${" " + CardsById.strIngredient13}<span><span>${" " + CardsById.strMeasure13}<span><span>${" " + CardsById.strIngredient14}<span><span>${" " + CardsById.strMeasure14}<span><span>${" " + CardsById.strIngredient15}<span><span>${" " + CardsById.strMeasure15}<span><span>${" " + CardsById.strIngredient16}<span><span>${" " + CardsById.strMeasure16}<span><span>${" " + CardsById.strIngredient17}<span><span>${" " + CardsById.strMeasure17}<span><span>${" " + CardsById.strIngredient18}<span><span>${" " + CardsById.strMeasure18}<span><span>${" " + CardsById.strIngredient19}<span><span>${" " + CardsById.strMeasure19}<span><span>${" " + CardsById.strIngredient20}<span><span>${" " + CardsById.strMeasure20}<span>`),
+            $(`<p>Instructions: <span>${CardsById.strInstructions}<span></p>`),
+        );
+        scrollView.dxScrollView({
+            width: '100%',
+            height: '100%',
+        });
+
+        return scrollView;
     };
     const popup = $('#popup').dxPopup({
-      contentTemplate: popupContentTemplate,
-      width: 600,
-      height: 500,
-      container: '.dx-viewport',
-      showTitle: true,
-      title: 'Recipe',
-      visible: false,
-      dragEnabled: true,
-      resizeEnabled: true,
-      hideOnOutsideClick: true,
-      showCloseButton: false,
-      position: {
-        at: 'bottom',
-        my: 'center',
-      },
-      toolbarItems: [{
-        widget: 'dxButton',
-        toolbar: 'bottom',
-        location: 'after',
-        options: {
-          text: 'Close',
-          onClick() {
-            popup.hide();
-          },
+        contentTemplate: popupContentTemplate,
+        width: 600,
+        height: 500,
+        container: '.dx-viewport',
+        showTitle: true,
+        title: 'Recipe',
+        visible: false,
+        dragEnabled: true,
+        resizeEnabled: true,
+        hideOnOutsideClick: true,
+        showCloseButton: false,
+        position: {
+            at: 'center',
+            my: 'center',
+            of: 'window'
         },
-      }],
-    }).dxPopup('instance');
-  
-    Cards.forEach((currentCard) => {
-      $('<li>')
-      .css("width","250")
-      .append(
-        $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`),
-        $('<br>'),
-        $('<span>').html(`<i>${currentCard.strMeal}</i>`),
-        $('<br>'),
-        $('<div>')
-          .addClass('button-info')
-          .dxButton({
-            text: 'Details',
-            onClick() {
-              GetMealById(currentCard.idMeal)
-              popup.option({
-                contentTemplate: () => popupContentTemplate(),
-                'position.of': `#image${currentCard.idMeal}`,
-              });
-              popup.show();
+        toolbarItems: [{
+            widget: 'dxButton',
+            toolbar: 'bottom',
+            location: 'after',
+            options: {
+                text: 'Close',
+                onClick() {
+                    popup.hide();
+                },
             },
-          }),
-      ).appendTo($('#cards'));
+        }],
+    }).dxPopup('instance');
+
+    Cards.forEach((currentCard) => {
+        $('<li>')
+            .css("width", "250")
+            .append(
+                $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`),
+                $('<br>'),
+                $('<span>').html(`<i>${currentCard.strMeal}</i>`),
+                $('<br>'),
+                $('<div>')
+                    .addClass('button-info')
+                    .dxButton({
+                        text: 'Details',
+                        onClick() {
+                            GetMealById(currentCard.idMeal)
+                            popup.option({
+                                contentTemplate: () => popupContentTemplate(),
+                                'position.of': `#image${currentCard.idMeal}`,
+                            });
+                            popup.show();
+                        },
+                    }),
+            ).appendTo($('#cards'));
     });
-  };
-  
-  $(function() {
+};
+
+$(function () {
     $("#ingredientSelection").dxTagBox({
         dataSource: ItemStore,
         valueExpr: "name",
         displayExpr: "name",
         placeholder: "Milk",
         showSelectionControls: true,
-        onValueChanged: function(e) {
-          var element = document.getElementById("cards");
-          element.innerHTML = "";
-          ingredientName = e.value[0];
-          GetMealByName(ingredientName);
-      },
+        onValueChanged: function (e) {
+            var element = document.getElementById("cards");
+            element.innerHTML = "";
+            ingredientName = e.value[0];
+            GetMealByName(ingredientName);
+        },
     });
-  });
+});
