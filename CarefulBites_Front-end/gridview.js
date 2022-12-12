@@ -395,21 +395,26 @@ function GetCards() {
         return scrollView;
     };
     const popup = $('#popup').dxPopup({
-        contentTemplate: popupContentTemplate,
-        width: 600,
-        height: 500,
-        container: '.dx-viewport',
-        showTitle: true,
-        title: 'Recipe',
-        visible: false,
-        dragEnabled: true,
-        resizeEnabled: true,
-        hideOnOutsideClick: true,
-        showCloseButton: false,
-        position: {
-            at: 'center',
-            my: 'center',
-            of: 'window'
+      contentTemplate: popupContentTemplate,
+      width: 600,
+      height: 500,
+      container: '.dx-viewport',
+      showTitle: true,
+      title: 'Recipe',
+      visible: false,
+      dragEnabled: true,
+      resizeEnabled: true,
+      hideOnOutsideClick: true,
+      showCloseButton: false,
+      toolbarItems: [{
+        widget: 'dxButton',
+        toolbar: 'bottom',
+        location: 'after',
+        options: {
+          text: 'Close',
+          onClick() {
+            popup.hide();
+          },
         },
         toolbarItems: [{
             widget: 'dxButton',
@@ -425,27 +430,26 @@ function GetCards() {
     }).dxPopup('instance');
 
     Cards.forEach((currentCard) => {
-        $('<li>')
-            .css("width", "250")
-            .append(
-                $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`),
-                $('<br>'),
-                $('<span>').html(`<i>${currentCard.strMeal}</i>`),
-                $('<br>'),
-                $('<div>')
-                    .addClass('button-info')
-                    .dxButton({
-                        text: 'Details',
-                        onClick() {
-                            GetMealById(currentCard.idMeal)
-                            popup.option({
-                                contentTemplate: () => popupContentTemplate(),
-                                'position.of': `#image${currentCard.idMeal}`,
-                            });
-                            popup.show();
-                        },
-                    }),
-            ).appendTo($('#cards'));
+      $('<li>')
+      .css("width","250")
+      .append(
+        $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`),
+        $('<br>'),
+        $('<span>').html(`<i>${currentCard.strMeal}</i>`),
+        $('<br>'),
+        $('<div>')
+          .addClass('button-info')
+          .dxButton({
+            text: 'Details',
+            onClick() {
+              GetMealById(currentCard.idMeal)
+              popup.option({
+                contentTemplate: () => popupContentTemplate(),
+              });
+              popup.show();
+            },
+          }),
+      ).appendTo($('#cards'));
     });
 };
 
