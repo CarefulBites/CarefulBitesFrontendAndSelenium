@@ -6,11 +6,14 @@ const userForm = {
 };
 const currentUser = "CurrentUser";
 let form_popup = undefined;
+
 function IsLoggedIn() {
   if (sessionStorage.getItem("LoggedIn")) {
     return true;
   } else return false;
 }
+
+
 function LogoutUser() {
   sessionStorage.removeItem(currentUser);
   sessionStorage.removeItem("LoggedIn");
@@ -43,6 +46,35 @@ $(() => {
     }, 1000);
     return d.promise();
   };
+
+  const loadPanel = // First, initialize the dxLoadPanel widget on an element in your page
+  $("#LOAD-PANEL").dxLoadPanel({
+    // The text to display in the loading indicator
+    message: "Please wait...",
+    // Set the widget's shading color
+    shadingColor: "rgba(0,0,0,0.4)",
+    // Set the widget's background color
+    backgroundColor: "#fff",
+    // Set the widget's text color
+    fontColor: "#000",
+    // Set the widget's position relative to the element
+    position: {
+      my: "center",
+      at: "center",
+      of: "body"
+    },
+    visible: false,
+    deferRendering: true,
+  }).dxLoadPanel('instance');
+
+  $(window).ajaxStart(function () {
+    // Show the load panel
+    if (loadPanel != undefined) {
+      loadPanel.show();
+    }
+  });
+
+  
 
   const popupContentTemplateLoggedIn = function () {
     return $("<div>").append(
@@ -95,49 +127,53 @@ $(() => {
                   itemType: "button",
                   horizontalAlignment: "left",
                   buttonOptions: {
+                    elementAttr: {
+                      id: 'POPUP-LOGIN-BUTTON'
+                    },
                     text: "Log In",
                     type: "default",
                     useSubmitBehavior: false,
                     onClick() {
-                      console.log(userForm);
-                      users = $.ajax({
+                      $.ajax({
                         url:
                           baseURL +
                           "/users?username=" +
                           encodeURIComponent(userForm.username),
                         dataType: "json",
                         method: "GET",
-                        async: false,
+                        async: true,
                         contentType: "application/json; charset=utf-8",
+                        success: function (responseData){
+                          if (responseData == undefined) {
+                            DevExpress.ui.notify(
+                              {
+                                message: "Error",
+                                position: {
+                                  my: "center top",
+                                  at: "center top",
+                                },
+                              },
+                              "danger",
+                              3000
+                            );
+                          } else {
+                            users = responseData;
+                            DevExpress.ui.notify(
+                              {
+                                message: "login success",
+                                position: {
+                                  my: "center top",
+                                  at: "center top",
+                                },
+                              },
+                              "success",
+                              3000
+                            );
+                            LoginUser(users);
+                            location.href = "./main_page.html";
+                          }
+                        }
                       });
-                      if (users.responseJSON == undefined) {
-                        DevExpress.ui.notify(
-                          {
-                            message: "You dont have a account",
-                            position: {
-                              my: "center top",
-                              at: "center top",
-                            },
-                          },
-                          "success",
-                          3000
-                        );
-                      } else {
-                        users = users.responseJSON;
-                        DevExpress.ui.notify(
-                          {
-                            message: "login success",
-                            position: {
-                              my: "center top",
-                              at: "center top",
-                            },
-                          },
-                          "success",
-                          3000
-                        );
-                        LoginUser(users);
-                        location.href = "./main_page.html";
-                      }
                     },
                   },
                 },
