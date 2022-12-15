@@ -19,7 +19,7 @@ const ItemStore = new DevExpress.data.CustomStore({
             }
         });
         $.ajax({
-            url: baseURL + "/foodItems",
+            url: baseURL + "/usersFood/" + encodeURIComponent(sessionStorage.getItem("CurrentUserId")),
             dataType: 'json',
             data: args,
             success(result) {
@@ -249,6 +249,7 @@ $(() => {
     $('#itemGrid').dxDataGrid({
         dataSource: ItemStore,
         keyExpr: 'itemId',
+        columnHidingEnabled: true,
         filterRow: {
             visible: true,
             applyFilter: 'auto',
@@ -280,7 +281,8 @@ $(() => {
         columns: [
             {
                 dataField: 'itemId',
-                dataType: 'number'
+                dataType: 'number',
+                visible: false
             },
             {
                 dataField: 'name',
@@ -300,19 +302,19 @@ $(() => {
                     dataSource: Object.values(ItemStorageDict),
                     displayExpr: 'name',
                     valueExpr: 'itemStorageId',
-                }
+                },
             },
             {
                 dataField: 'caloriesPer',
-                dataType: 'number'
+                dataType: 'number',
             },
             {
                 dataField: 'expirationDate',
-                dataType: 'date'
+                dataType: 'date',
             },
             {
                 dataField: 'openDate',
-                dataType: 'date'
+                dataType: 'date',
             },
             {
                 dataField: 'daysAfterOpen',
@@ -373,6 +375,7 @@ $(() => {
     });
 });
 
+
 function GetCards() {
     const popupContentTemplate = function () {
 
@@ -416,16 +419,6 @@ function GetCards() {
             popup.hide();
           },
         },
-        toolbarItems: [{
-            widget: 'dxButton',
-            toolbar: 'bottom',
-            location: 'after',
-            options: {
-                text: 'Close',
-                onClick() {
-                    popup.hide();
-                },
-            },
         }],
     }).dxPopup('instance');
 
