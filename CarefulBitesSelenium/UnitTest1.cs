@@ -26,7 +26,9 @@ public class UnitTest1 {
     public static void Setup(TestContext context) {
     
     var options = new ChromeOptions();
-    options.AddArgument("--start-maximized");
+    options.AddArgument("--window-size=1920,1080")
+    options.AddArgument("--start-maximized")
+    options.AddArgument("--headless")
 
 #if DEBUG
         _driver = new ChromeDriver(DriverDirectory, options);
