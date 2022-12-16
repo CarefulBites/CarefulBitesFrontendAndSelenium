@@ -1,4 +1,5 @@
 using System;
+using System.Reflection.Metadata;
 using System.Threading;
 using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -36,7 +37,8 @@ public class UnitTest1 {
         _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
 
 #if DEBUG
-        var url = "https://carefulbites.azurewebsites.net/";
+        //var url = "https://carefulbites.azurewebsites.net/";
+        var url = "http://127.0.0.1:5500/CarefulBites_Front-end/index.html";
 #endif
 #if RELEASE
         var url = "http://127.0.0.1:9000/index.html";
@@ -145,23 +147,62 @@ public class UnitTest1 {
         clearInput?.Click();
     }
 
+    [TestMethod]
+    public void Test8GetRecipes()
+    {
+        _driver?.SwitchTo().ActiveElement();
+        var filter = _driver?.FindElement(By.Id("ingredientSelection")); 
+        ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView(true);", filter);
+        Thread.Sleep(2000);
+
+        var recipes = _driver?.FindElement(By.XPath("//div[@id='ingredientSelection']//*[@class='dx-texteditor-input']"));
+        
+        Assert.IsNotNull(recipes);
+        
+        recipes?.Click();
+
+        var selectedIngredient = _driver?.FindElement(By.XPath("//div[@class='dx-scrollview-content']//div[@class='dx-item dx-list-item']//*[contains(@class,'dx-checkbox-icon')]"));
+
+        Assert.IsNotNull(selectedIngredient); 
+
+        selectedIngredient?.Click();
+
+        Thread.Sleep(2000);
+
+    }
+
+    [TestMethod]
+    public void Test9GetCards()
+    {
+        _driver?.SwitchTo().ActiveElement();
+        var cards = _driver?.FindElement(By.Id("cards"));
+        ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView(true);", cards);
+        Thread.Sleep(1000);
+
+        var popup = _driver?.FindElement(By.XPath("//ul[@id='cards']//div[@role='button']"));
+
+        Assert.IsNotNull(popup);
+
+        popup?.Click();
+
+        Thread.Sleep(1000);
+
+    }
+
     //[TestMethod]
-    //public void Test8GetRecipes()
+    //public void Test9GetAccountPage()
     //{
     //    _driver?.SwitchTo().ActiveElement();
-        
-    //    Actions action = new Actions(_driver);
-    //    action.DragAndDropToOffset(_driver.FindElement(By.XPath("//*[@id=\"itemGrid\"]/div/div[6]/div/table/tbody/tr[1]/td[1]/div")), 0, -250);
-    //    action.Build().Perform();
+    //    var loginButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
 
-    //    var filter = _driver?.FindElement(By.XPath("//*[contains(@data-dx_placeholder,'Milk')]"));
-    //    Assert.IsNotNull(filter);
+    //    Assert.IsNotNull(loginButton);
 
-    //    filter?.Click();
+    //    loginButton?.Click();
     //}
-    
+
     //[TestMethod]
-    //public void Test8GetAccountPage() {
+    //public void Test91CreateAccount()
+    //{
     //    _driver?.SwitchTo().ActiveElement();
     //    var loginButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
 
