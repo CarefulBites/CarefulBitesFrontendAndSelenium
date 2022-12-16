@@ -4,8 +4,8 @@ using System.Threading;
 using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
-//using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.Chrome;
+//using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.Interactions;
 //using OpenQA.Selenium.Edge;
 
@@ -26,8 +26,8 @@ public class UnitTest1 {
     public static void Setup(TestContext context) {
 
 #if DEBUG
-        //_driver = new ChromeDriver(DriverDirectory);
-        _driver = new FirefoxDriver(DriverDirectory);
+        _driver = new ChromeDriver(DriverDirectory);
+        //_driver = new FirefoxDriver(DriverDirectory);
         //_driver = new EdgeDriver(DriverDirectory);
 #endif
 #if RELEASE
@@ -88,6 +88,8 @@ public class UnitTest1 {
     [TestMethod]
     public void Test3GetLogo()
     {
+        _driver.Manage().Window.Maximize();
+        Thread.Sleep(1000);
         _driver?.SwitchTo().ActiveElement();
         var sort = _driver?.FindElement(By.ClassName("logo"));
 
