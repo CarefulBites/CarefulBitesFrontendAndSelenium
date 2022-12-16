@@ -449,11 +449,9 @@ function GetCards() {
 $(function () {
     $("#ingredientSelection").dxTagBox({
         dataSource: ItemStore,
-        name: "ingredientBox",
-        label: "ingredient",
-        labelMode: "hidden",
         valueExpr: "name",
         displayExpr: "name",
+        placeholder: "Milk",
         showSelectionControls: true,
         onValueChanged: function (e) {
             var element = document.getElementById("cards");
