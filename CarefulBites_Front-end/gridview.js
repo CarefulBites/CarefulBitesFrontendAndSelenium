@@ -234,7 +234,7 @@ const popupContentTemplateItemStorageForm = function () {
 $(() => {
     ItemStorageDict = []
     $.ajax({
-        url: baseURL + "/itemStorages/",
+        url: baseURL + "/itemStorages/?userId=" + sessionStorage.getItem('CurrentUserId'),
         method: 'GET',
         contentType: "application/json; charset=utf-8",
         async: false,
