@@ -24,14 +24,17 @@ public class UnitTest1 {
 
     [ClassInitialize]
     public static void Setup(TestContext context) {
+    
+    var options = new ChromeOptions();
+    options.AddArgument("--start-maximized");
 
 #if DEBUG
-        _driver = new ChromeDriver(DriverDirectory);
+        _driver = new ChromeDriver(DriverDirectory, options);
         //_driver = new FirefoxDriver(DriverDirectory);
         //_driver = new EdgeDriver(DriverDirectory);
 #endif
 #if RELEASE
-        _driver = new ChromeDriver(DriverDirectory);
+        _driver = new ChromeDriver(DriverDirectory, options);
 #endif
 
         _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -88,8 +91,6 @@ public class UnitTest1 {
     [TestMethod]
     public void Test3GetLogo()
     {
-        _driver.Manage().Window.Maximize();
-        Thread.Sleep(1000);
         _driver?.SwitchTo().ActiveElement();
         var sort = _driver?.FindElement(By.ClassName("logo"));
 
