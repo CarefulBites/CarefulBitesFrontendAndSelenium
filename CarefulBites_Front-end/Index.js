@@ -68,8 +68,8 @@ function GetRandomCards() {
   };
   const popup = $('#randomPopup').dxPopup({
     contentTemplate: popupContentTemplate,
-    width: 600,
-    height: 500,
+    width: "80vw",
+    height: "60vh",
     container: '.dx-viewport',
     showTitle: true,
     title: 'Recipe',
@@ -93,7 +93,7 @@ function GetRandomCards() {
 
   RandomCards.forEach((currentCard) => {
     $('<li>')
-    .css("width","250")
+    .css("width","400")
     .append(
       $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`),
       $('<br>'),
