@@ -1,4 +1,4 @@
-name: Build and deploy ASP.Net Core app to Azure Web App
+name: Run Selenium tests and publish web-app
 
 env:
   AZURE_WEBAPP_NAME: CarefulBitesAPI20221128134821    # set this to the name of your Azure Web App
