@@ -28,7 +28,7 @@ jobs:
         url: 'https://carefulbitesapi20221128134821.azurewebsites.net/CarefulBites/foodItems'
         method: 'GET'
         customHeaders: '{"Content-Type": "application/json"}'
-        retry_on: error
+        preventFailureOnNoResponse: 'true'
     
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v2
