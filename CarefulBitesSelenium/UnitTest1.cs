@@ -1,12 +1,9 @@
 using System;
-using System.Reflection.Metadata;
 using System.Threading;
-using System.Xml.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 //using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.Interactions;
 //using OpenQA.Selenium.Edge;
 
 namespace CarefulBitesSelenium;
@@ -24,14 +21,19 @@ public class UnitTest1 {
 
     [ClassInitialize]
     public static void Setup(TestContext context) {
+    
+    var options = new ChromeOptions();
+    options.AddArgument("--window-size=1920,1080");
+    options.AddArgument("--start-maximized");
+    options.AddArgument("--headless");
 
 #if DEBUG
-        _driver = new ChromeDriver(DriverDirectory);
+        _driver = new ChromeDriver(DriverDirectory, options);
         //_driver = new FirefoxDriver(DriverDirectory);
         //_driver = new EdgeDriver(DriverDirectory);
 #endif
 #if RELEASE
-        _driver = new ChromeDriver(DriverDirectory);
+        _driver = new ChromeDriver(DriverDirectory, options);
 #endif
 
         _driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
@@ -99,6 +101,7 @@ public class UnitTest1 {
     [TestMethod]
     public void Test4ChangeTheme()
     {
+        Thread.Sleep(10);
         _driver?.SwitchTo().ActiveElement();
         var theme = _driver?.FindElement(By.Id("theme-button"));
 
@@ -152,8 +155,8 @@ public class UnitTest1 {
     {
         _driver?.SwitchTo().ActiveElement();
         var filter = _driver?.FindElement(By.Id("ingredientSelection")); 
-        ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView(true);", filter);
-        Thread.Sleep(2000);
+        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", filter);
+        //Thread.Sleep(2000);
 
         var recipes = _driver?.FindElement(By.XPath("//div[@id='ingredientSelection']//*[@class='dx-texteditor-input']"));
         
@@ -167,8 +170,7 @@ public class UnitTest1 {
 
         selectedIngredient?.Click();
 
-        Thread.Sleep(2000);
-
+        //Thread.Sleep(2000);
     }
 
     [TestMethod]
@@ -176,8 +178,8 @@ public class UnitTest1 {
     {
         _driver?.SwitchTo().ActiveElement();
         var cards = _driver?.FindElement(By.Id("cards"));
-        ((IJavaScriptExecutor)_driver).ExecuteScript("arguments[0].scrollIntoView(true);", cards);
-        Thread.Sleep(1000);
+        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", cards);
+        //Thread.Sleep(1000);
 
         var popup = _driver?.FindElement(By.XPath("//ul[@id='cards']//div[@role='button']"));
 
@@ -185,8 +187,7 @@ public class UnitTest1 {
 
         popup?.Click();
 
-        Thread.Sleep(1000);
-
+        //Thread.Sleep(1000);
     }
 
     //[TestMethod]

@@ -80,9 +80,6 @@ $(() => {
       loadPanel.hide();
     }
   });
-
-  
-
   const popupContentTemplateLoggedIn = function () {
     return $("<div>").append(
       $(
@@ -92,6 +89,7 @@ $(() => {
       )
     );
   };
+
   const popupContentTemplate = function () {
     return $("<div>").append(
       $("<div />")
@@ -118,7 +116,13 @@ $(() => {
             {
               dataField: "password",
               caption: "Password",
-              editorOptions: { mode: "password" },
+              editorOptions: {
+                mode: "password",
+                onEnterKey: function(e) {
+                  console.log(e)
+                  $('#POPUP-LOGIN-BUTTON').click();
+                },
+              },
               validationRules: [
                 {
                   type: "required",
@@ -139,7 +143,7 @@ $(() => {
                     },
                     text: "Log In",
                     type: "default",
-                    useSubmitBehavior: false,
+                    useSubmitBehavior: false,                    
                     onClick() {
                       $.ajax({
                         url:
@@ -181,7 +185,7 @@ $(() => {
                           }
                         }
                       });
-                    },
+                    }                                       
                   },
                 },
                 {
@@ -199,7 +203,7 @@ $(() => {
               ],
             },
           ],
-        })
+        }),        
     );
   };
 
@@ -381,7 +385,8 @@ $(() => {
         deferred.reject("Create Account failed");
       });
     if (users.responseJSON != undefined) {
-      LoginUser(users.responseJSON);
+      users = [ users.responseJSON ];
+      LoginUser(users);
       location.href = "./main_page.html";
     }
 
