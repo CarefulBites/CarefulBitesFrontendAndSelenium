@@ -74,6 +74,13 @@ $(() => {
     }
   });
 
+  $(window).ajaxStop(function () {
+    // Show the load panel
+    if (loadPanel != undefined) {
+      loadPanel.hide();
+    }
+  });
+
   
 
   const popupContentTemplateLoggedIn = function () {
