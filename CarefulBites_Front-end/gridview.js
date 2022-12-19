@@ -188,7 +188,7 @@ const popupContentTemplateItemStorageForm = function () {
                                 dataSource: Object.values(ItemStorageDict),
                                 displayExpr: 'name',
                                 valueExpr: 'itemStorageId',
-                                onValueChanged: function(e) {
+                                onValueChanged: function (e) {
                                     key = e.value;
                                 }
                             },
@@ -219,7 +219,7 @@ const popupContentTemplateItemStorageForm = function () {
                                             contentType: "application/json; charset=utf-8",
                                         })
                                     }
-                                    
+
                                     location.reload()
                                 }
                             },
@@ -250,6 +250,10 @@ $(() => {
         dataSource: ItemStore,
         keyExpr: 'itemId',
         columnHidingEnabled: true,
+        rowAlternationEnabled: false,
+        showColumnLines: false,
+        showRowLines: true,
+        showBorders: true,
         filterRow: {
             visible: true,
             applyFilter: 'auto',
@@ -277,6 +281,21 @@ $(() => {
         },
         onEditingStart: function (e) {
             row = e.data
+        },
+        onRowPrepared(e) {
+            if (e.rowType === 'data') {
+                if (!e.isEditing) {
+                    const expirationDate = new Date(Date.parse(e.data.expirationDate));
+                const currentDate = new Date();
+                currentDate.setHours(0, 0, 0, 0);
+
+                // Get the cell element for the expirationDate column
+                const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
+                if (expirationDate < currentDate) {
+                    $(expirationDateCell.cellElement[0]).css('color', 'red');
+                }
+                }
+            }
         },
         columns: [
             {
@@ -307,6 +326,7 @@ $(() => {
             {
                 dataField: 'caloriesPer',
                 dataType: 'number',
+                visible: false,
             },
             {
                 dataField: 'expirationDate',
@@ -337,7 +357,6 @@ $(() => {
                 }
             }
         ],
-        showBorders: true,
     })
 
     $("#theme-button").dxButton({
@@ -398,51 +417,51 @@ function GetCards() {
         return scrollView;
     };
     const popup = $('#popup').dxPopup({
-      contentTemplate: popupContentTemplate,
-      width: 600,
-      height: 500,
-      container: '.dx-viewport',
-      showTitle: true,
-      title: 'Recipe',
-      visible: false,
-      dragEnabled: true,
-      resizeEnabled: true,
-      hideOnOutsideClick: true,
-      showCloseButton: false,
-      toolbarItems: [{
-        widget: 'dxButton',
-        toolbar: 'bottom',
-        location: 'after',
-        options: {
-          text: 'Close',
-          onClick() {
-            popup.hide();
-          },
-        },
+        contentTemplate: popupContentTemplate,
+        width: 600,
+        height: 500,
+        container: '.dx-viewport',
+        showTitle: true,
+        title: 'Recipe',
+        visible: false,
+        dragEnabled: true,
+        resizeEnabled: true,
+        hideOnOutsideClick: true,
+        showCloseButton: false,
+        toolbarItems: [{
+            widget: 'dxButton',
+            toolbar: 'bottom',
+            location: 'after',
+            options: {
+                text: 'Close',
+                onClick() {
+                    popup.hide();
+                },
+            },
         }],
     }).dxPopup('instance');
 
     Cards.forEach((currentCard) => {
-      $('<li>')
-      .css("width","250")
-      .append(
-        $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`),
-        $('<br>'),
-        $('<span>').html(`<i>${currentCard.strMeal}</i>`),
-        $('<br>'),
-        $('<div>')
-          .addClass('button-info')
-          .dxButton({
-            text: 'Details',
-            onClick() {
-              GetMealById(currentCard.idMeal)
-              popup.option({
-                contentTemplate: () => popupContentTemplate(),
-              });
-              popup.show();
-            },
-          }),
-      ).appendTo($('#cards'));
+        $('<li>')
+            .css("width", "250")
+            .append(
+                $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`),
+                $('<br>'),
+                $('<span>').html(`<i>${currentCard.strMeal}</i>`),
+                $('<br>'),
+                $('<div>')
+                    .addClass('button-info')
+                    .dxButton({
+                        text: 'Details',
+                        onClick() {
+                            GetMealById(currentCard.idMeal)
+                            popup.option({
+                                contentTemplate: () => popupContentTemplate(),
+                            });
+                            popup.show();
+                        },
+                    }),
+            ).appendTo($('#cards'));
     });
 };
 
