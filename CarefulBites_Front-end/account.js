@@ -379,7 +379,8 @@ $(() => {
         deferred.reject("Create Account failed");
       });
     if (users.responseJSON != undefined) {
-      LoginUser(users.responseJSON);
+      users = [ users.responseJSON ];
+      LoginUser(users);
       location.href = "./main_page.html";
     }
 
