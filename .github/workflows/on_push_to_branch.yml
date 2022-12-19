@@ -1,0 +1,70 @@
+name: Run Selenium tests
+
+env:
+  AZURE_WEBAPP_NAME: CarefulBItes
+  AZURE_WEBAPP_PACKAGE_PATH: './CarefulBites_Front-end'
+  DOTNET_VERSION: '7.0.100'
+
+on:
+  push:
+    branches:
+      - '*'
+      - '!main'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true  
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment:
+      name: 'Testing'
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Send request to API to ensure DB is awake
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'https://carefulbitesapi20221128134821.azurewebsites.net/CarefulBites/foodItems'
+        method: 'GET'
+        customHeaders: '{"Content-Type": "application/json"}'
+        preventFailureOnNoResponse: 'true'
+    
+    - name: Set up .NET Core
+      uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    
+    - name: Set up dependency caching for faster builds
+      uses: actions/cache@v3
+      with:
+        path: ~/.nuget/packages
+        key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-nuget-
+          
+    - name: setup-chromedriver
+      uses: nanasess/setup-chromedriver@v1.1.0
+        
+    - name:  Install Google Chrome 
+      run: |
+        chmod +x ./scripts/InstallChrome.sh
+        ./scripts/InstallChrome.sh
+        
+    - uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+        
+    - name: Test
+      run: |
+        export DISPLAY=:99
+        chromedriver --url-base=/wd/hub &
+        sudo Xvfb -ac :99 -screen 0 1920x1080x24 > /dev/null 2>&1 & # optional
+        python -m http.server --directory /home/runner/work/CarefulBitesFrontendAndSelenium/CarefulBitesFrontendAndSelenium/CarefulBites_Front-end --bind 127.0.0.1 9000 &
+        dotnet test './CarefulBitesSelenium/' --configuration Release
