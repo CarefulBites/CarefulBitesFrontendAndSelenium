@@ -380,7 +380,7 @@ $(() => {
       });
     if (users.responseJSON != undefined) {
       users = [ users.responseJSON ];
-      LoginUser(users.responseJSON);
+      LoginUser(users);
       location.href = "./main_page.html";
     }
 
