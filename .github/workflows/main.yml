@@ -21,6 +21,14 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     
+    - name: Send request to API to ensure DB is awake
+      uses: fjogeleit/http-request-action@v1
+      with:
+        url: 'https://carefulbitesapi20221128134821.azurewebsites.net/CarefulBites/foodItems'
+        method: 'GET'
+        customHeaders: '{"Content-Type": "application/json"}'
+        retry_on: error
+    
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v2
       with:
