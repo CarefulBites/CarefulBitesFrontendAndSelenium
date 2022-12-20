@@ -54,7 +54,6 @@ const ItemStore = new DevExpress.data.CustomStore({
     update: function (key, values) {
         jsonpatchstr = "["
         Object.keys(values).forEach(key => {
-            console.log(key, values[key]);
             if (typeof (values[key]) == 'number' || typeof (values[key]) == 'object') {
                 jsonpatchstr += `{ \"op\": \"replace\", \"path\": \"/${key}\", \"value\": ${values[key]} },`
             }
@@ -286,14 +285,18 @@ $(() => {
             if (e.rowType === 'data') {
                 if (!e.isEditing) {
                     const expirationDate = new Date(Date.parse(e.data.expirationDate));
-                const currentDate = new Date();
-                currentDate.setHours(0, 0, 0, 0);
-
-                // Get the cell element for the expirationDate column
-                const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
-                if (expirationDate < currentDate) {
-                    $(expirationDateCell.cellElement[0]).css('color', 'red');
-                }
+                    const currentDate = new Date();
+                    currentDate.setHours(0, 0, 0, 0);
+                    const differenceInDays = (expirationDate - currentDate) / (1000 * 60 * 60 * 24);
+                    
+                    // Get the cell element for the expirationDate column
+                    const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
+                    if (differenceInDays < 0) {
+                        $(expirationDateCell.cellElement[0]).css('color', 'red');
+                    }
+                    else if (differenceInDays <= 3 && differenceInDays >= 0) {
+                        $(expirationDateCell.cellElement[0]).css('color', 'orange');
+                    }
                 }
             }
         },
