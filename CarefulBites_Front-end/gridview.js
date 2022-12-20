@@ -286,14 +286,14 @@ $(() => {
             if (e.rowType === 'data') {
                 if (!e.isEditing) {
                     const expirationDate = new Date(Date.parse(e.data.expirationDate));
-                const currentDate = new Date();
-                currentDate.setHours(0, 0, 0, 0);
+                    const currentDate = new Date();
+                    currentDate.setHours(0, 0, 0, 0);
 
-                // Get the cell element for the expirationDate column
-                const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
-                if (expirationDate < currentDate) {
-                    $(expirationDateCell.cellElement[0]).css('color', 'red');
-                }
+                    // Get the cell element for the expirationDate column
+                    const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
+                    if (expirationDate < currentDate) {
+                        $(expirationDateCell.cellElement[0]).css('color', 'red');
+                    }
                 }
             }
         },
@@ -360,15 +360,17 @@ $(() => {
     })
 
     $("#theme-button").dxButton({
-        text: "change theme",
-        styling: 'contained',
+        text: "light theme",
         onClick: () => {
             if (DevExpress.ui.themes.current() == "material.blue.dark") {
                 DevExpress.ui.themes.current("material.blue.light");
+                $("#theme-button").dxButton("instance").option("text", "dark theme")
             } else {
                 DevExpress.ui.themes.current("material.blue.dark");
+                $("#theme-button").dxButton("instance").option("text", "light theme")
             }
-        }
+        },        
+        styling: 'contained'        
     });
 
     itemStoragePopUp = $('#POPUP-ITEMSTORAGE').dxPopup({
@@ -377,7 +379,7 @@ $(() => {
         height: 500,
         container: '.dx-viewport',
         showTitle: true,
-        title: 'Log In',
+        title: 'Storage Management',
         visible: false,
         dragEnabled: false,
         hideOnOutsideClick: true,
@@ -385,8 +387,7 @@ $(() => {
     }).dxPopup('instance');
     $("#POPUP-ITEMSTORAGE-BUTTON").dxButton({
         styling: 'contained',
-        icon: 'user',
-        text: 'ItemStorage Management',
+        text: 'storage management',
         onClick: () => {
             console.log(itemStoragePopUp)
             itemStoragePopUp.show();
