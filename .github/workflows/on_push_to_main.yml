@@ -29,6 +29,7 @@ jobs:
         method: 'GET'
         customHeaders: '{"Content-Type": "application/json"}'
         preventFailureOnNoResponse: 'true'
+        timeout: 15000
     
     - name: Set up .NET Core
       uses: actions/setup-dotnet@v2
