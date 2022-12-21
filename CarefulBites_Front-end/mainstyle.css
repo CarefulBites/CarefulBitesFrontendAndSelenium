@@ -127,6 +127,14 @@ nav {
   padding-top: 30px;
 }
 
+.reduce-left-gap {
+  padding-left: 2px !important;
+}
+
+.reduce-right-gap {
+  padding-right: 2px !important;
+}
+
 @media (max-width: 550px) {
   ul li {
     width: 250px !important;

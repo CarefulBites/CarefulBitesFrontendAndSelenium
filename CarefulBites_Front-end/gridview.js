@@ -314,26 +314,37 @@ $(() => {
             {
                 dataField: 'amount',
                 dataType: 'number',
-                width: 125            
+                allowSorting: false,
+                allowFiltering: false,
+                cellTemplate: function(container, options) {
+                    container.addClass('reduce-right-gap').text(options.text);
+                }
             },
             {
                 dataField: 'unit',
                 calculateCellValue: function (rowData) {
                     return rowData.unit;
                 },
-                calculateDisplayValue: function(rowData) {
+                calculateDisplayValue: function (rowData) {
                     if (rowData.unit == 0) {
-                      return 'kg'
+                        return 'kg'
                     } else if (rowData.unit == 1) {
-                      return 'L'
+                        return 'L'
                     } else if (rowData.unit == 2) {
-                      return 'pcs.'
+                        return 'pcs.'
                     } else {
-                      return 'Error: Unit not recognised.'
+                        return 'Error: Unit not recognised.'
                     }
                 },
-                width: 75,
+                width: 100,
                 alignment: 'left',
+                caption: '',
+                allowSearch: false,
+                allowSorting: false,
+                allowFiltering: false,
+                cellTemplate: function(container, options) {
+                    container.addClass('reduce-left-gap').text(options.text);
+                },
                 editorType: 'dxSelectBox',
                 editorOptions: {
                     displayExpr: 'text',
