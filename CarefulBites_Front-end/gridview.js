@@ -254,6 +254,9 @@ $(() => {
         showColumnLines: false,
         showRowLines: true,
         showBorders: true,
+        scrolling: {
+            mode: 'virtual',
+        },
         filterRow: {
             visible: true,
             applyFilter: 'auto',
@@ -272,13 +275,6 @@ $(() => {
             allowAdding: true,
             allowDeleting: true,
         },
-        pager: {
-            showPageSizeSelector: true,
-            allowedPageSizes: "auto",
-            visible: true
-            //[10, 25, 50, 100],
-
-        },
         onEditingStart: function (e) {
             row = e.data
         },
@@ -286,16 +282,33 @@ $(() => {
             if (e.rowType === 'data') {
                 if (!e.isEditing) {
                     const expirationDate = new Date(Date.parse(e.data.expirationDate));
-                const currentDate = new Date();
-                currentDate.setHours(0, 0, 0, 0);
+                    const currentDate = new Date();
+                    currentDate.setHours(0, 0, 0, 0);
 
-                // Get the cell element for the expirationDate column
-                const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
-                if (expirationDate < currentDate) {
-                    $(expirationDateCell.cellElement[0]).css('color', 'red');
-                }
+                    // Get the cell element for the expirationDate column
+                    const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
+                    if (expirationDate < currentDate) {
+                        $(expirationDateCell.cellElement[0]).css('color', 'red');
+                    }
                 }
             }
+        },
+        toolbar: {
+            items: [{
+                widget: "dxButton",
+                location: 'before',
+                options: {
+                    stylingMode: 'contained',
+                    text: 'ItemStorage Management',
+                    type: 'normal',
+                    onClick: () => {
+                        itemStoragePopUp.show();
+                    }
+                }
+            },
+                'addRowButton',
+                'searchPanel',
+            ]
         },
         columns: [
             {
@@ -377,21 +390,21 @@ $(() => {
         height: 500,
         container: '.dx-viewport',
         showTitle: true,
-        title: 'Log In',
+        title: 'Item Storage Management',
         visible: false,
         dragEnabled: false,
         hideOnOutsideClick: true,
         showCloseButton: false,
     }).dxPopup('instance');
-    $("#POPUP-ITEMSTORAGE-BUTTON").dxButton({
-        styling: 'contained',
-        icon: 'user',
-        text: 'ItemStorage Management',
-        onClick: () => {
-            console.log(itemStoragePopUp)
-            itemStoragePopUp.show();
-        }
-    });
+    // $("#POPUP-ITEMSTORAGE-BUTTON").dxButton({
+    //     styling: 'contained',
+    //     icon: 'user',
+    //     text: 'ItemStorage Management',
+    //     onClick: () => {
+    //         console.log(itemStoragePopUp)
+    //         itemStoragePopUp.show();
+    //     }
+    // });
 });
 
 
