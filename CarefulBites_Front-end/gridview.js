@@ -278,14 +278,14 @@ $(() => {
             row = e.data
         },
         onRowPrepared(e) {
-            if (e.rowType === 'data') {
+            if (e.rowType === 'data' && e.cells.length > 0) {
                 if (!e.isEditing) {
                     const expirationDate = new Date(Date.parse(e.data.expirationDate));
                     const currentDate = new Date();
                     currentDate.setHours(0, 0, 0, 0);
-                    
+
                     const differenceInDays = (expirationDate - currentDate) / (1000 * 60 * 60 * 24);
-                    
+
                     // Get the cell element for the expirationDate column
                     const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
                     if (differenceInDays < 0) {
@@ -337,10 +337,48 @@ $(() => {
             },
             {
                 dataField: 'amount',
-                dataType: 'number'
+                dataType: 'number',
+                allowSorting: false,
+                allowFiltering: false,
+                cellTemplate: function(container, options) {
+                    container.addClass('reduce-right-gap').text(options.text);
+                }
             },
             {
                 dataField: 'unit',
+                calculateCellValue: function (rowData) {
+                    return rowData.unit;
+                },
+                calculateDisplayValue: function (rowData) {
+                    if (rowData.unit == 0) {
+                        return 'kg'
+                    } else if (rowData.unit == 1) {
+                        return 'L'
+                    } else if (rowData.unit == 2) {
+                        return 'pcs.'
+                    } else {
+                        return 'Error: Unit not recognised.'
+                    }
+                },
+                width: 100,
+                alignment: 'left',
+                caption: '',
+                allowSearch: false,
+                allowSorting: false,
+                allowFiltering: false,
+                cellTemplate: function(container, options) {
+                    container.addClass('reduce-left-gap').text(options.text);
+                },
+                editorType: 'dxSelectBox',
+                editorOptions: {
+                    displayExpr: 'text',
+                    valueExpr: 'value',
+                    items: [
+                        { value: 0, text: 'kg' },
+                        { value: 1, text: 'L' },
+                        { value: 2, text: 'pcs.' },
+                    ],
+                }
             },
             {
                 dataField: 'itemStorageId',
@@ -374,7 +412,6 @@ $(() => {
                         daysAfterOpenResult = Math.trunc((currentDate - openDate) / (1000 * 3600 * 24))
                         return daysAfterOpenResult == 1 ? daysAfterOpenResult + ' day' : daysAfterOpenResult + ' days'
                     }
-
                 }
             },
             {
@@ -397,8 +434,8 @@ $(() => {
                 DevExpress.ui.themes.current("material.blue.dark");
                 $("#theme-button").dxButton("instance").option("text", "light theme")
             }
-        },        
-        styling: 'contained'        
+        },
+        styling: 'contained'
     });
 
     itemStoragePopUp = $('#POPUP-ITEMSTORAGE').dxPopup({
