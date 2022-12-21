@@ -310,7 +310,18 @@ $(() => {
                     }
                 }
             },
-                'addRowButton',
+            {
+                widget: "dxButton",
+                options: {
+                    stylingMode: 'contained',
+                    text: 'Add Item',
+                    icon: 'plus',
+                    type: 'normal',
+                    onClick: () => {
+                        $('#itemGrid').dxDataGrid("instance").addRow();  
+                    }
+                }
+            },
                 'searchPanel',
             ]
         },
