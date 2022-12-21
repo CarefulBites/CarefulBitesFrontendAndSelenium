@@ -253,6 +253,9 @@ $(() => {
         showColumnLines: false,
         showRowLines: true,
         showBorders: true,
+        scrolling: {
+            mode: 'virtual',
+        },
         filterRow: {
             visible: true,
             applyFilter: 'auto',
@@ -270,13 +273,6 @@ $(() => {
             allowUpdating: true,
             allowAdding: true,
             allowDeleting: true,
-        },
-        pager: {
-            showPageSizeSelector: true,
-            allowedPageSizes: "auto",
-            visible: true
-            //[10, 25, 50, 100],
-
         },
         onEditingStart: function (e) {
             row = e.data
@@ -300,6 +296,23 @@ $(() => {
                     }
                 }
             }
+        },
+        toolbar: {
+            items: [{
+                widget: "dxButton",
+                location: 'before',
+                options: {
+                    stylingMode: 'contained',
+                    text: 'ItemStorage Management',
+                    type: 'normal',
+                    onClick: () => {
+                        itemStoragePopUp.show();
+                    }
+                }
+            },
+                'addRowButton',
+                'searchPanel',
+            ]
         },
         columns: [
             {
@@ -389,14 +402,6 @@ $(() => {
         hideOnOutsideClick: true,
         showCloseButton: false,
     }).dxPopup('instance');
-    $("#POPUP-ITEMSTORAGE-BUTTON").dxButton({
-        styling: 'contained',
-        text: 'storage management',
-        onClick: () => {
-            console.log(itemStoragePopUp)
-            itemStoragePopUp.show();
-        }
-    });
 });
 
 
