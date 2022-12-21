@@ -135,6 +135,18 @@ nav {
   padding-right: 2px !important;
 }
 
+.red-text {
+  color: rgb(243, 70, 70) !important;
+}
+
+.orange-text {
+  color: rgb(255, 185, 55) !important;
+}
+
+.green-text {
+  color: rgb(70, 215, 70) !important;
+}
+
 @media (max-width: 550px) {
   ul li {
     width: 250px !important;
