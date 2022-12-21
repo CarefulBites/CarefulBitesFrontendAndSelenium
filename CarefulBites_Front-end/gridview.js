@@ -247,7 +247,6 @@ $(() => {
 
     $('#itemGrid').dxDataGrid({
         dataSource: ItemStore,
-        keyExpr: 'itemId',
         columnHidingEnabled: true,
         rowAlternationEnabled: false,
         showColumnLines: false,
@@ -318,7 +317,7 @@ $(() => {
                     icon: 'plus',
                     type: 'normal',
                     onClick: () => {
-                        $('#itemGrid').dxDataGrid("instance").addRow();  
+                        $('#itemGrid').dxDataGrid("instance").addRow();
                     }
                 }
             },
@@ -340,7 +339,7 @@ $(() => {
                 dataType: 'number',
                 allowSorting: false,
                 allowFiltering: false,
-                cellTemplate: function(container, options) {
+                cellTemplate: function (container, options) {
                     container.addClass('reduce-right-gap').text(options.text);
                 }
             },
@@ -366,7 +365,7 @@ $(() => {
                 allowSearch: false,
                 allowSorting: false,
                 allowFiltering: false,
-                cellTemplate: function(container, options) {
+                cellTemplate: function (container, options) {
                     container.addClass('reduce-left-gap').text(options.text);
                 },
                 editorType: 'dxSelectBox',
@@ -392,27 +391,51 @@ $(() => {
             {
                 dataField: 'caloriesPer',
                 dataType: 'number',
-                visible: false,
-            },
-            {
-                dataField: 'expirationDate',
-                dataType: 'date',
+                visible: false
             },
             {
                 dataField: 'openDate',
                 dataType: 'date',
             },
             {
+                dataField: 'expirationDate',
+                dataType: 'date',
+            },
+            {
                 dataField: 'daysAfterOpen',
                 dataType: 'number',
+                caption: '# of Days Fresh after Opening'
+            },
+            {
+                caption: 'Fresh Days Left',
+                dataType: 'number',
                 calculateCellValue: function (rowData) {
-                    if (rowData.openDate) {
+                    freshDaysLeft = 0;
+                    expDateByOpened = new Date(Date.parse(rowData.openDate));
+                    expDateByOpened.setDate(expDateByOpened.getDate() + rowData.daysAfterOpen);
+                    if (expDateByOpened < Date.parse(rowData.expirationDate) && rowData.daysAfterOpen) {
                         currentDate = new Date()
                         openDate = new Date(Date.parse(rowData.openDate))
-                        daysAfterOpenResult = Math.trunc((currentDate - openDate) / (1000 * 3600 * 24))
-                        return daysAfterOpenResult == 1 ? daysAfterOpenResult + ' day' : daysAfterOpenResult + ' days'
+                        daysFresh = Math.trunc((currentDate - openDate) / (1000 * 3600 * 24))
+                        freshDaysLeft = rowData.daysAfterOpen - daysFresh
+                    } else {
+                        currentDate = new Date()
+                        expDate = new Date(Date.parse(rowData.expirationDate))
+                        freshDaysLeft = Math.trunc((expDate - currentDate) / (1000 * 3600 * 24))
                     }
-                }
+
+                    return freshDaysLeft;
+                },
+                cellTemplate: function (container, options) {
+                    if (options.value < 0) {
+                        container.addClass('red-text').text(options.text);
+                    } else if (options.value < 3) {
+                        container.addClass('orange-text').text(options.text);
+                    } else if (!Number.isNaN(options.value)) {
+                        container.addClass('green-text').text(options.text);
+                    } else {
+                    }
+                },
             },
             {
                 caption: 'Storage',
