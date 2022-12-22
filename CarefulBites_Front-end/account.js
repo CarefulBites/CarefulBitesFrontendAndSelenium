@@ -48,24 +48,24 @@ $(() => {
   };
 
   const loadPanel = // First, initialize the dxLoadPanel widget on an element in your page
-  $("#LOAD-PANEL").dxLoadPanel({
-    // The text to display in the loading indicator
-    message: "Please wait...",
-    // Set the widget's shading color
-    shadingColor: "rgba(0,0,0,0.4)",
-    // Set the widget's background color
-    backgroundColor: "#fff",
-    // Set the widget's text color
-    fontColor: "#000",
-    // Set the widget's position relative to the element
-    position: {
-      my: "center",
-      at: "center",
-      of: "body"
-    },
-    visible: false,
-    deferRendering: true,
-  }).dxLoadPanel('instance');
+    $("#LOAD-PANEL").dxLoadPanel({
+      // The text to display in the loading indicator
+      message: "Please wait...",
+      // Set the widget's shading color
+      shadingColor: "rgba(0,0,0,0.4)",
+      // Set the widget's background color
+      backgroundColor: "#fff",
+      // Set the widget's text color
+      fontColor: "#000",
+      // Set the widget's position relative to the element
+      position: {
+        my: "center",
+        at: "center",
+        of: "body"
+      },
+      visible: false,
+      deferRendering: true,
+    }).dxLoadPanel('instance');
 
   $(window).ajaxStart(function () {
     // Show the load panel
@@ -100,12 +100,14 @@ $(() => {
           readOnly: false,
           showColonAfterLabel: true,
           labelLocation: "left",
-          minColWidth: 300,
-          colCount: 1,
+          screenByWidth: function (width) {
+              return 2;
+          },
           items: [
             {
               dataField: "username",
               caption: "Username",
+              colSpan: 2,
               validationRules: [
                 {
                   type: "required",
@@ -116,9 +118,10 @@ $(() => {
             {
               dataField: "password",
               caption: "Password",
+              colSpan: 2,
               editorOptions: {
                 mode: "password",
-                onEnterKey: function(e) {
+                onEnterKey: function (e) {
                   console.log(e)
                   $('#POPUP-LOGIN-BUTTON').click();
                 },
@@ -136,6 +139,7 @@ $(() => {
               items: [
                 {
                   itemType: "button",
+                  colSpan: 1,
                   horizontalAlignment: "left",
                   buttonOptions: {
                     elementAttr: {
@@ -143,7 +147,7 @@ $(() => {
                     },
                     text: "Log In",
                     type: "default",
-                    useSubmitBehavior: false,                    
+                    useSubmitBehavior: false,
                     onClick() {
                       $.ajax({
                         url:
@@ -154,7 +158,7 @@ $(() => {
                         method: "GET",
                         async: true,
                         contentType: "application/json; charset=utf-8",
-                        success: function (responseData){
+                        success: function (responseData) {
                           if (responseData == undefined) {
                             DevExpress.ui.notify(
                               {
@@ -185,25 +189,29 @@ $(() => {
                           }
                         }
                       });
-                    }                                       
+                    }
                   },
                 },
                 {
                   itemType: "button",
+                  colSpan: 1,
                   horizontalAlignment: "right",
                   buttonOptions: {
+                    elementAttr: {
+                      id: 'POPUP-CREATEACCOUNT-BUTTON'
+                    },
                     text: "Create Account",
                     type: "default",
                     useSubmitBehavior: false,
                     onClick() {
                       location.href = "./create_account.html";
-                    },
+                    }
                   },
                 },
               ],
             },
           ],
-        }),        
+        }),
     );
   };
 
@@ -260,8 +268,6 @@ $(() => {
     form_popup = $("#popup-login")
       .dxPopup({
         contentTemplate: popupContentTemplate,
-        width: 425,
-        height: 300,
         container: ".dx-viewport",
         showTitle: true,
         title: "Log In",
@@ -269,6 +275,8 @@ $(() => {
         dragEnabled: false,
         hideOnOutsideClick: true,
         showCloseButton: false,
+        maxWidth: 500,
+        maxHeight: 300
       })
       .dxPopup("instance");
 
@@ -385,7 +393,7 @@ $(() => {
         deferred.reject("Create Account failed");
       });
     if (users.responseJSON != undefined) {
-      users = [ users.responseJSON ];
+      users = [users.responseJSON];
       LoginUser(users);
       location.href = "./main_page.html";
     }

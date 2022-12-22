@@ -164,11 +164,14 @@ nav {
   align-items: center;
 }
 
+#POPUP-LOGIN-BUTTON, #POPUP-CREATEACCOUNT-BUTTON {
+  margin-top: 10px;
+}
+
 @media (max-width: 850px) {
   ul li {
     width: 250px !important;
   }
-
   ul {
     padding-left: 0px !important;
   }
@@ -183,5 +186,11 @@ nav {
     display: block;
     margin-bottom: 1vh;
     margin-left: 0 !important;
+  }
+}
+
+@media (max-width: 540px) {
+  #POPUP-LOGIN-BUTTON, #POPUP-CREATEACCOUNT-BUTTON {
+    font-size: 8px;
   }
 }
