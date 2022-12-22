@@ -398,12 +398,16 @@ $(() => {
 let Cards = [];
 
 function GetMealByName(ingredient) {
+  ingredients = ingredient[0];
+  for (let i = 1; i < ingredient.length; i++) {
+    ingredients += "&ingredient=" + ingredient[i];
+  }
   $.ajax({
     type: "GET",
     dataType: "json",
     url:
       "https://carefulbitesapi20221128134821.azurewebsites.net/Meal?ingredient=" +
-      ingredient,
+      ingredients,
     async: true,
     success: function (data) {
       Cards = data;
