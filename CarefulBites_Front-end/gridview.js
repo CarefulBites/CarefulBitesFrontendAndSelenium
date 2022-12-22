@@ -261,8 +261,7 @@ $(() => {
         },
         searchPanel: {
             visible: true,
-            width: 240,
-            placeholder: 'Search...',
+            width: 240
         },
         headerFilter: {
             visible: true,
@@ -302,7 +301,7 @@ $(() => {
                 location: 'before',
                 options: {
                     stylingMode: 'contained',
-                    text: 'ItemStorage Management',
+                    text: 'Storage Management',
                     type: 'normal',
                     onClick: () => {
                         itemStoragePopUp.show();
@@ -322,7 +321,7 @@ $(() => {
                 }
             },
                 'searchPanel',
-            ]
+            ]            
         },
         columns: [
             {
@@ -474,7 +473,6 @@ $(() => {
         showCloseButton: false,
     }).dxPopup('instance');
 });
-
 
 function GetCards() {
     const popupContentTemplate = function () {
