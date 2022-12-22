@@ -29,27 +29,22 @@
         <p style="font-size: 4vw; padding-bottom: 0; margin-bottom: 0">CarefulBites</p>
         <p style="font-size: 1.75vw; padding-top: 0">Care for Your Food</p>
     </div>
-    <div class="row justify-content-center text-white text-center">
-        <input id="login" type="button" class="menu" style="font-size: 2vh; width: 60vw; height: 10vh; margin-top: 1vh; margin-bottom: 1vh"
+    <div class="row container-fluid justify-content-center" style="padding-right: 0">
+        <input id="login" type="button" class="menu"
+            style="font-size: 1.8vh; width: 60vw; height: 11vh; margin-top: 1vh; margin-bottom: 1vh"
             value="Login or sign up" onclick="ShowPopUp()">
     </div>
     <div id="popup-login"></div>
-    <div class="col-lg-12 pt-1">
-        <div class="demo-container">
-            <div id="container">
-                <div class="randomMeals">
-                    <p class="text-center pb-2" style="font-size: 3vh">Recipe Suggestions</p>
-                    <ul id="randomCards"></ul>
-                    <div id="randomPopup"></div>
-                </div>
-            </div>
-        </div>
+    <div id="container" class="randomMeals">
+        <p class="text-center" style="font-size: 3vh; padding-top: 2vh;">Recipe Suggestions</p>
+        <ul class="justify-content-center" id="randomCards"></ul>
+        <div id="randomPopup"></div>
     </div>
     <footer class="border-top mt-2">
         <div class="row container-fluid mt-4">
             <div id="footer-contact" class="pb-3">
                 <p id="contact" class="text-uppercase fw-bold mb-2">Contact:</p>
-                <div>
+                <div class="contacts">
                     <a id="mail" style="color: white" href="mailto:mads80i4@edu.zealand.dk">mads80i4@edu.zealand.dk</a>
                     <a id="mail" style="margin-left: 2vw; color: white"
                         href="mailto:mads81i7@edu.zealand.dk">mads81i7@edu.zealand.dk</a>
@@ -59,7 +54,6 @@
                         href="mailto:jona97g8@edu.zealand.dk">jona97g8@edu.zealand.dk</a>
                 </div>
             </div>
-
         </div>
     </footer>
 </body>

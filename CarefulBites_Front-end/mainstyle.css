@@ -148,18 +148,40 @@ nav {
 }
 
 .recipe-button {
-  font-size: 1.5vh;
-  width: 9vw;
+  font-size: 1.2em;
+  width: 10vw;
+  min-width: 120px;
   height: 5vh;
+  min-height: 40px;
   margin-bottom: 2vh;
 }
 
-@media (max-width: 700px) {
+#randomCards {
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 26vw;
+  align-items: center;
+}
+
+@media (max-width: 850px) {
   ul li {
     width: 250px !important;
   }
 
   ul {
     padding-left: 0px !important;
+  }
+
+  #randomCards {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 850px) {
+  .contacts a {
+    display: block;
+    margin-bottom: 1vh;
+    margin-left: 0 !important;
   }
 }
