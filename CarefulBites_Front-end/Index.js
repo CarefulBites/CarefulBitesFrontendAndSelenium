@@ -98,13 +98,13 @@ function GetRandomCards() {
 
     $('<li>')
       .css({
-        'width': '28vw',
+        'width': '30vw',
         'border': '3px solid white',
         'border-radius': '20px'
       })
       .append(
-        $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`).attr('style', 'width: 20vw; margin-top: 3vh; border-radius: 10px'),
-        $('<p>').html(`${currentCard.strMeal}`).attr('style', 'padding-top: 2vh; padding-bottom: 0vh; font-size: 1.5vw'),
+        $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`).attr('style', 'width: 20vw; min-width: 180px; margin-top: 3vh; border-radius: 10px'),
+        $('<p>').html(`${currentCard.strMeal}`).attr('style', 'padding-top: 2vh; padding-bottom: 0vh; font-size: 1.2em'),
         $('<div>')
           .addClass('button-info mt-0 recipe-button')
           .dxButton({
