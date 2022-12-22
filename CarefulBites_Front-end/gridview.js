@@ -252,6 +252,7 @@ $(() => {
         showColumnLines: false,
         showRowLines: true,
         showBorders: true,
+        noDataText: ItemStorageDict.length === 0 ? "To get started, try creating a storage in STORAGE MANAGEMENT":"Great! Now click the ADD ITEM button above the grid",
         scrolling: {
             mode: 'virtual',
         },
@@ -331,13 +332,15 @@ $(() => {
             },
             {
                 dataField: 'name',
-                dataType: 'string'
+                dataType: 'string',
+                placeholder: 'Name of item e.g Milk'
             },
             {
                 dataField: 'amount',
                 dataType: 'number',
                 allowSorting: false,
                 allowFiltering: false,
+                placeholder: 'The amount left of the item',
                 cellTemplate: function (container, options) {
                     container.addClass('reduce-right-gap').text(options.text);
                 }
@@ -381,6 +384,7 @@ $(() => {
             {
                 dataField: 'itemStorageId',
                 caption: 'Storage',
+                placeholder: 'The placement of the item',
                 lookup: {
                     dataSource: Object.values(ItemStorageDict),
                     displayExpr: 'name',
@@ -395,19 +399,23 @@ $(() => {
             {
                 dataField: 'openDate',
                 dataType: 'date',
+                placeholder: 'Date of opening'
             },
             {
                 dataField: 'expirationDate',
                 dataType: 'date',
+                placeholder: 'The marked expiration date'
             },
             {
                 dataField: 'daysAfterOpen',
                 dataType: 'number',
-                caption: '# of Days Fresh after Opening'
+                caption: '# of Days Fresh after Opening',
+                placeholder: 'Days fresh when opened'
             },
             {
                 caption: 'Fresh Days Left',
                 dataType: 'number',
+                placeholder: 'Number of days left Whether opened or not',
                 calculateCellValue: function (rowData) {
                     freshDaysLeft = 0;
                     expDateByOpened = new Date(Date.parse(rowData.openDate));
@@ -440,7 +448,9 @@ $(() => {
                 caption: 'Storage',
                 groupIndex: 0,
                 calculateCellValue: function (rowData) {
-                    return ItemStorageDict[rowData.itemStorageId].name
+                    if (rowData.itemStorageId !== undefined) {
+                        return ItemStorageDict[rowData.itemStorageId].name
+                    }
                 }
             }
         ],
