@@ -507,8 +507,8 @@ function GetCards() {
     };
     const popup = $('#popup').dxPopup({
         contentTemplate: popupContentTemplate,
-        width: 600,
-        height: 500,
+        width: "80vw",
+        height: "60vh",
         container: '.dx-viewport',
         showTitle: true,
         title: 'Recipe',
