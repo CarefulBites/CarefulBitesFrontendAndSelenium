@@ -247,20 +247,21 @@ $(() => {
 
     $('#itemGrid').dxDataGrid({
         dataSource: ItemStore,
-        keyExpr: 'itemId',
         columnHidingEnabled: true,
         rowAlternationEnabled: false,
         showColumnLines: false,
         showRowLines: true,
         showBorders: true,
+        scrolling: {
+            mode: 'virtual',
+        },
         filterRow: {
             visible: true,
             applyFilter: 'auto',
         },
         searchPanel: {
             visible: true,
-            width: 240,
-            placeholder: 'Search...',
+            width: 240
         },
         headerFilter: {
             visible: true,
@@ -271,25 +272,18 @@ $(() => {
             allowAdding: true,
             allowDeleting: true,
         },
-        pager: {
-            showPageSizeSelector: true,
-            allowedPageSizes: "auto",
-            visible: true
-            //[10, 25, 50, 100],
-
-        },
         onEditingStart: function (e) {
             row = e.data
         },
         onRowPrepared(e) {
-            if (e.rowType === 'data') {
+            if (e.rowType === 'data' && e.cells.length > 0) {
                 if (!e.isEditing) {
                     const expirationDate = new Date(Date.parse(e.data.expirationDate));
                     const currentDate = new Date();
                     currentDate.setHours(0, 0, 0, 0);
-                    
+
                     const differenceInDays = (expirationDate - currentDate) / (1000 * 60 * 60 * 24);
-                    
+
                     // Get the cell element for the expirationDate column
                     const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
                     if (differenceInDays < 0) {
@@ -300,6 +294,34 @@ $(() => {
                     }
                 }
             }
+        },
+        toolbar: {
+            items: [{
+                widget: "dxButton",
+                location: 'before',
+                options: {
+                    stylingMode: 'contained',
+                    text: 'Storage Management',
+                    type: 'normal',
+                    onClick: () => {
+                        itemStoragePopUp.show();
+                    }
+                }
+            },
+            {
+                widget: "dxButton",
+                options: {
+                    stylingMode: 'contained',
+                    text: 'Add Item',
+                    icon: 'plus',
+                    type: 'normal',
+                    onClick: () => {
+                        $('#itemGrid').dxDataGrid("instance").addRow();
+                    }
+                }
+            },
+                'searchPanel',
+            ]            
         },
         columns: [
             {
@@ -313,10 +335,48 @@ $(() => {
             },
             {
                 dataField: 'amount',
-                dataType: 'number'
+                dataType: 'number',
+                allowSorting: false,
+                allowFiltering: false,
+                cellTemplate: function (container, options) {
+                    container.addClass('reduce-right-gap').text(options.text);
+                }
             },
             {
                 dataField: 'unit',
+                calculateCellValue: function (rowData) {
+                    return rowData.unit;
+                },
+                calculateDisplayValue: function (rowData) {
+                    if (rowData.unit == 0) {
+                        return 'kg'
+                    } else if (rowData.unit == 1) {
+                        return 'L'
+                    } else if (rowData.unit == 2) {
+                        return 'pcs.'
+                    } else {
+                        return 'Error: Unit not recognised.'
+                    }
+                },
+                width: 100,
+                alignment: 'left',
+                caption: '',
+                allowSearch: false,
+                allowSorting: false,
+                allowFiltering: false,
+                cellTemplate: function (container, options) {
+                    container.addClass('reduce-left-gap').text(options.text);
+                },
+                editorType: 'dxSelectBox',
+                editorOptions: {
+                    displayExpr: 'text',
+                    valueExpr: 'value',
+                    items: [
+                        { value: 0, text: 'kg' },
+                        { value: 1, text: 'L' },
+                        { value: 2, text: 'pcs.' },
+                    ],
+                }
             },
             {
                 dataField: 'itemStorageId',
@@ -330,28 +390,51 @@ $(() => {
             {
                 dataField: 'caloriesPer',
                 dataType: 'number',
-                visible: false,
-            },
-            {
-                dataField: 'expirationDate',
-                dataType: 'date',
+                visible: false
             },
             {
                 dataField: 'openDate',
                 dataType: 'date',
             },
             {
+                dataField: 'expirationDate',
+                dataType: 'date',
+            },
+            {
                 dataField: 'daysAfterOpen',
                 dataType: 'number',
+                caption: '# of Days Fresh after Opening'
+            },
+            {
+                caption: 'Fresh Days Left',
+                dataType: 'number',
                 calculateCellValue: function (rowData) {
-                    if (rowData.openDate) {
+                    freshDaysLeft = 0;
+                    expDateByOpened = new Date(Date.parse(rowData.openDate));
+                    expDateByOpened.setDate(expDateByOpened.getDate() + rowData.daysAfterOpen);
+                    if (expDateByOpened < Date.parse(rowData.expirationDate) && rowData.daysAfterOpen) {
                         currentDate = new Date()
                         openDate = new Date(Date.parse(rowData.openDate))
-                        daysAfterOpenResult = Math.trunc((currentDate - openDate) / (1000 * 3600 * 24))
-                        return daysAfterOpenResult == 1 ? daysAfterOpenResult + ' day' : daysAfterOpenResult + ' days'
+                        daysFresh = Math.trunc((currentDate - openDate) / (1000 * 3600 * 24))
+                        freshDaysLeft = rowData.daysAfterOpen - daysFresh
+                    } else {
+                        currentDate = new Date()
+                        expDate = new Date(Date.parse(rowData.expirationDate))
+                        freshDaysLeft = Math.trunc((expDate - currentDate) / (1000 * 3600 * 24))
                     }
 
-                }
+                    return freshDaysLeft;
+                },
+                cellTemplate: function (container, options) {
+                    if (options.value < 0) {
+                        container.addClass('red-text').text(options.text);
+                    } else if (options.value < 3) {
+                        container.addClass('orange-text').text(options.text);
+                    } else if (!Number.isNaN(options.value)) {
+                        container.addClass('green-text').text(options.text);
+                    } else {
+                    }
+                },
             },
             {
                 caption: 'Storage',
@@ -373,8 +456,8 @@ $(() => {
                 DevExpress.ui.themes.current("material.blue.dark");
                 $("#theme-button").dxButton("instance").option("text", "light theme")
             }
-        },        
-        styling: 'contained'        
+        },
+        styling: 'contained'
     });
 
     itemStoragePopUp = $('#POPUP-ITEMSTORAGE').dxPopup({
@@ -389,16 +472,7 @@ $(() => {
         hideOnOutsideClick: true,
         showCloseButton: false,
     }).dxPopup('instance');
-    $("#POPUP-ITEMSTORAGE-BUTTON").dxButton({
-        styling: 'contained',
-        text: 'storage management',
-        onClick: () => {
-            console.log(itemStoragePopUp)
-            itemStoragePopUp.show();
-        }
-    });
 });
-
 
 function GetCards() {
     const popupContentTemplate = function () {

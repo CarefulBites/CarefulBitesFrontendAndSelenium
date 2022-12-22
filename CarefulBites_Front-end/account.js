@@ -13,11 +13,11 @@ function IsLoggedIn() {
   } else return false;
 }
 
-
 function LogoutUser() {
   sessionStorage.removeItem(currentUser);
   sessionStorage.removeItem("LoggedIn");
 }
+
 function ShowPopUp() {
   form_popup.show();
 }

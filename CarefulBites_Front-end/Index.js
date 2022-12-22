@@ -1,7 +1,7 @@
 // Random Meals
 
 $(() => {
-GetRandomMeals(3);
+  GetRandomMeals(3);
 });
 
 let RandomCards = [];
@@ -47,25 +47,25 @@ function GetRandomMealById(id) {
 
 function GetRandomCards() {
   const popupContentTemplate = function () {
+    const scrollView = $('<div />');
+    scrollView.append(
+      $(`<p>Meal: <span>${RandomCardsById.strMeal}</span></p>`),
+      $(`<p>Origin: <span>${RandomCardsById.strArea}</span></p>`),
+      $(`<p>Tags: <span>${RandomCardsById.strTags}<span></p>`),
+      $(`<p>Category: <span>${RandomCardsById.strCategory}<span></p>`),
+      $(`<p>Video: <span>${RandomCardsById.strYoutube}<span></p>`),
+      $(`<p>Source: <span>${RandomCardsById.strSource}</span></p>`),
+      $(`<p>Ingredients: <span>${RandomCardsById.strIngredient1}<span><span>${" " + RandomCardsById.strMeasure1}<span><span>${" " + RandomCardsById.strIngredient2}<span><span>${" " + RandomCardsById.strMeasure2}<span><span>${" " + RandomCardsById.strIngredient3}<span><span>${" " + RandomCardsById.strMeasure3}<span><span>${" " + RandomCardsById.strIngredient4}<span><span>${" " + RandomCardsById.strMeasure4}<span><span>${" " + RandomCardsById.strIngredient5}<span><span>${" " + RandomCardsById.strMeasure5}<span><span>${" " + RandomCardsById.strIngredient6}<span><span>${" " + RandomCardsById.strMeasure6}<span><span>${" " + RandomCardsById.strIngredient7}<span><span>${" " + RandomCardsById.strMeasure7}<span><span>${" " + RandomCardsById.strIngredient8}<span><span>${" " + RandomCardsById.strMeasure8}<span><span>${" " + RandomCardsById.strIngredient9}<span><span>${" " + RandomCardsById.strMeasure9}<span><span>${" " + RandomCardsById.strIngredient10}<span><span>${" " + RandomCardsById.strMeasure10}<span><span>${" " + RandomCardsById.strIngredient11}<span><span>${" " + RandomCardsById.strMeasure11}<span><span>${" " + RandomCardsById.strIngredient12}<span><span>${" " + RandomCardsById.strMeasure12}<span><span>${" " + RandomCardsById.strIngredient13}<span><span>${" " + RandomCardsById.strMeasure13}<span><span>${" " + RandomCardsById.strIngredient14}<span><span>${" " + RandomCardsById.strMeasure14}<span><span>${" " + RandomCardsById.strIngredient15}<span><span>${" " + RandomCardsById.strMeasure15}<span><span>${" " + RandomCardsById.strIngredient16}<span><span>${" " + RandomCardsById.strMeasure16}<span><span>${" " + RandomCardsById.strIngredient17}<span><span>${" " + RandomCardsById.strMeasure17}<span><span>${" " + RandomCardsById.strIngredient18}<span><span>${" " + RandomCardsById.strMeasure18}<span><span>${" " + RandomCardsById.strIngredient19}<span><span>${" " + RandomCardsById.strMeasure19}<span><span>${" " + RandomCardsById.strIngredient20}<span><span>${" " + RandomCardsById.strMeasure20}<span>`),
+      $(`<p>Instructions: <span>${RandomCardsById.strInstructions}<span></p>`),
+    );
+    scrollView.dxScrollView({
+      width: '100%',
+      height: '100%',
+    });
 
-      const scrollView = $('<div />');
-      scrollView.append(
-          $(`<p>Meal: <span>${RandomCardsById.strMeal}</span></p>`),
-          $(`<p>Origin: <span>${RandomCardsById.strArea}</span></p>`),
-          $(`<p>Tags: <span>${RandomCardsById.strTags}<span></p>`),
-          $(`<p>Category: <span>${RandomCardsById.strCategory}<span></p>`),
-          $(`<p>Video: <span>${RandomCardsById.strYoutube}<span></p>`),
-          $(`<p>Source: <span>${RandomCardsById.strSource}</span></p>`),
-          // $(`<p>Ingredients: <span>${RandomCardsById.strIngredient1}<span><span>${" " + RandomCardsById.strMeasure1}<span><span>${" " + RandomCardsById.strIngredient2}<span><span>${" " + RandomCardsById.strMeasure2}<span><span>${" " + RandomCardsById.strIngredient3}<span><span>${" " + RandomCardsById.strMeasure3}<span><span>${" " + RandomCardsById.strIngredient4}<span><span>${" " + RandomCardsById.strMeasure4}<span><span>${" " + RandomCardsById.strIngredient5}<span><span>${" " + RandomCardsById.strMeasure5}<span><span>${" " + RandomCardsById.strIngredient6}<span><span>${" " + RandomCardsById.strMeasure6}<span><span>${" " + RandomCardsById.strIngredient7}<span><span>${" " + RandomCardsById.strMeasure7}<span><span>${" " + RandomCardsById.strIngredient8}<span><span>${" " + RandomCardsById.strMeasure8}<span><span>${" " + RandomCardsById.strIngredient9}<span><span>${" " + RandomCardsById.strMeasure9}<span><span>${" " + RandomCardsById.strIngredient10}<span><span>${" " + RandomCardsById.strMeasure10}<span><span>${" " + RandomCardsById.strIngredient11}<span><span>${" " + RandomCardsById.strMeasure11}<span><span>${" " + RandomCardsById.strIngredient12}<span><span>${" " + RandomCardsById.strMeasure12}<span><span>${" " + RandomCardsById.strIngredient13}<span><span>${" " + RandomCardsById.strMeasure13}<span><span>${" " + RandomCardsById.strIngredient14}<span><span>${" " + RandomCardsById.strMeasure14}<span><span>${" " + RandomCardsById.strIngredient15}<span><span>${" " + RandomCardsById.strMeasure15}<span><span>${" " + RandomCardsById.strIngredient16}<span><span>${" " + RandomCardsById.strMeasure16}<span><span>${" " + RandomCardsById.strIngredient17}<span><span>${" " + RandomCardsById.strMeasure17}<span><span>${" " + RandomCardsById.strIngredient18}<span><span>${" " + RandomCardsById.strMeasure18}<span><span>${" " + RandomCardsById.strIngredient19}<span><span>${" " + RandomCardsById.strMeasure19}<span><span>${" " + RandomCardsById.strIngredient20}<span><span>${" " + RandomCardsById.strMeasure20}<span>`),
-          $(`<p>Instructions: <span>${RandomCardsById.strInstructions}<span></p>`),
-      );
-      scrollView.dxScrollView({
-          width: '100%',
-          height: '100%',
-      });
-
-      return scrollView;
+    return scrollView;
   };
+
   const popup = $('#randomPopup').dxPopup({
     contentTemplate: popupContentTemplate,
     width: "80vw",
@@ -88,42 +88,48 @@ function GetRandomCards() {
           popup.hide();
         },
       },
-      }],
+    }],
   }).dxPopup('instance');
 
   RandomCards.forEach((currentCard) => {
+    if (currentCard.strMeal.length > 29) {
+      currentCard.strMeal = currentCard.strMeal.substring(0, 29) + "..."
+    }
+
     $('<li>')
-    .css("width","400")
-    .append(
-      $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`),
-      $('<br>'),
-      $('<span>').html(`<i>${currentCard.strMeal}</i>`),
-      $('<br>'),
-      $('<div>')
-        .addClass('button-info')
-        .dxButton({
-          text: 'Details',
-          onClick() {
-            GetRandomMealById(currentCard.idMeal)
-            popup.option({
-              contentTemplate: () => popupContentTemplate(),
-            });
-            popup.show();
-          },
-        }),
-    ).appendTo($('#randomCards'));
+      .css({
+        'width': '28vw',
+        'border': '3px solid white',
+        'border-radius': '20px'
+      })
+      .append(
+        $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`).attr('style', 'width: 20vw; margin-top: 3vh; border-radius: 10px'),
+        $('<p>').html(`${currentCard.strMeal}`).attr('style', 'padding-top: 2vh; padding-bottom: 0vh; font-size: 1.5vw'),
+        $('<div>')
+          .addClass('button-info mt-0 recipe-button')
+          .dxButton({
+            text: 'Details',
+            onClick() {
+              GetRandomMealById(currentCard.idMeal)
+              popup.option({
+                contentTemplate: () => popupContentTemplate(),
+              });
+              popup.show();
+            },
+          })
+      ).appendTo($('#randomCards'));
   });
 };
 
 $(function () {
   $("#amountSelection").dxTagBox({
-      items: Numbers,
-      onValueChanged: function (e) {
-          var element = document.getElementById("randomCards");
-          element.innerHTML = "";
-          amount = e.value[0];
-          GetRandomMeals(amount);
-      },
+    items: Numbers,
+    onValueChanged: function (e) {
+      var element = document.getElementById("randomCards");
+      element.innerHTML = "";
+      amount = e.value[0];
+      GetRandomMeals(amount);
+    },
   });
 });
 
