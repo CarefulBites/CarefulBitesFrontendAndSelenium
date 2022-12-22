@@ -262,8 +262,7 @@ $(() => {
         },
         searchPanel: {
             visible: true,
-            width: 240,
-            placeholder: 'Search...',
+            width: 240
         },
         headerFilter: {
             visible: true,
@@ -303,7 +302,7 @@ $(() => {
                 location: 'before',
                 options: {
                     stylingMode: 'contained',
-                    text: 'ItemStorage Management',
+                    text: 'Storage Management',
                     type: 'normal',
                     onClick: () => {
                         itemStoragePopUp.show();
@@ -323,7 +322,7 @@ $(() => {
                 }
             },
                 'searchPanel',
-            ]
+            ]            
         },
         columns: [
             {
@@ -485,7 +484,6 @@ $(() => {
     }).dxPopup('instance');
 });
 
-
 function GetCards() {
     const popupContentTemplate = function () {
 
@@ -566,7 +564,7 @@ $(function () {
         onValueChanged: function (e) {
             var element = document.getElementById("cards");
             element.innerHTML = "";
-            ingredientName = e.value[0];
+            ingredientName = e.value;
             GetMealByName(ingredientName);
         },
     });

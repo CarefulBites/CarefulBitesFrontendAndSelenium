@@ -124,7 +124,7 @@ nav {
 }
 
 .randomMeals {
-  padding-top: 30px;
+  padding-top: 2vh;
 }
 
 .reduce-left-gap {
@@ -147,7 +147,24 @@ nav {
   color: rgb(70, 215, 70) !important;
 }
 
-@media (max-width: 550px) {
+.recipe-button {
+  font-size: 1.2em;
+  width: 10vw;
+  min-width: 120px;
+  height: 5vh;
+  min-height: 40px;
+  margin-bottom: 2vh;
+}
+
+#randomCards {
+  border-radius: 20px;
+  display: flex;
+  flex-direction: row;
+  flex: 0 0 26vw;
+  align-items: center;
+}
+
+@media (max-width: 850px) {
   ul li {
     width: 250px !important;
   }
@@ -156,5 +173,15 @@ nav {
     padding-left: 0px !important;
   }
 
-  
+  #randomCards {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 850px) {
+  .contacts a {
+    display: block;
+    margin-bottom: 1vh;
+    margin-left: 0 !important;
+  }
 }
