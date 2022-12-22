@@ -24,25 +24,21 @@
 
 <body class="dx-viewport">
     <div id="LOAD-PANEL"></div>
-    <div class="container-fluid p-2 pt-3 text-white text-center">
+    <div class="container-fluid p-2 text-white text-center" style="padding-top: 3vh">
         <img src="foodlogo.png" class="img-fluid" alt="Cinque Terre" style="width: 20vw; padding-bottom: 1vw">
-        <p class="display-2" style="padding-bottom: 0; margin-bottom: 0">CarefulBites</p>
+        <p style="font-size: 4vw; padding-bottom: 0; margin-bottom: 0">CarefulBites</p>
         <p style="font-size: 1.75vw; padding-top: 0">Care for Your Food</p>
     </div>
-    <div class="container-fluid">
-        <div class="container-lg text-white text-center">
-            <div class="row justify-content-center ">
-                <input id="login" type="button" class="menu" value="Login or sign up" onclick="ShowPopUp()">
-            </div>
-        </div>
-        <div id="popup-login">
-        </div>
+    <div class="row justify-content-center text-white text-center">
+        <input id="login" type="button" class="menu" style="font-size: 2vh; width: 60vw; height: 10vh; margin-top: 1vh; margin-bottom: 1vh"
+            value="Login or sign up" onclick="ShowPopUp()">
     </div>
+    <div id="popup-login"></div>
     <div class="col-lg-12 pt-1">
         <div class="demo-container">
             <div id="container">
                 <div class="randomMeals">
-                    <p class="display-6 text-center pb-2">Recipe Suggestions</p>
+                    <p class="text-center pb-2" style="font-size: 3vh">Recipe Suggestions</p>
                     <ul id="randomCards"></ul>
                     <div id="randomPopup"></div>
                 </div>

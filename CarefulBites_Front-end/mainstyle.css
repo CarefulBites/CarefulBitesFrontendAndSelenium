@@ -147,7 +147,14 @@ nav {
   color: rgb(70, 215, 70) !important;
 }
 
-@media (max-width: 550px) {
+.recipe-button {
+  font-size: 1.5vh;
+  width: 9vw;
+  height: 5vh;
+  margin-bottom: 2vh;
+}
+
+@media (max-width: 700px) {
   ul li {
     width: 250px !important;
   }
@@ -155,6 +162,4 @@ nav {
   ul {
     padding-left: 0px !important;
   }
-
-  
 }
