@@ -130,7 +130,6 @@ const popupContentTemplateItemStorageForm = function () {
                                 type: 'required',
                                 message: 'Name is required'
                             }],
-
                         },
                         {
                             dataField: 'userId',
@@ -321,7 +320,7 @@ $(() => {
                 }
             },
                 'searchPanel',
-            ]            
+            ]
         },
         columns: [
             {
