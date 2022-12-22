@@ -480,7 +480,7 @@ $(function () {
         onValueChanged: function (e) {
             var element = document.getElementById("cards");
             element.innerHTML = "";
-            ingredientName = e.value[0];
+            ingredientName = e.value;
             GetMealByName(ingredientName);
         },
     });
