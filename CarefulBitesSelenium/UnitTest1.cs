@@ -159,7 +159,7 @@ public class UnitTest1 {
     {
         _driver?.SwitchTo().ActiveElement();
         var foodTab = _driver?.FindElement(By.XPath("//*[contains(@class,'dx-icon-food')]"));
-        foodTab.Click();
+        foodTab?.Click();
 
         var filter = _driver?.FindElement(By.Id("ingredientSelection")); 
         (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", filter);
