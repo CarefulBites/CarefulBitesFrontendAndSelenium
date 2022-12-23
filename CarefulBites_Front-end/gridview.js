@@ -251,7 +251,7 @@ $(() => {
         showColumnLines: false,
         showRowLines: true,
         showBorders: true,
-        noDataText: ItemStorageDict.length === 0 ? "To get started, try creating a storage in STORAGE MANAGEMENT":"Great! Now click the ADD ITEM button above the grid",
+        noDataText: ItemStorageDict.length === 0 ? "To get started, try creating a storage in STORAGE.":"Great! Now click the ADD button above the grid.",
         scrolling: {
             mode: 'virtual',
         },
@@ -260,8 +260,7 @@ $(() => {
             applyFilter: 'auto',
         },
         searchPanel: {
-            visible: true,
-            width: 240
+            visible: (screen.width > 580) ? true : false,
         },
         headerFilter: {
             visible: true,
@@ -298,11 +297,14 @@ $(() => {
         toolbar: {
             items: [{
                 widget: "dxButton",
-                location: 'before',
+                location: 'before',                
                 options: {
                     stylingMode: 'contained',
                     text: 'Storage Management',
-                    type: 'normal',
+                    elementAttr: {
+                        id: 'storage-mgmt-button',
+                    },
+                    type: 'storage',
                     onClick: () => {
                         itemStoragePopUp.show();
                     }
@@ -313,14 +315,25 @@ $(() => {
                 options: {
                     stylingMode: 'contained',
                     text: 'Add Item',
+                    elementAttr: {
+                        id: 'add-item-button',
+                    },
                     icon: 'plus',
-                    type: 'normal',
+                    type: 'add-item',
                     onClick: () => {
                         $('#itemGrid').dxDataGrid("instance").addRow();
                     }
                 }
             },
-                'searchPanel',
+            {
+                name: 'searchPanel',
+                cssClass: 'item-search-panel',
+                options: {
+                    elementAttr: {
+                        id: 'item-search-panel'
+                    },
+                }
+            }
             ]
         },
         columns: [

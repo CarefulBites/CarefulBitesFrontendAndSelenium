@@ -164,14 +164,38 @@ nav {
   align-items: center;
 }
 
-#POPUP-LOGIN-BUTTON, #POPUP-CREATEACCOUNT-BUTTON {
+#POPUP-LOGIN-BUTTON,
+#POPUP-CREATEACCOUNT-BUTTON {
   margin-top: 10px;
+}
+
+#storage-mgmt-button.dx-button-has-text .dx-button-content {
+  white-space: normal;
+}
+
+#add-item-button.dx-button-has-text .dx-button-content {
+  white-space: normal;
+}
+
+@media (max-width: 580px) {
+  .dx-button.dx-button-storage {
+    font-size: 2.5vw;
+    width: auto;
+    height: auto;
+  }
+
+  .dx-button.dx-button-add-item {
+    font-size: 2.5vw;
+    width: auto;
+    height: auto;
+  }
 }
 
 @media (max-width: 850px) {
   ul li {
     width: 250px !important;
   }
+
   ul {
     padding-left: 0px !important;
   }
@@ -190,7 +214,8 @@ nav {
 }
 
 @media (max-width: 540px) {
-  #POPUP-LOGIN-BUTTON, #POPUP-CREATEACCOUNT-BUTTON {
+  #POPUP-LOGIN-BUTTON,
+  #POPUP-CREATEACCOUNT-BUTTON {
     font-size: 8px;
   }
 }
