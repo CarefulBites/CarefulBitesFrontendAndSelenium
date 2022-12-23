@@ -22,18 +22,16 @@
     <link rel="icon" type="image/png" href="foodlogo.png" sizes="32x32" />
 </head>
 
-<body class="dx-viewport">
+<body class="dx-viewport container-fluid">
     <div id="LOAD-PANEL"></div>
-    <div class="container-fluid p-2 text-white text-center" style="padding-top: 3vh">
+    <div class="p-2 text-white text-center" style="padding-top: 3vh">
         <img src="foodlogo.png" class="img-fluid" alt="Cinque Terre" style="width: 20vw; padding-bottom: 1vw">
         <p style="font-size: 4vw; padding-bottom: 0; margin-bottom: 0">CarefulBites</p>
         <p style="font-size: 1.75vw; padding-top: 0">Care for Your Food</p>
     </div>
-    <div class="row container-fluid justify-content-center" style="padding-right: 0">
-        <input id="login" type="button" class="menu"
-            style="font-size: 3vh; line-height: 3vh; width: 60vw; height: 11vh; margin-top: 1vh; margin-bottom: 1vh; padding-bottom: 7vh"
-            value="Login or sign up" onclick="ShowPopUp()">
-    </div>
+    <div class="row justify-content-center">
+        <div id="login-button"></div>
+    </div>    
     <div id="popup-login"></div>
     <div id="container" class="randomMeals">
         <p class="text-center" style="font-size: 3vh; padding-top: 2vh;">Recipe Suggestions</p>
@@ -41,7 +39,7 @@
         <div id="randomPopup"></div>
     </div>
     <footer class="border-top mt-2">
-        <div class="row container-fluid mt-4">
+        <div class="row mt-4">
             <div id="footer-contact" class="pb-3">
                 <p id="contact" class="text-uppercase fw-bold mb-2">Contact:</p>
                 <div class="contacts">

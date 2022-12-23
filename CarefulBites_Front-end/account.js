@@ -280,14 +280,19 @@ $(() => {
       })
       .dxPopup("instance");
 
-    $("#popup-button").dxButton({
-      styling: "contained",
-      icon: "user",
-      text: "Log In",
+    $("#login-button").dxButton({
+      type: "default",
+      text: "Log In or Sign Up",
+      width: "58vw",
+      height: "11vh",
+      maxWidth: 400,
+      elementAttr: {
+        id: 'LOGIN-BUTTON'
+      },
       onClick: () => {
         form_popup.show();
-      },
-    });
+      }
+    })
   }
   const formWidget = $("#form")
     .dxForm({

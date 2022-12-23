@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -25,7 +26,10 @@ public class UnitTest1 {
     var options = new ChromeOptions();
     options.AddArgument("--window-size=1920,1080");
     options.AddArgument("--start-maximized");
+
+#if RELEASE
     options.AddArgument("--headless");
+#endif
 
 #if DEBUG
         _driver = new ChromeDriver(DriverDirectory, options);
@@ -57,7 +61,7 @@ public class UnitTest1 {
     [TestMethod]
     public void Test1GetLoginModal() {
         _driver?.SwitchTo().ActiveElement();
-        var loginButton = _driver?.FindElement(By.XPath("//*[@id=\"login\"]"));
+        var loginButton = _driver?.FindElement(By.XPath("//*[@id=\"LOGIN-BUTTON\"]"));
 
         Assert.IsNotNull(loginButton);
 
@@ -80,7 +84,7 @@ public class UnitTest1 {
 
         loginPassword?.SendKeys("Admin");
 
-        var loginButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Log In')]"));
+        var loginButton = _driver?.FindElement(By.XPath("//*[@id=\"POPUP-LOGIN-BUTTON\"]"));
 
         Assert.IsNotNull(loginButton);
 

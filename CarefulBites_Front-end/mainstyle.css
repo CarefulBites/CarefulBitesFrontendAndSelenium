@@ -177,6 +177,10 @@ nav {
   white-space: normal;
 }
 
+#LOGIN-BUTTON {
+  font-size: 3vh;
+}
+
 @media (max-width: 580px) {
   .dx-button.dx-button-storage {
     font-size: 2.5vw;
@@ -217,5 +221,8 @@ nav {
   #POPUP-LOGIN-BUTTON,
   #POPUP-CREATEACCOUNT-BUTTON {
     font-size: 8px;
+  }
+  #LOGIN-BUTTON {
+    font-size: 3.4vw;
   }
 }
