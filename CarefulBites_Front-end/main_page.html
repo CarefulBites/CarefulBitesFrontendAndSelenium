@@ -11,7 +11,7 @@
     <!-- <link rel="stylesheet" href="lib/css/dx.material.blue.dark.css"> -->
     <link rel="dx-theme" data-theme="material.blue.light" href="lib/css/dx.material.blue.light.css" data-active="false">
     <link rel="dx-theme" data-theme="material.blue.dark" href="lib/css/dx.material.blue.dark.css" data-active="true">
-    <script type="text/javascript" src="lib/js/dx.all.js"></script>
+    <script type="text/javascript" src="lib/js/dx.all.debug.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="mainstyle.css">
@@ -41,28 +41,41 @@
             <div class="col-lg-12">
                 <div id="POPUP-ITEMSTORAGE-BUTTON"></div>
                 <div id="POPUP-ITEMSTORAGE"></div>
-                <div class="demo-container">
-                    <div id="itemGrid"></div>
+                <div id="tabs">
+                    <div data-options="dxTemplate: { name: 'itemGrid' }">Items</div>
+
                 </div>
-            </div>
-            <div class="col-lg-12 pt-5">
-                <div class="demo-container">
-                    <div id="container">
-                        <h3>Recipes</h3>
-                        <div class="form">
-                            <div class="dx-field-label">Ingredient Selection</div>
-                            <div class="dx-field-value">
-                                <div id="ingredientSelection"></div>
+                <div id="tab-content">
+                    <div data-options="dxTemplate: { name: 'item' }">
+                        <!-- item data grid goes here -->
+                    </div>
+                    <div data-options="dxTemplate: { name: 'customer' }">
+                        <!-- customer data grid goes here -->
+                    </div>
+                    <div class="demo-container">
+                        <div id="itemGrid"></div>
+                    </div>
+                </div>
+                <div class="col-lg-12 pt-5">
+                    <div class="demo-container">
+                        <div style="display: none;" id="RECIPES-TAB">
+                            <div id="container">
+                                <h3>Recipes</h3>
+                                <div class="form">
+                                    <div class="dx-field-label">Ingredient Selection</div>
+                                    <div class="dx-field-value">
+                                        <div id="ingredientSelection"></div>
+                                    </div>
+                                </div>
+                                <ul id="cards"></ul>
+                                <div id="popup"></div>
                             </div>
                         </div>
-                        <ul id="cards"></ul>
-                        <div id="popup"></div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Footer -->
-        <!-- <footer class="border-top mt-4">
+            <!-- Footer -->
+            <!-- <footer class="border-top mt-4">
             <div class="container-fluid mt-4">
                 <div class="row">
                     <div id="footer-contact" class="col-3 offset-md-1">
@@ -72,8 +85,8 @@
                 </div>
             </div>
         </footer> -->
-        <!-- Footer -->
-    </div>
+            <!-- Footer -->
+        </div>
 </body>
 
 </html>

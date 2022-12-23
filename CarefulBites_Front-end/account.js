@@ -135,7 +135,8 @@ $(() => {
             },
             {
               itemType: "group",
-              colCount: 2,
+              colCount: 1,
+              minColWidth: "1vw",
               items: [
                 {
                   itemType: "button",
@@ -221,8 +222,8 @@ $(() => {
     form_popup = $("#popup-logout")
       .dxPopup({
         contentTemplate: popupContentTemplateLoggedIn,
-        width: 425,
-        height: 300,
+        width: "80vw",
+        height: "40vh",
         container: ".dx-viewport",
         showTitle: true,
         title: "Log Out",
