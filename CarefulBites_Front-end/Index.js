@@ -92,13 +92,13 @@ function GetRandomCards() {
   }).dxPopup('instance');
 
   RandomCards.forEach((currentCard) => {
-    if (currentCard.strMeal.length > 29) {
-      currentCard.strMeal = currentCard.strMeal.substring(0, 29) + "..."
+    if (currentCard.strMeal.length > 25) {
+      currentCard.strMeal = currentCard.strMeal.substring(0, 23) + "..."
     }
 
     $('<li>')
       .css({
-        'width': '30vw',
+        'width': '25vw',
         'border': '3px solid white',
         'border-radius': '20px'
       })
