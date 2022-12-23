@@ -245,22 +245,12 @@ $(() => {
     })
     $("#tabs").dxTabPanel({
         animationEnabled: true,
-        onTitleClick: function (e) {
-            element = $('#RECIPES-TAB')
-            if (e.itemData.title === 'Recipes') {
-                element.css('display', 'block')
-            }
-            else {
-                element.css('display', 'none')
-            }
-        },
         items: [
             {
                 title: 'Items',
                 icon: 'cart',
                 template: function (itemData, itemIndex, element) {
-                    $('#RECIPES-TAB').css('display', 'none')
-                    const grid = $("<div id=\"itemGrid\" style='padding:15px'>")
+                    const grid = $("<div id=\"itemGrid\">")
                     grid.appendTo(element);
                     grid.dxDataGrid({
                         dataSource: ItemStore,
@@ -274,7 +264,7 @@ $(() => {
                             mode: 'virtual',
                         },
                         filterRow: {
-                            visible: true,
+                            visible: (screen.width > 580) ? true : false,
                             applyFilter: 'auto',
                         },
                         searchPanel: {
@@ -302,7 +292,7 @@ $(() => {
                                     const differenceInDays = (expirationDate - currentDate) / (1000 * 60 * 60 * 24);
 
                                     // Get the cell element for the expirationDate column
-                                    const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
+                                    const expirationDateCell = e.cells.find(element => element.column.caption === 'Exp. Date');
                                     if (differenceInDays < 0) {
                                         $(expirationDateCell.cellElement[0]).css('color', 'red');
                                     }
@@ -368,6 +358,7 @@ $(() => {
                             {
                                 dataField: 'amount',
                                 dataType: 'number',
+                                width: 100,
                                 allowSorting: false,
                                 allowFiltering: false,
                                 placeholder: 'The amount left of the item',
@@ -391,10 +382,9 @@ $(() => {
                                         return 'Error: Unit not recognised.'
                                     }
                                 },
-                                width: 100,
+                                width: 80,
                                 alignment: 'left',
                                 caption: '',
-                                allowSearch: false,
                                 allowSorting: false,
                                 allowFiltering: false,
                                 cellTemplate: function (container, options) {
@@ -415,10 +405,11 @@ $(() => {
                                 dataField: 'itemStorageId',
                                 caption: 'Storage',
                                 placeholder: 'The placement of the item',
+                                width: 200,
                                 lookup: {
                                     dataSource: Object.values(ItemStorageDict),
                                     displayExpr: 'name',
-                                    valueExpr: 'itemStorageId',
+                                    valueExpr: 'itemStorageId'
                                 },
                             },
                             {
@@ -429,23 +420,30 @@ $(() => {
                             {
                                 dataField: 'openDate',
                                 dataType: 'date',
-                                placeholder: 'Date of opening'
+                                placeholder: '...',
+                                width: 120
                             },
                             {
                                 dataField: 'expirationDate',
                                 dataType: 'date',
-                                placeholder: 'The marked expiration date'
+                                caption: 'Exp. Date',
+                                placeholder: '...',
+                                width: 120
                             },
                             {
                                 dataField: 'daysAfterOpen',
                                 dataType: 'number',
-                                caption: '# of Days Fresh after Opening',
-                                placeholder: 'Days fresh when opened'
+                                caption: 'DFAO',
+                                placeholder: 'Days fresh when opened',
+                                allowFiltering: false,
+                                width: 80
                             },
                             {
-                                caption: 'Fresh Days Left',
+                                caption: 'FDL',
                                 dataType: 'number',
                                 placeholder: 'Number of days left Whether opened or not',
+                                allowFiltering: false,
+                                width: 80,
                                 calculateCellValue: function (rowData) {
                                     freshDaysLeft = 0;
                                     expDateByOpened = new Date(Date.parse(rowData.openDate));
@@ -491,8 +489,19 @@ $(() => {
             {
                 title: 'Recipes',
                 icon: 'food',
-                onTitleClick: function (e) {
-                    console.log('Hello from item')
+                template: function (itemData, itemIndex, element) {
+                    const recipes = $("<div id=\"recipes\">")
+                    recipes.appendTo(element)
+                    recipes.append(
+                        $(`<h3>Recipes</h3>`),
+                        $('<div>').attr('id', 'container').append(
+                            $('<div>').attr('id', 'ingredientSelection'),
+                            $('<ul>').attr('id', 'cards'),
+                            $('<div>').attr('id', 'popup')
+                        )
+                    );                    
+                    console.log(recipes)
+                    IngredientSelection()
                 }
             }]
     });
@@ -595,12 +604,12 @@ function GetCards() {
     });
 };
 
-$(function () {
+function IngredientSelection() {
     $("#ingredientSelection").dxTagBox({
         dataSource: ItemStore,
         valueExpr: "name",
         displayExpr: "name",
-        placeholder: "Milk",
+        placeholder: "Ingredient selection",
         showSelectionControls: true,
         onValueChanged: function (e) {
             var element = document.getElementById("cards");
@@ -609,4 +618,4 @@ $(function () {
             GetMealByName(ingredientName);
         },
     });
-});
+};
