@@ -135,8 +135,7 @@ $(() => {
             },
             {
               itemType: "group",
-              colCount: 1,
-              minColWidth: "1vw",
+              colCount: 2,
               items: [
                 {
                   itemType: "button",
