@@ -100,7 +100,7 @@ $(() => {
           readOnly: false,
           showColonAfterLabel: true,
           labelLocation: "left",
-          minColWidth: 300,
+          minColWidth: "40vw",
           colCount: 1,
           items: [
             {
@@ -132,11 +132,13 @@ $(() => {
             },
             {
               itemType: "group",
-              colCount: 2,
+              colCount: 1,
+              minColWidth: "1vw",
               items: [
                 {
                   itemType: "button",
-                  horizontalAlignment: "left",
+                  horizontalAlignment: "center",
+                  colSpan: 1,
                   buttonOptions: {
                     elementAttr: {
                       id: 'POPUP-LOGIN-BUTTON'
@@ -190,7 +192,8 @@ $(() => {
                 },
                 {
                   itemType: "button",
-                  horizontalAlignment: "right",
+                  horizontalAlignment: "center",
+                  colSpan: 1,
                   buttonOptions: {
                     text: "Create Account",
                     type: "default",
@@ -213,8 +216,8 @@ $(() => {
     form_popup = $("#popup-logout")
       .dxPopup({
         contentTemplate: popupContentTemplateLoggedIn,
-        width: 425,
-        height: 300,
+        width: "80vw",
+        height: "40vh",
         container: ".dx-viewport",
         showTitle: true,
         title: "Log Out",
@@ -260,8 +263,8 @@ $(() => {
     form_popup = $("#popup-login")
       .dxPopup({
         contentTemplate: popupContentTemplate,
-        width: 425,
-        height: 300,
+        width: "80vw",
+        height: "40vh",
         container: ".dx-viewport",
         showTitle: true,
         title: "Log In",

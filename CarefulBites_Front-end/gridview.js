@@ -245,216 +245,457 @@ $(() => {
         }
     })
 
-    $('#itemGrid').dxDataGrid({
-        dataSource: ItemStore,
-        columnHidingEnabled: true,
-        rowAlternationEnabled: false,
-        showColumnLines: false,
-        showRowLines: true,
-        showBorders: true,
-        noDataText: ItemStorageDict.length === 0 ? "To get started, try creating a storage in STORAGE MANAGEMENT":"Great! Now click the ADD ITEM button above the grid",
-        scrolling: {
-            mode: 'virtual',
-        },
-        filterRow: {
-            visible: true,
-            applyFilter: 'auto',
-        },
-        searchPanel: {
-            visible: true,
-            width: 240
-        },
-        headerFilter: {
-            visible: true,
-        },
-        editing: {
-            mode: 'row',
-            allowUpdating: true,
-            allowAdding: true,
-            allowDeleting: true,
-        },
-        onEditingStart: function (e) {
-            row = e.data
-        },
-        onRowPrepared(e) {
-            if (e.rowType === 'data' && e.cells.length > 0) {
-                if (!e.isEditing) {
-                    const expirationDate = new Date(Date.parse(e.data.expirationDate));
-                    const currentDate = new Date();
-                    currentDate.setHours(0, 0, 0, 0);
-
-                    const differenceInDays = (expirationDate - currentDate) / (1000 * 60 * 60 * 24);
-
-                    // Get the cell element for the expirationDate column
-                    const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
-                    if (differenceInDays < 0) {
-                        $(expirationDateCell.cellElement[0]).css('color', 'red');
-                    }
-                    else if (differenceInDays <= 3 && differenceInDays >= 0) {
-                        $(expirationDateCell.cellElement[0]).css('color', 'orange');
-                    }
-                }
+    $("#tabs").dxTabPanel({
+        animationEnabled: true,
+        onTitleClick: function(e) {
+            element = $('#RECIPES-TAB')
+            if (e.itemData.title === 'Recipes') {
+                element.css('display', 'block')
+            }
+            else {
+                element.css('display', 'none')
             }
         },
-        toolbar: {
-            items: [{
-                widget: "dxButton",
-                location: 'before',
-                options: {
-                    stylingMode: 'contained',
-                    text: 'Storage Management',
-                    type: 'normal',
-                    onClick: () => {
-                        itemStoragePopUp.show();
-                    }
-                }
-            },
-            {
-                widget: "dxButton",
-                options: {
-                    stylingMode: 'contained',
-                    text: 'Add Item',
-                    icon: 'plus',
-                    type: 'normal',
-                    onClick: () => {
-                        $('#itemGrid').dxDataGrid("instance").addRow();
-                    }
-                }
-            },
-                'searchPanel',
-            ]            
-        },
-        columns: [
-            {
-                dataField: 'itemId',
-                dataType: 'number',
-                visible: false
-            },
-            {
-                dataField: 'name',
-                dataType: 'string',
-                placeholder: 'Name of item e.g Milk'
-            },
-            {
-                dataField: 'amount',
-                dataType: 'number',
-                allowSorting: false,
-                allowFiltering: false,
-                placeholder: 'The amount left of the item',
-                cellTemplate: function (container, options) {
-                    container.addClass('reduce-right-gap').text(options.text);
-                }
-            },
-            {
-                dataField: 'unit',
-                calculateCellValue: function (rowData) {
-                    return rowData.unit;
-                },
-                calculateDisplayValue: function (rowData) {
-                    if (rowData.unit == 0) {
-                        return 'kg'
-                    } else if (rowData.unit == 1) {
-                        return 'L'
-                    } else if (rowData.unit == 2) {
-                        return 'pcs.'
-                    } else {
-                        return 'Error: Unit not recognised.'
-                    }
-                },
-                width: 100,
-                alignment: 'left',
-                caption: '',
-                allowSearch: false,
-                allowSorting: false,
-                allowFiltering: false,
-                cellTemplate: function (container, options) {
-                    container.addClass('reduce-left-gap').text(options.text);
-                },
-                editorType: 'dxSelectBox',
-                editorOptions: {
-                    displayExpr: 'text',
-                    valueExpr: 'value',
-                    items: [
-                        { value: 0, text: 'kg' },
-                        { value: 1, text: 'L' },
-                        { value: 2, text: 'pcs.' },
+        items: [
+        {
+            title: 'Items',
+            icon: 'cart',
+            template: function (itemData, itemIndex, element) {
+                $('#RECIPES-TAB').css('display', 'none')
+                const grid = $("<div id=\"itemGrid\" style='padding:15px'>")
+                grid.appendTo(element);
+                grid.dxDataGrid({
+                    dataSource: ItemStore,
+                    columnHidingEnabled: true,
+                    rowAlternationEnabled: false,
+                    showColumnLines: false,
+                    showRowLines: true,
+                    showBorders: true,
+                    noDataText: ItemStorageDict.length === 0 ? "To get started, try creating a storage in STORAGE MANAGEMENT":"Great! Now click the ADD ITEM button above the grid",
+                    scrolling: {
+                        mode: 'virtual',
+                    },
+                    filterRow: {
+                        visible: true,
+                        applyFilter: 'auto',
+                    },
+                    searchPanel: {
+                        visible: true,
+                        width: 240
+                    },
+                    headerFilter: {
+                        visible: true,
+                    },
+                    editing: {
+                        mode: 'row',
+                        allowUpdating: true,
+                        allowAdding: true,
+                        allowDeleting: true,
+                    },
+                    onEditingStart: function (e) {
+                        row = e.data
+                    },
+                    onRowPrepared(e) {
+                        if (e.rowType === 'data' && e.cells.length > 0) {
+                            if (!e.isEditing) {
+                                const expirationDate = new Date(Date.parse(e.data.expirationDate));
+                                const currentDate = new Date();
+                                currentDate.setHours(0, 0, 0, 0);
+            
+                                const differenceInDays = (expirationDate - currentDate) / (1000 * 60 * 60 * 24);
+            
+                                // Get the cell element for the expirationDate column
+                                const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
+                                if (differenceInDays < 0) {
+                                    $(expirationDateCell.cellElement[0]).css('color', 'red');
+                                }
+                                else if (differenceInDays <= 3 && differenceInDays >= 0) {
+                                    $(expirationDateCell.cellElement[0]).css('color', 'orange');
+                                }
+                            }
+                        }
+                    },
+                    toolbar: {
+                        items: [{
+                            widget: "dxButton",
+                            location: 'before',
+                            options: {
+                                stylingMode: 'contained',
+                                text: 'Storage Management',
+                                type: 'normal',
+                                onClick: () => {
+                                    itemStoragePopUp.show();
+                                }
+                            }
+                        },
+                        {
+                            widget: "dxButton",
+                            options: {
+                                stylingMode: 'contained',
+                                text: 'Add Item',
+                                icon: 'plus',
+                                type: 'normal',
+                                onClick: () => {
+                                    $('#itemGrid').dxDataGrid("instance").addRow();
+                                }
+                            }
+                        },
+                            'searchPanel',
+                        ]            
+                    },
+                    columns: [
+                        {
+                            dataField: 'itemId',
+                            dataType: 'number',
+                            visible: false
+                        },
+                        {
+                            dataField: 'name',
+                            dataType: 'string',
+                            placeholder: 'Name of item e.g Milk'
+                        },
+                        {
+                            dataField: 'amount',
+                            dataType: 'number',
+                            allowSorting: false,
+                            allowFiltering: false,
+                            placeholder: 'The amount left of the item',
+                            cellTemplate: function (container, options) {
+                                container.addClass('reduce-right-gap').text(options.text);
+                            }
+                        },
+                        {
+                            dataField: 'unit',
+                            calculateCellValue: function (rowData) {
+                                return rowData.unit;
+                            },
+                            calculateDisplayValue: function (rowData) {
+                                if (rowData.unit == 0) {
+                                    return 'kg'
+                                } else if (rowData.unit == 1) {
+                                    return 'L'
+                                } else if (rowData.unit == 2) {
+                                    return 'pcs.'
+                                } else {
+                                    return 'Error: Unit not recognised.'
+                                }
+                            },
+                            width: 100,
+                            alignment: 'left',
+                            caption: '',
+                            allowSearch: false,
+                            allowSorting: false,
+                            allowFiltering: false,
+                            cellTemplate: function (container, options) {
+                                container.addClass('reduce-left-gap').text(options.text);
+                            },
+                            editorType: 'dxSelectBox',
+                            editorOptions: {
+                                displayExpr: 'text',
+                                valueExpr: 'value',
+                                items: [
+                                    { value: 0, text: 'kg' },
+                                    { value: 1, text: 'L' },
+                                    { value: 2, text: 'pcs.' },
+                                ],
+                            }
+                        },
+                        {
+                            dataField: 'itemStorageId',
+                            caption: 'Storage',
+                            placeholder: 'The placement of the item',
+                            lookup: {
+                                dataSource: Object.values(ItemStorageDict),
+                                displayExpr: 'name',
+                                valueExpr: 'itemStorageId',
+                            },
+                        },
+                        {
+                            dataField: 'caloriesPer',
+                            dataType: 'number',
+                            visible: false
+                        },
+                        {
+                            dataField: 'openDate',
+                            dataType: 'date',
+                            placeholder: 'Date of opening'
+                        },
+                        {
+                            dataField: 'expirationDate',
+                            dataType: 'date',
+                            placeholder: 'The marked expiration date'
+                        },
+                        {
+                            dataField: 'daysAfterOpen',
+                            dataType: 'number',
+                            caption: '# of Days Fresh after Opening',
+                            placeholder: 'Days fresh when opened'
+                        },
+                        {
+                            caption: 'Fresh Days Left',
+                            dataType: 'number',
+                            placeholder: 'Number of days left Whether opened or not',
+                            calculateCellValue: function (rowData) {
+                                freshDaysLeft = 0;
+                                expDateByOpened = new Date(Date.parse(rowData.openDate));
+                                expDateByOpened.setDate(expDateByOpened.getDate() + rowData.daysAfterOpen);
+                                if (expDateByOpened < Date.parse(rowData.expirationDate) && rowData.daysAfterOpen) {
+                                    currentDate = new Date()
+                                    openDate = new Date(Date.parse(rowData.openDate))
+                                    daysFresh = Math.trunc((currentDate - openDate) / (1000 * 3600 * 24))
+                                    freshDaysLeft = rowData.daysAfterOpen - daysFresh
+                                } else {
+                                    currentDate = new Date()
+                                    expDate = new Date(Date.parse(rowData.expirationDate))
+                                    freshDaysLeft = Math.trunc((expDate - currentDate) / (1000 * 3600 * 24))
+                                }
+            
+                                return freshDaysLeft;
+                            },
+                            cellTemplate: function (container, options) {
+                                if (options.value < 0) {
+                                    container.addClass('red-text').text(options.text);
+                                } else if (options.value < 3) {
+                                    container.addClass('orange-text').text(options.text);
+                                } else if (!Number.isNaN(options.value)) {
+                                    container.addClass('green-text').text(options.text);
+                                } else {
+                                }
+                            },
+                        },
+                        {
+                            caption: 'Storage',
+                            groupIndex: 0,
+                            calculateCellValue: function (rowData) {
+                                if (rowData.itemStorageId !== undefined) {
+                                    return ItemStorageDict[rowData.itemStorageId].name
+                                }
+                            }
+                        }
                     ],
-                }
-            },
-            {
-                dataField: 'itemStorageId',
-                caption: 'Storage',
-                placeholder: 'The placement of the item',
-                lookup: {
-                    dataSource: Object.values(ItemStorageDict),
-                    displayExpr: 'name',
-                    valueExpr: 'itemStorageId',
-                },
-            },
-            {
-                dataField: 'caloriesPer',
-                dataType: 'number',
-                visible: false
-            },
-            {
-                dataField: 'openDate',
-                dataType: 'date',
-                placeholder: 'Date of opening'
-            },
-            {
-                dataField: 'expirationDate',
-                dataType: 'date',
-                placeholder: 'The marked expiration date'
-            },
-            {
-                dataField: 'daysAfterOpen',
-                dataType: 'number',
-                caption: '# of Days Fresh after Opening',
-                placeholder: 'Days fresh when opened'
-            },
-            {
-                caption: 'Fresh Days Left',
-                dataType: 'number',
-                placeholder: 'Number of days left Whether opened or not',
-                calculateCellValue: function (rowData) {
-                    freshDaysLeft = 0;
-                    expDateByOpened = new Date(Date.parse(rowData.openDate));
-                    expDateByOpened.setDate(expDateByOpened.getDate() + rowData.daysAfterOpen);
-                    if (expDateByOpened < Date.parse(rowData.expirationDate) && rowData.daysAfterOpen) {
-                        currentDate = new Date()
-                        openDate = new Date(Date.parse(rowData.openDate))
-                        daysFresh = Math.trunc((currentDate - openDate) / (1000 * 3600 * 24))
-                        freshDaysLeft = rowData.daysAfterOpen - daysFresh
-                    } else {
-                        currentDate = new Date()
-                        expDate = new Date(Date.parse(rowData.expirationDate))
-                        freshDaysLeft = Math.trunc((expDate - currentDate) / (1000 * 3600 * 24))
-                    }
-
-                    return freshDaysLeft;
-                },
-                cellTemplate: function (container, options) {
-                    if (options.value < 0) {
-                        container.addClass('red-text').text(options.text);
-                    } else if (options.value < 3) {
-                        container.addClass('orange-text').text(options.text);
-                    } else if (!Number.isNaN(options.value)) {
-                        container.addClass('green-text').text(options.text);
-                    } else {
-                    }
-                },
-            },
-            {
-                caption: 'Storage',
-                groupIndex: 0,
-                calculateCellValue: function (rowData) {
-                    if (rowData.itemStorageId !== undefined) {
-                        return ItemStorageDict[rowData.itemStorageId].name
-                    }
-                }
+                }).dxDataGrid('instance')
+                console.log(grid)
             }
-        ],
-    })
+        },
+        {
+            title: 'Recipes',
+            icon: 'food',
+            onTitleClick: function(e) {
+                console.log('Hello from item')
+            }
+        }]
+      });
+
+    // $('#itemGrid').dxDataGrid({
+    //     dataSource: ItemStore,
+    //     columnHidingEnabled: true,
+    //     rowAlternationEnabled: false,
+    //     showColumnLines: false,
+    //     showRowLines: true,
+    //     showBorders: true,
+    //     noDataText: ItemStorageDict.length === 0 ? $("<div>").html("To get started, try creating a storage in<br>STORAGE MANAGEMENT").html():"Great! Now click the ADD ITEM button above the grid",
+    //     scrolling: {
+    //         mode: 'virtual',
+    //     },
+    //     filterRow: {
+    //         visible: true,
+    //         applyFilter: 'auto',
+    //     },
+    //     searchPanel: {
+    //         visible: true,
+    //         width: 240
+    //     },
+    //     headerFilter: {
+    //         visible: true,
+    //     },
+    //     editing: {
+    //         mode: 'row',
+    //         allowUpdating: true,
+    //         allowAdding: true,
+    //         allowDeleting: true,
+    //     },
+    //     onEditingStart: function (e) {
+    //         row = e.data
+    //     },
+    //     onRowPrepared(e) {
+    //         if (e.rowType === 'data' && e.cells.length > 0) {
+    //             if (!e.isEditing) {
+    //                 const expirationDate = new Date(Date.parse(e.data.expirationDate));
+    //                 const currentDate = new Date();
+    //                 currentDate.setHours(0, 0, 0, 0);
+
+    //                 const differenceInDays = (expirationDate - currentDate) / (1000 * 60 * 60 * 24);
+
+    //                 // Get the cell element for the expirationDate column
+    //                 const expirationDateCell = e.cells.find(element => element.column.caption === 'Expiration Date');
+    //                 if (differenceInDays < 0) {
+    //                     $(expirationDateCell.cellElement[0]).css('color', 'red');
+    //                 }
+    //                 else if (differenceInDays <= 3 && differenceInDays >= 0) {
+    //                     $(expirationDateCell.cellElement[0]).css('color', 'orange');
+    //                 }
+    //             }
+    //         }
+    //     },
+    //     toolbar: {
+    //         items: [{
+    //             widget: "dxButton",
+    //             location: 'before',
+    //             options: {
+    //                 stylingMode: 'contained',
+    //                 text: 'Storage Management',
+    //                 type: 'normal',
+    //                 onClick: () => {
+    //                     itemStoragePopUp.show();
+    //                 }
+    //             }
+    //         },
+    //         {
+    //             widget: "dxButton",
+    //             options: {
+    //                 stylingMode: 'contained',
+    //                 text: 'Add Item',
+    //                 icon: 'plus',
+    //                 type: 'normal',
+    //                 onClick: () => {
+    //                     $('#itemGrid').dxDataGrid("instance").addRow();
+    //                 }
+    //             }
+    //         },
+    //             'searchPanel',
+    //         ]            
+    //     },
+    //     columns: [
+    //         {
+    //             dataField: 'itemId',
+    //             dataType: 'number',
+    //             visible: false
+    //         },
+    //         {
+    //             dataField: 'name',
+    //             dataType: 'string',
+    //             placeholder: 'Name of item e.g Milk'
+    //         },
+    //         {
+    //             dataField: 'amount',
+    //             dataType: 'number',
+    //             allowSorting: false,
+    //             allowFiltering: false,
+    //             placeholder: 'The amount left of the item',
+    //             cellTemplate: function (container, options) {
+    //                 container.addClass('reduce-right-gap').text(options.text);
+    //             }
+    //         },
+    //         {
+    //             dataField: 'unit',
+    //             calculateCellValue: function (rowData) {
+    //                 return rowData.unit;
+    //             },
+    //             calculateDisplayValue: function (rowData) {
+    //                 if (rowData.unit == 0) {
+    //                     return 'kg'
+    //                 } else if (rowData.unit == 1) {
+    //                     return 'L'
+    //                 } else if (rowData.unit == 2) {
+    //                     return 'pcs.'
+    //                 } else {
+    //                     return 'Error: Unit not recognised.'
+    //                 }
+    //             },
+    //             width: 100,
+    //             alignment: 'left',
+    //             caption: '',
+    //             allowSearch: false,
+    //             allowSorting: false,
+    //             allowFiltering: false,
+    //             cellTemplate: function (container, options) {
+    //                 container.addClass('reduce-left-gap').text(options.text);
+    //             },
+    //             editorType: 'dxSelectBox',
+    //             editorOptions: {
+    //                 displayExpr: 'text',
+    //                 valueExpr: 'value',
+    //                 items: [
+    //                     { value: 0, text: 'kg' },
+    //                     { value: 1, text: 'L' },
+    //                     { value: 2, text: 'pcs.' },
+    //                 ],
+    //             }
+    //         },
+    //         {
+    //             dataField: 'itemStorageId',
+    //             caption: 'Storage',
+    //             placeholder: 'The placement of the item',
+    //             lookup: {
+    //                 dataSource: Object.values(ItemStorageDict),
+    //                 displayExpr: 'name',
+    //                 valueExpr: 'itemStorageId',
+    //             },
+    //         },
+    //         {
+    //             dataField: 'caloriesPer',
+    //             dataType: 'number',
+    //             visible: false
+    //         },
+    //         {
+    //             dataField: 'openDate',
+    //             dataType: 'date',
+    //             placeholder: 'Date of opening'
+    //         },
+    //         {
+    //             dataField: 'expirationDate',
+    //             dataType: 'date',
+    //             placeholder: 'The marked expiration date'
+    //         },
+    //         {
+    //             dataField: 'daysAfterOpen',
+    //             dataType: 'number',
+    //             caption: '# of Days Fresh after Opening',
+    //             placeholder: 'Days fresh when opened'
+    //         },
+    //         {
+    //             caption: 'Fresh Days Left',
+    //             dataType: 'number',
+    //             placeholder: 'Number of days left Whether opened or not',
+    //             calculateCellValue: function (rowData) {
+    //                 freshDaysLeft = 0;
+    //                 expDateByOpened = new Date(Date.parse(rowData.openDate));
+    //                 expDateByOpened.setDate(expDateByOpened.getDate() + rowData.daysAfterOpen);
+    //                 if (expDateByOpened < Date.parse(rowData.expirationDate) && rowData.daysAfterOpen) {
+    //                     currentDate = new Date()
+    //                     openDate = new Date(Date.parse(rowData.openDate))
+    //                     daysFresh = Math.trunc((currentDate - openDate) / (1000 * 3600 * 24))
+    //                     freshDaysLeft = rowData.daysAfterOpen - daysFresh
+    //                 } else {
+    //                     currentDate = new Date()
+    //                     expDate = new Date(Date.parse(rowData.expirationDate))
+    //                     freshDaysLeft = Math.trunc((expDate - currentDate) / (1000 * 3600 * 24))
+    //                 }
+
+    //                 return freshDaysLeft;
+    //             },
+    //             cellTemplate: function (container, options) {
+    //                 if (options.value < 0) {
+    //                     container.addClass('red-text').text(options.text);
+    //                 } else if (options.value < 3) {
+    //                     container.addClass('orange-text').text(options.text);
+    //                 } else if (!Number.isNaN(options.value)) {
+    //                     container.addClass('green-text').text(options.text);
+    //                 } else {
+    //                 }
+    //             },
+    //         },
+    //         {
+    //             caption: 'Storage',
+    //             groupIndex: 0,
+    //             calculateCellValue: function (rowData) {
+    //                 if (rowData.itemStorageId !== undefined) {
+    //                     return ItemStorageDict[rowData.itemStorageId].name
+    //                 }
+    //             }
+    //         }
+    //     ],
+    // })
 
     $("#theme-button").dxButton({
         text: "light theme",
