@@ -188,7 +188,7 @@ const popupContentTemplateItemStorageForm = function () {
                                 valueExpr: 'itemStorageId',
                                 onValueChanged: function (e) {
                                     key = e.value;
-                                }
+                                },
                             },
 
                         },
@@ -522,8 +522,10 @@ $(() => {
 
     itemStoragePopUp = $('#POPUP-ITEMSTORAGE').dxPopup({
         contentTemplate: popupContentTemplateItemStorageForm,
-        width: 500,
-        height: 500,
+        width: '80vw',
+        maxWidth: 500,
+        height: '80vh',
+        maxHeight: 500,
         container: '.dx-viewport',
         showTitle: true,
         title: 'Storage Management',
