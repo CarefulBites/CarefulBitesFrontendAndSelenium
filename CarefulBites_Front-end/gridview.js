@@ -493,9 +493,9 @@ $(() => {
                     const recipes = $("<div id=\"recipes\">")
                     recipes.appendTo(element)
                     recipes.append(
-                        $(`<h3>Recipes</h3>`),
                         $('<div>').attr('id', 'container').append(
-                            $('<div>').attr('id', 'ingredientSelection'),
+                            $('<div>').attr('id', 'ingredientSelectionBox').append(
+                                $('<div>').attr('id', 'ingredientSelection')),
                             $('<ul>').attr('id', 'cards'),
                             $('<div>').attr('id', 'popup')
                         )
@@ -581,15 +581,16 @@ function GetCards() {
     }).dxPopup('instance');
 
     Cards.forEach((currentCard) => {
+        if (currentCard.strMeal.length > 28) {
+            currentCard.strMeal = currentCard.strMeal.substring(0, 26) + "..."
+        }
+
         $('<li>')
-            .css("width", "250")
             .append(
                 $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`),
-                $('<br>'),
-                $('<span>').html(`<i>${currentCard.strMeal}</i>`),
-                $('<br>'),
+                $('<p>').html(`${currentCard.strMeal}`),
                 $('<div>')
-                    .addClass('button-info')
+                    .addClass('button-info mt-0 recipe-button-2')
                     .dxButton({
                         text: 'Details',
                         onClick() {
