@@ -80,22 +80,46 @@ nav {
 
 /* recipes */
 #container {
-  padding: 10px;
+  padding-top: 10px;
 }
 
 #container ul {
   list-style-type: none;
   text-align: center;
+  padding: 0;
+  margin: 0;
 }
 
 #container ul li {
   display: inline-block;
-  width: 160px;
-  margin: 10px;
+  margin: 8px;
+  width: 220px;
+  border: 2px solid lightgray;
+  border-radius: 16px;
 }
 
 #container ul li img {
+  width: 196px;
+  margin-top: 12px;
+  border-radius: 16px;
+}
+
+#container ul li p {
+  margin-top: 12px;
+  margin-bottom: 12px;
+  font-size: 1em
+}
+
+.recipe-button-2 {
+  font-size: 12px;
   width: 100px;
+  margin-bottom: 12px;
+}
+
+#ingredientSelectionBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button-info {
@@ -119,8 +143,9 @@ nav {
 }
 
 #ingredientSelection {
-  width: 15%;
-  min-width: 200px;
+  width: 80vw;
+  max-width: 1000px;
+  margin-bottom: 2px;
 }
 
 .randomMeals {
@@ -145,15 +170,6 @@ nav {
 
 .green-text {
   color: rgb(70, 215, 70) !important;
-}
-
-.recipe-button {
-  font-size: 1.2em;
-  width: 10vw;
-  min-width: 120px;
-  height: 5vh;
-  min-height: 40px;
-  margin-bottom: 2vh;
 }
 
 #randomCards {
@@ -197,7 +213,7 @@ nav {
 
 @media (max-width: 850px) {
   ul li {
-    width: 250px !important;
+    width: 250px;
   }
 
   ul {

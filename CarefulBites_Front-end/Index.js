@@ -92,21 +92,16 @@ function GetRandomCards() {
   }).dxPopup('instance');
 
   RandomCards.forEach((currentCard) => {
-    if (currentCard.strMeal.length > 25) {
-      currentCard.strMeal = currentCard.strMeal.substring(0, 23) + "..."
+    if (currentCard.strMeal.length > 28) {
+      currentCard.strMeal = currentCard.strMeal.substring(0, 26) + "..."
     }
 
     $('<li>')
-      .css({
-        'width': '25vw',
-        'border': '3px solid white',
-        'border-radius': '20px'
-      })
       .append(
-        $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`).attr('style', 'width: 20vw; min-width: 180px; margin-top: 3vh; border-radius: 10px'),
-        $('<p>').html(`${currentCard.strMeal}`).attr('style', 'padding-top: 2vh; padding-bottom: 0vh; font-size: 1.2em'),
+        $('<img>').attr('src', `${currentCard.strMealThumb}`).attr('id', `image${currentCard.idMeal}`),
+        $('<p>').html(`${currentCard.strMeal}`),
         $('<div>')
-          .addClass('button-info mt-0 recipe-button')
+          .addClass('button-info mt-0 recipe-button-2')
           .dxButton({
             text: 'Details',
             onClick() {
