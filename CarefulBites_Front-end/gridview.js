@@ -259,7 +259,7 @@ $(() => {
                         showColumnLines: false,
                         showRowLines: true,
                         showBorders: true,
-                        noDataText: ItemStorageDict.length === 0 ? "To get started, try creating a storage in STORAGE." : "Great! Now click the ADD button above the grid.",
+                        noDataText: ItemStorageDict.length === 0 ? "To get started, try creating a storage in STORAGE MANAGEMENT." : "Great! Now click the ADD button above the grid.",
                         scrolling: {
                             mode: 'virtual',
                         },
