@@ -61,23 +61,28 @@ nav {
 
 @media (max-width: 320px) {
   #user-drop-down-button {
-    min-width: 150px
+    min-width: 100px
   }
 
   #user-drop-down-button .dx-button-content {
-    font-size: 4vw;
+    font-size: 3vw;
   }
 
   #user-drop-down-button .dx-icon {
-    font-size: 6vw;
+    font-size: 5vw;
   }
 
   .dx-item-content.dx-list-item-content {
-    font-size: 4vw;
+    font-size: 3vw;
+    padding: 4px;
+  }
+
+  .dx-item-content.dx-list-item-content .dx-list-item-icon-container {
+    width: 30px;
   }
 
   .dx-item-content.dx-list-item-content .dx-icon {
-    font-size: 6vw;
+    font-size: 5vw;
   }
 }
 
