@@ -16,6 +16,12 @@
   margin: 15px;
 }
 
+@media screen and (max-width: 600px) {
+  .jumbotron {
+    margin: 0px;
+  }
+}
+
 .dx-field-item-label-location-top {
   padding-left: 0;
   font-size: 20px;
