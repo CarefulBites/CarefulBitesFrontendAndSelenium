@@ -218,45 +218,15 @@ $(() => {
   let href = location.href;
   let lastPathSegment = href.substring(href.lastIndexOf("/") + 1);
   if (lastPathSegment == "main_page.html") {
-    form_popup = $("#popup-logout")
-      .dxPopup({
-        contentTemplate: popupContentTemplateLoggedIn,
-        width: "80vw",
-        height: "40vh",
-        container: ".dx-viewport",
-        showTitle: true,
-        title: "Log Out",
-        visible: false,
-        dragEnabled: false,
-        hideOnOutsideClick: true,
-        showCloseButton: false,
-        toolbarItems: [
-          {
-            widget: "dxButton",
-            toolbar: "bottom",
-            location: "center",
-            options: {
-              text: "Log Out",
-              stylingMode: "contained",
-              type: "default",
-              onClick: () => {
-                LogoutUser();
-                location.href = "./index.html";
-              },
-            },
-          },
-        ],
-      })
-      .dxPopup("instance");
-
-    $("#popup-button").dxButton({
-      styling: "contained",
-      icon: "user",
-      text: sessionStorage.getItem(currentUser),
-      onClick: () => {
-        form_popup.show();
-      },
-    });
+      $('#logout-button').dxButton({
+        icon: 'user',
+        type: 'Warning',
+        text: 'Log Out',
+        onClick() {
+          LogoutUser();
+          location.href = "./index.html";
+        },
+      });
     if (!IsLoggedIn()) {
       location.href = "./index.html";
     }
