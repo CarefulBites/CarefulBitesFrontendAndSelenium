@@ -16,6 +16,12 @@
   margin: 15px;
 }
 
+@media screen and (max-width: 600px) {
+  .jumbotron {
+    margin: 0px;
+  }
+}
+
 .dx-field-item-label-location-top {
   padding-left: 0;
   font-size: 20px;
@@ -88,12 +94,12 @@ nav {
 
 @media (max-width: 600px) {
   .logo-div {
-    font-size: 15px;
+    font-size: 4vw;
   }
 
   .logo {
-    width: 50px;
-    height: 50px;
+    width: 10vw;
+    height: auto;
   }
 
   .navbar-button {
@@ -243,20 +249,6 @@ nav {
 
 #LOGIN-BUTTON {
   font-size: 3vh;
-}
-
-@media (max-width: 580px) {
-  .dx-button.dx-button-storage {
-    font-size: 2.5vw;
-    width: auto;
-    height: auto;
-  }
-
-  .dx-button.dx-button-add-item {
-    font-size: 2.5vw;
-    width: auto;
-    height: auto;
-  }
 }
 
 @media (max-width: 850px) {

@@ -218,9 +218,9 @@ $(() => {
   let href = location.href;
   let lastPathSegment = href.substring(href.lastIndexOf("/") + 1);
   if (lastPathSegment == "main_page.html") {
-      $('#logout-button').dxButton({
+    $('#logout-button').dxButton({
         icon: 'user',
-        type: 'Warning',
+        type: 'logout',
         text: 'Log Out',
         onClick() {
           LogoutUser();
