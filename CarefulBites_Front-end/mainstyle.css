@@ -10,37 +10,33 @@
   font-size: 24px;
 }
 
-.jumbotron {
-  margin: 15px;
-}
-
-@media screen and (max-width: 600px) {
-  .jumbotron {
-    margin: 0px;
-  }
-}
-
 .dx-field-item-label-location-top {
   padding-left: 0;
   font-size: 20px;
 }
 
-@media screen and (max-width: 600px) {
-  .container {
-    padding-top: 100px;
+@media (orientation: landscape) {
+  .dx-viewport {
+    padding-left: 4%;
+    padding-right: 4%;
   }
+}
+
+.container-fluid {
+  margin-left: 10px;
+  margin-right: 10px
+}
+
+.dx-viewport {
+  padding-top: 10px;
 }
 
 body {
   min-height: 100vh;
 }
 
-nav {
-  margin-bottom: 5%;
-}
-
-.navbar-button {
-  margin-right: 10px;
+.navbar {
+  margin-bottom: 10px;
 }
 
 .logo {
@@ -98,11 +94,6 @@ nav {
   .logo {
     width: 10vw;
     height: auto;
-  }
-
-  .navbar-button {
-    margin-right: 0px;
-    align-items: flex-end;
   }
 
   .container-fluid {
