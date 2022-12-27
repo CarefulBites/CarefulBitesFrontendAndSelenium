@@ -499,7 +499,7 @@ $(() => {
                             $('<ul>').attr('id', 'cards'),
                             $('<div>').attr('id', 'popup')
                         )
-                    );                    
+                    );
                     console.log(recipes)
                     IngredientSelection()
                 }
@@ -517,6 +517,7 @@ $(() => {
                 $("#theme-button").dxButton("instance").option("text", "light theme")
             }
         },
+        type: 'switch-theme',
         styling: 'contained'
     });
 
