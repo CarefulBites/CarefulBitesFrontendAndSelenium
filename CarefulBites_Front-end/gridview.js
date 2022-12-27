@@ -526,16 +526,40 @@ $(() => {
                 }
             }]
     });
-
+    data = sessionStorage.getItem("userinfo")
+    if (data == "chocolate") {
+        DevExpress.ui.themes.current("material.blue.dark");
+    }
+    if (data == "milk") {
+        DevExpress.ui.themes.current("material.blue.light");
+    }
     $("#theme-button").dxButton({
         text: "light theme",
         onClick: () => {
             if (DevExpress.ui.themes.current() == "material.blue.dark") {
                 DevExpress.ui.themes.current("material.blue.light");
                 $("#theme-button").dxButton("instance").option("text", "dark theme")
+                jsonpatchstr = "[{ \"op\": \"replace\", \"path\": \"/information\", \"value\": \"chocolate\" }]";
+                id = sessionStorage.getItem("CurrentUserId")
+                $.ajax({
+                    url: baseURL + "/users/" + encodeURIComponent(id),
+                    type: "patch",
+                    dataType: "json",
+                    data: jsonpatchstr,
+                    contentType: "application/json-patch+json; charset=utf-8",
+                })
             } else {
                 DevExpress.ui.themes.current("material.blue.dark");
                 $("#theme-button").dxButton("instance").option("text", "light theme")
+                jsonpatchstr = "[{ \"op\": \"replace\", \"path\": \"/information\", \"value\": \"milk\" }]";
+                id = sessionStorage.getItem("CurrentUserId")
+                $.ajax({
+                    url: baseURL + "/users/" + encodeURIComponent(id),
+                    type: "patch",
+                    dataType: "json",
+                    data: jsonpatchstr,
+                    contentType: "application/json-patch+json; charset=utf-8",
+                })
             }
         },
         type: 'switch-theme',
