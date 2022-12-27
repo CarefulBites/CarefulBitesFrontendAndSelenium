@@ -274,7 +274,28 @@ $(() => {
                             visible: true,
                         },
                         editing: {
-                            mode: 'row',
+                            mode: 'form',
+                            form: {
+                                items: [{
+                                    itemType: "group",
+                                    items: [
+                                        { dataField: "name" },
+                                        { dataField: "amount" },
+                                        { dataField: "unit" },
+                                        {
+                                            dataField: "itemStorageId",
+                                            lookup: {
+                                                dataSource: Object.values(ItemStorageDict),
+                                                displayExpr: 'name',
+                                                valueExpr: 'itemStorageId'
+                                            }
+                                        },
+                                        { dataField: "openDate" },
+                                        { dataField: "expirationDate" },
+                                        { dataField: "daysAfterOpen" },
+                                    ]
+                                },]
+                            },
                             allowUpdating: true,
                             allowAdding: true,
                             allowDeleting: true,
@@ -499,7 +520,7 @@ $(() => {
                             $('<ul>').attr('id', 'cards'),
                             $('<div>').attr('id', 'popup')
                         )
-                    );                    
+                    );
                     console.log(recipes)
                     IngredientSelection()
                 }
