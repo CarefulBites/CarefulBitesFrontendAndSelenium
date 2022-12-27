@@ -16,6 +16,7 @@ function IsLoggedIn() {
 function LogoutUser() {
   sessionStorage.removeItem(currentUser);
   sessionStorage.removeItem("LoggedIn");
+  sessionStorage.removeItem("userinfo");
 }
 
 function ShowPopUp() {
@@ -31,6 +32,7 @@ function LoginUser(users) {
       sessionStorage.setItem(currentUser, users[0].username);
       sessionStorage.setItem("LoggedIn", true);
       sessionStorage.setItem("CurrentUserId", users[0].userId);
+      sessionStorage.setItem("userinfo", users[0].information);
     } else {
       alert("User not found");
     }
@@ -101,7 +103,7 @@ $(() => {
           showColonAfterLabel: true,
           labelLocation: "left",
           screenByWidth: function (width) {
-              return 2;
+            return 2;
           },
           items: [
             {
@@ -219,14 +221,14 @@ $(() => {
   let lastPathSegment = href.substring(href.lastIndexOf("/") + 1);
   if (lastPathSegment == "main_page.html") {
     $('#logout-button').dxButton({
-        icon: 'user',
-        type: 'logout',
-        text: 'Log Out',
-        onClick() {
-          LogoutUser();
-          location.href = "./index.html";
-        },
-      });
+      icon: 'user',
+      type: 'logout',
+      text: 'Log Out',
+      onClick() {
+        LogoutUser();
+        location.href = "./index.html";
+      },
+    });
     if (!IsLoggedIn()) {
       location.href = "./index.html";
     }
