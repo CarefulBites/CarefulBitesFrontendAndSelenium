@@ -190,7 +190,6 @@ const popupContentTemplateItemStorageForm = function () {
                                     key = e.value;
                                 },
                             },
-
                         },
                         {
                             dataField: 'userId',
@@ -526,44 +525,35 @@ $(() => {
                 }
             }]
     });
-    data = sessionStorage.getItem("userinfo")
-    if (data == "chocolate") {
-        DevExpress.ui.themes.current("material.blue.dark");
-    }
-    if (data == "milk") {
-        DevExpress.ui.themes.current("material.blue.light");
-    }
-    $("#theme-button").dxButton({
-        text: "light theme",
-        onClick: () => {
-            if (DevExpress.ui.themes.current() == "material.blue.dark") {
-                DevExpress.ui.themes.current("material.blue.light");
-                $("#theme-button").dxButton("instance").option("text", "dark theme")
-                jsonpatchstr = "[{ \"op\": \"replace\", \"path\": \"/information\", \"value\": \"chocolate\" }]";
-                id = sessionStorage.getItem("CurrentUserId")
-                $.ajax({
-                    url: baseURL + "/users/" + encodeURIComponent(id),
-                    type: "patch",
-                    dataType: "json",
-                    data: jsonpatchstr,
-                    contentType: "application/json-patch+json; charset=utf-8",
-                })
-            } else {
-                DevExpress.ui.themes.current("material.blue.dark");
-                $("#theme-button").dxButton("instance").option("text", "light theme")
-                jsonpatchstr = "[{ \"op\": \"replace\", \"path\": \"/information\", \"value\": \"milk\" }]";
-                id = sessionStorage.getItem("CurrentUserId")
-                $.ajax({
-                    url: baseURL + "/users/" + encodeURIComponent(id),
-                    type: "patch",
-                    dataType: "json",
-                    data: jsonpatchstr,
-                    contentType: "application/json-patch+json; charset=utf-8",
-                })
+
+    const actions = [
+        {
+            id: 1,
+            text: "Switch Theme",
+            icon: "tips",
+            onClick: () => {
+                if (DevExpress.ui.themes.current() == "material.blue.dark") {
+                    DevExpress.ui.themes.current("material.blue.light");
+                } else {
+                    DevExpress.ui.themes.current("material.blue.dark");
+                }
             }
         },
-        type: 'switch-theme',
-        styling: 'contained'
+        {
+            id: 2,
+            text: "Log Out",
+            icon: "runner",
+            onClick: () => {
+                LogoutUser();
+                location.href = "./index.html";
+            },
+        }
+    ];
+
+    $("#user-drop-down-button").dxDropDownButton({
+        items: actions,
+        icon: "user",
+        text: sessionStorage.getItem(currentUser)
     });
 
     itemStoragePopUp = $('#POPUP-ITEMSTORAGE').dxPopup({

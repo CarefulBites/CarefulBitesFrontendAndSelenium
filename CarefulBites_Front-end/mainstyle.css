@@ -2,8 +2,6 @@
   margin: 20px;
   padding: 30px;
   background-color: #363640;
-  /*display: inline-block;
-  cursor: pointer;*/
   border-color: white;
   border: solid;
   color: white;
@@ -14,6 +12,12 @@
 
 .jumbotron {
   margin: 15px;
+}
+
+@media screen and (max-width: 600px) {
+  .jumbotron {
+    margin: 0px;
+  }
 }
 
 .dx-field-item-label-location-top {
@@ -55,6 +59,37 @@ nav {
   font-size: 30px;
 }
 
+#user-drop-down-button {
+  min-width: 180px;
+}
+
+@media (max-width: 320px) {
+  #user-drop-down-button {
+    min-width: 100px
+  }
+
+  #user-drop-down-button .dx-button-content {
+    font-size: 3vw;
+  }
+
+  #user-drop-down-button .dx-icon {
+    font-size: 5vw;
+  }
+
+  .dx-item-content.dx-list-item-content {
+    font-size: 3vw;
+    padding: 4px;
+  }
+
+  .dx-item-content.dx-list-item-content .dx-list-item-icon-container {
+    width: 30px;
+  }
+
+  .dx-item-content.dx-list-item-content .dx-icon {
+    font-size: 5vw;
+  }
+}
+
 @media (max-width: 600px) {
   .logo-div {
     font-size: 4vw;
@@ -86,28 +121,9 @@ nav {
     width: auto;
     height: auto;
   }
-
-  .dx-button.dx-button-switch-theme {
-    font-size: 2.2vw;
-    width: auto;
-    height: auto;
-  }
-
-  .dx-button.dx-button-logout {
-    font-size: 2.2vw;
-    width: auto;
-    height: auto;
-    margin-left: 1vw;
-  }
-
-  .dx-button.dx-button-logout .dx-icon {
-    font-size: 2.2vw;
-    margin-right: 0;
-    margin-left: 0;
-  }
 }
 
-@media (min-width: 575.98px) {
+@media (min-width: 576px) {
   #contact {
     font-size: 20px;
     padding-left: 0px !important;
