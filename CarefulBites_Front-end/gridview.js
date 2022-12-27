@@ -259,7 +259,7 @@ $(() => {
                         showColumnLines: false,
                         showRowLines: true,
                         showBorders: true,
-                        noDataText: ItemStorageDict.length === 0 ? "To get started, try creating a storage in STORAGE." : "Great! Now click the ADD button above the grid.",
+                        noDataText: ItemStorageDict.length === 0 ? "To get started, try creating a storage in STORAGE MANAGEMENT." : "Great! Now click the ADD button above the grid.",
                         scrolling: {
                             mode: 'virtual',
                         },
@@ -274,7 +274,28 @@ $(() => {
                             visible: true,
                         },
                         editing: {
-                            mode: 'row',
+                            mode: 'form',
+                            form: {
+                                items: [{
+                                    itemType: "group",
+                                    items: [
+                                        { dataField: "name" },
+                                        { dataField: "amount" },
+                                        { dataField: "unit" },
+                                        {
+                                            dataField: "itemStorageId",
+                                            lookup: {
+                                                dataSource: Object.values(ItemStorageDict),
+                                                displayExpr: 'name',
+                                                valueExpr: 'itemStorageId'
+                                            }
+                                        },
+                                        { dataField: "openDate" },
+                                        { dataField: "expirationDate" },
+                                        { dataField: "daysAfterOpen" },
+                                    ]
+                                },]
+                            },
                             allowUpdating: true,
                             allowAdding: true,
                             allowDeleting: true,
