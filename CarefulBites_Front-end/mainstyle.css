@@ -114,11 +114,33 @@ body {
   }
 }
 
-@media (min-width: 576px) {
-  #contact {
-    font-size: 20px;
-    padding-left: 0px !important;
+@media (min-width: 800px) {
+  #contacts {
+    display:inline-flex;
   }
+
+  #mail {
+    padding-right: 14px;
+  }
+}
+
+#mail {
+  color: white;
+}
+
+footer {
+  padding-left: 10px;
+}
+
+#contact {
+  padding-top: 15px;
+  padding-bottom: 10px;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+#contacts {
+  font-size: 14px;
 }
 
 /* recipes */
@@ -254,19 +276,12 @@ body {
   }
 }
 
-@media (max-width: 850px) {
-  .contacts a {
-    display: block;
-    margin-bottom: 1vh;
-    margin-left: 0 !important;
-  }
-}
-
 @media (max-width: 540px) {
   #POPUP-LOGIN-BUTTON,
   #POPUP-CREATEACCOUNT-BUTTON {
     font-size: 8px;
   }
+
   #LOGIN-BUTTON {
     font-size: 3.4vw;
   }
