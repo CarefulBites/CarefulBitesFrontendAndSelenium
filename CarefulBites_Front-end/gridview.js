@@ -525,18 +525,43 @@ $(() => {
                 }
             }]
     });
-
+    data = sessionStorage.getItem("userinfo")
+    if (data == "chocolate") {
+        DevExpress.ui.themes.current("material.blue.dark");
+    }
+    if (data == "milk") {
+        DevExpress.ui.themes.current("material.blue.light");
+    }
     const actions = [
         {
             id: 1,
             text: "Switch Theme",
             icon: "tips",
             onClick: () => {
-                if (DevExpress.ui.themes.current() == "material.blue.dark") {
-                    DevExpress.ui.themes.current("material.blue.light");
+                id = sessionStorage.getItem("CurrentUserId")
+                data = sessionStorage.getItem("userinfo")
+                if (data == "milk") {
+                    jsonpatchstr = "[{ \"op\": \"replace\", \"path\": \"/information\", \"value\": \"chocolate\" }]";
+                    data = "chocolate";
                 } else {
-                    DevExpress.ui.themes.current("material.blue.dark");
+                    jsonpatchstr = "[{ \"op\": \"replace\", \"path\": \"/information\", \"value\": \"milk\" }]";
+                    data = "milk";
                 }
+                if (data == "chocolate") {
+                    DevExpress.ui.themes.current("material.blue.dark");
+                    sessionStorage.setItem("userinfo", "chocolate");
+                }
+                if (data == "milk") {
+                    DevExpress.ui.themes.current("material.blue.light");
+                    sessionStorage.setItem("userinfo", "milk")
+                }
+                $.ajax({
+                    url: baseURL + "/users/" + encodeURIComponent(id),
+                    type: "patch",
+                    dataType: "json",
+                    data: jsonpatchstr,
+                    contentType: "application/json-patch+json; charset=utf-8",
+                })
             }
         },
         {
