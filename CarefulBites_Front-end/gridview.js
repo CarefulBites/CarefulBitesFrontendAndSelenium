@@ -538,6 +538,7 @@ $(() => {
                 $("#theme-button").dxButton("instance").option("text", "light theme")
             }
         },
+        type: 'switch-theme',
         styling: 'contained'
     });
 
