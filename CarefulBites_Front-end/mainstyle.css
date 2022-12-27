@@ -55,7 +55,7 @@ nav {
   font-size: 30px;
 }
 
-@media (max-width: 580px) {
+@media (max-width: 600px) {
   .logo-div {
     font-size: 4vw;
   }
