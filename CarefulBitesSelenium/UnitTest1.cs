@@ -103,15 +103,24 @@ public class UnitTest1 {
     }
 
     [TestMethod]
-    public void Test4ChangeTheme()
+    public void Test4AClickDropdown()
     {
-        Thread.Sleep(10);
         _driver?.SwitchTo().ActiveElement();
-        var theme = _driver?.FindElement(By.Id("theme-button"));
+        var dropDown = _driver?.FindElement(By.Id("user-drop-down-button"));
+
+        Assert.IsNotNull(dropDown);
+
+        dropDown?.Click();
+    }
+
+    [TestMethod]
+    public void Test4BChangeTheme()
+    {
+        _driver?.SwitchTo().ActiveElement();
+        var theme = _driver?.FindElement(By.XPath("//*[contains(@class,'dx-icon-tips')]"));
 
         Assert.IsNotNull(theme);
 
-        theme?.Click();
         theme?.Click();
     }
 
@@ -163,7 +172,7 @@ public class UnitTest1 {
 
         var filter = _driver?.FindElement(By.Id("ingredientSelection")); 
         (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", filter);
-        //Thread.Sleep(2000);
+        Thread.Sleep(10);
 
         var recipes = _driver?.FindElement(By.XPath("//div[@id='ingredientSelection']//*[@class='dx-texteditor-input']"));
         
