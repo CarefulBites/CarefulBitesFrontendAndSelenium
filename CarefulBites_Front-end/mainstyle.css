@@ -10,37 +10,33 @@
   font-size: 24px;
 }
 
-.jumbotron {
-  margin: 15px;
-}
-
-@media screen and (max-width: 600px) {
-  .jumbotron {
-    margin: 0px;
-  }
-}
-
 .dx-field-item-label-location-top {
   padding-left: 0;
   font-size: 20px;
 }
 
-@media screen and (max-width: 600px) {
-  .container {
-    padding-top: 100px;
+@media (orientation: landscape) {
+  .dx-viewport {
+    padding-left: 4%;
+    padding-right: 4%;
   }
+}
+
+.container-fluid {
+  margin-left: 10px;
+  margin-right: 10px
+}
+
+.dx-viewport {
+  padding-top: 10px;
 }
 
 body {
   min-height: 100vh;
 }
 
-nav {
-  margin-bottom: 5%;
-}
-
-.navbar-button {
-  margin-right: 10px;
+.navbar {
+  margin-bottom: 10px;
 }
 
 .logo {
@@ -100,11 +96,6 @@ nav {
     height: auto;
   }
 
-  .navbar-button {
-    margin-right: 0px;
-    align-items: flex-end;
-  }
-
   .container-fluid {
     padding-left: 0px;
     padding-right: 0px;
@@ -123,11 +114,33 @@ nav {
   }
 }
 
-@media (min-width: 576px) {
-  #contact {
-    font-size: 20px;
-    padding-left: 0px !important;
+@media (min-width: 800px) {
+  #contacts {
+    display:inline-flex;
   }
+
+  #mail {
+    padding-right: 14px;
+  }
+}
+
+#mail {
+  color: white;
+}
+
+footer {
+  padding-left: 10px;
+}
+
+#contact {
+  padding-top: 15px;
+  padding-bottom: 10px;
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+#contacts {
+  font-size: 14px;
 }
 
 /* recipes */
@@ -263,19 +276,12 @@ nav {
   }
 }
 
-@media (max-width: 850px) {
-  .contacts a {
-    display: block;
-    margin-bottom: 1vh;
-    margin-left: 0 !important;
-  }
-}
-
 @media (max-width: 540px) {
   #POPUP-LOGIN-BUTTON,
   #POPUP-CREATEACCOUNT-BUTTON {
     font-size: 8px;
   }
+
   #LOGIN-BUTTON {
     font-size: 3.4vw;
   }
