@@ -55,7 +55,33 @@ nav {
   font-size: 30px;
 }
 
-@media (max-width: 575.98px) {
+#user-drop-down-button {
+  min-width: 180px;
+}
+
+@media (max-width: 320px) {
+  #user-drop-down-button {
+    min-width: 150px
+  }
+
+  #user-drop-down-button .dx-button-content {
+    font-size: 4vw;
+  }
+
+  #user-drop-down-button .dx-icon {
+    font-size: 6vw;
+  }
+
+  .dx-item-content.dx-list-item-content {
+    font-size: 4vw;
+  }
+
+  .dx-item-content.dx-list-item-content .dx-icon {
+    font-size: 6vw;
+  }
+}
+
+@media (max-width: 600px) {
   .logo-div {
     font-size: 15px;
   }
@@ -69,9 +95,26 @@ nav {
     margin-right: 0px;
     align-items: flex-end;
   }
+
+  .container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .dx-button.dx-button-storage {
+    font-size: 2.5vw;
+    width: auto;
+    height: auto;
+  }
+
+  .dx-button.dx-button-add-item {
+    font-size: 2.5vw;
+    width: auto;
+    height: auto;
+  }
 }
 
-@media (min-width: 575.98px) {
+@media (min-width: 576px) {
   #contact {
     font-size: 20px;
     padding-left: 0px !important;
