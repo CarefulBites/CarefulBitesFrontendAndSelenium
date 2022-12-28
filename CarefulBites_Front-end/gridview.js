@@ -186,6 +186,7 @@ const popupContentTemplateItemStorageForm = function () {
                                 dataSource: Object.values(ItemStorageDict),
                                 displayExpr: 'name',
                                 valueExpr: 'itemStorageId',
+                                showCancelButton: true,
                                 onValueChanged: function (e) {
                                     key = e.value;
                                 },
