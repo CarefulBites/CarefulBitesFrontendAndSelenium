@@ -131,6 +131,7 @@ const popupContentTemplateItemStorageFormDeleteOrMove = function () {
                                 dataSource: Object.values(ItemStorageDictDelete),
                                 displayExpr: 'name',
                                 valueExpr: 'itemStorageId',
+                                showCancelButton: true,
                                 onValueChanged: function (e) {
                                     key = e.value;
                                 },
