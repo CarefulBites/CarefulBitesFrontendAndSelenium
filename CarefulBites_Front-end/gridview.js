@@ -379,9 +379,10 @@ $(() => {
                             {
                                 dataField: 'amount',
                                 dataType: 'number',
-                                width: 100,
+                                caption: (screen.width > 580) ? 'Amount' : 'Amt.',
+                                width: (screen.width > 580) ? 82 : 62,
                                 allowSorting: false,
-                                allowFiltering: false,
+                                allowFiltering: false,                                
                                 placeholder: 'The amount left of the item',
                                 cellTemplate: function (container, options) {
                                     container.addClass('reduce-right-gap').text(options.text);
@@ -403,7 +404,7 @@ $(() => {
                                         return 'Error: Unit not recognised.'
                                     }
                                 },
-                                width: 80,
+                                width: 33,
                                 alignment: 'left',
                                 caption: '',
                                 allowSorting: false,
@@ -502,7 +503,7 @@ $(() => {
                                     }
                                 }
                             }
-                        ],
+                        ]
                     }).dxDataGrid('instance')
                     console.log(grid)
                 }
