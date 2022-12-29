@@ -1,3 +1,4 @@
+let deleteStorageId = null
 const ItemStore = new DevExpress.data.CustomStore({
     key: 'itemId',
     load(loadOptions) {
@@ -108,6 +109,97 @@ let itemStorageForm = {
     userId: -1
 }
 
+const popupContentTemplateItemStorageFormDeleteOrMove = function () {
+    return $('<div>').append(
+        $('<div />').attr('id', 'ITEMSTORAGE-FORM-ID').dxForm({
+            labelMode: 'floating',
+            formData: itemStorageForm,
+            showColonAfterLabel: false,
+            labelLocation: 'left',
+            colcount: 1,
+            title: 'What do you wish to do with the items in the storage?',
+            items:
+                [
+                    {
+                        itemType: 'group',
+                        caption: 'MOVE',
+                        items: [{
+                            caption: 'Move To',
+                            editorType: "dxLookup",
+                            editorOptions: {
+                                placeholder: 'Select a value',
+                                dataSource: Object.values(ItemStorageDictDelete),
+                                displayExpr: 'name',
+                                valueExpr: 'itemStorageId',
+                                onValueChanged: function (e) {
+                                    key = e.value;
+                                },
+                            },
+                        },
+                        {
+                            itemType: 'button',
+                            horizontalAlignment: 'center',
+                            buttonOptions: {
+                                text: 'Move',
+                                type: 'default',
+                                useSubmitBehavior: false,
+                                onClick() {
+                                    $.ajax({
+                                        url: baseURL + "/itemStorages/" + encodeURIComponent(deleteStorageId) + '?destinationId=' + encodeURIComponent(key),
+                                        dataType: 'json',
+                                        method: "DELETE",
+                                        contentType: "application/json; charset=utf-8",
+                                        success(result) {
+                                            location.reload()
+                                        }
+                                    })
+                                }
+                            }
+
+                        }
+                    ]
+                    },
+                    {
+                        itemType: 'group',
+                        caption: 'DELETE ALL',
+                        items: [
+                            {
+                                itemType: 'button',
+                                horizontalAlignment: 'center',
+                                buttonOptions: {
+                                    text: 'Delete All',
+                                    type: 'danger',
+                                    useSubmitBehavior: false,
+                                    onClick() {
+                                        $.ajax({
+                                            url: baseURL + "/itemStorages/" + encodeURIComponent(deleteStorageId) + '?destinationId=-1',
+                                            dataType: 'json',
+                                            method: "DELETE",
+                                            contentType: "application/json; charset=utf-8",
+                                            success(result) {
+                                                location.reload()
+                                            }
+                                        })
+                                    }
+                                },
+                            },]
+                    },
+                    {
+                        itemType: 'button',
+                        horizontalAlignment: 'right',
+                        buttonOptions: {
+                            text: 'Cancel',
+                            type: 'normal',
+                            useSubmitBehavior: false,
+                            onClick() {
+                                storagePopUpDeleteOrMove.hide()
+                            }
+                        }
+                    }
+                ]
+        }))
+}
+
 const popupContentTemplateItemStorageForm = function () {
     return $('<div>').append(
         $('<div />').attr('id', 'ITEMSTORAGE-FORM-ID').dxForm({
@@ -207,18 +299,31 @@ const popupContentTemplateItemStorageForm = function () {
                                 type: 'danger',
                                 useSubmitBehavior: false,
                                 onClick() {
-                                    console.log()
-                                    if (confirm('Are you sure you wish to delete this item?')) {
-                                        $.ajax({
-                                            url: baseURL + "/itemStorages/" + encodeURIComponent(key),
-                                            dataType: 'json',
-                                            method: "DELETE",
-                                            async: false,
-                                            contentType: "application/json; charset=utf-8",
-                                        })
-                                    }
+                                    deleteStorageId = key
+                                    const flatItems = $('#itemGrid').dxDataGrid("instance").getDataSource()._items.flatMap(item => item.items)
+                                    var match = flatItems.find(item => item.itemStorageId === key)
 
-                                    location.reload()
+                                    var result = DevExpress.ui.dialog.confirm("<p>Are you sure?</p>", "Confirm changes")
+                                    result.done(function (dialogResult) {
+                                        if (dialogResult) {
+                                            if (match !== 'undefined') {
+                                                console.log('Do something')
+                                                ItemStorageDictDelete = ItemStorageDict
+                                                delete ItemStorageDictDelete[deleteStorageId]
+                                                storagePopUpDeleteOrMove.show()
+                                            }
+                                            else {
+                                                $.ajax({
+                                                    url: baseURL + "/itemStorages/" + encodeURIComponent(key),
+                                                    dataType: 'json',
+                                                    method: "DELETE",
+                                                    async: false,
+                                                    contentType: "application/json; charset=utf-8",
+                                                })
+                                                location.reload()
+                                            }
+                                        }
+                                    })
                                 }
                             },
                         },
@@ -231,6 +336,7 @@ const popupContentTemplateItemStorageForm = function () {
 
 $(() => {
     ItemStorageDict = []
+    ItemStorageDictDelete = []
     $.ajax({
         url: baseURL + "/itemStorages/?userId=" + sessionStorage.getItem('CurrentUserId'),
         method: 'GET',
@@ -260,9 +366,6 @@ $(() => {
                         showRowLines: true,
                         showBorders: true,
                         noDataText: ItemStorageDict.length === 0 ? "To get started, try creating a storage in STORAGE MANAGEMENT." : "Great! Now click the ADD button above the grid.",
-                        scrolling: {
-                            mode: 'virtual',
-                        },
                         filterRow: {
                             visible: (screen.width > 580) ? true : false,
                             applyFilter: 'auto',
@@ -592,6 +695,21 @@ $(() => {
         container: '.dx-viewport',
         showTitle: true,
         title: 'Storage Management',
+        visible: false,
+        dragEnabled: false,
+        hideOnOutsideClick: true,
+        showCloseButton: false,
+    }).dxPopup('instance');
+
+    storagePopUpDeleteOrMove = $('#POPUP-ITEMSTORAGE-DELETE-OR-MOVE').dxPopup({
+        contentTemplate: popupContentTemplateItemStorageFormDeleteOrMove,
+        width: '80vw',
+        maxWidth: 500,
+        height: '80vh',
+        maxHeight: 500,
+        container: '.dx-viewport',
+        showTitle: true,
+        title: 'Move or Delete All',
         visible: false,
         dragEnabled: false,
         hideOnOutsideClick: true,
