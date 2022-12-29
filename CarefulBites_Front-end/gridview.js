@@ -45,18 +45,24 @@ const ItemStore = new DevExpress.data.CustomStore({
             method: 'POST',
             data: JSON.stringify(values),
             contentType: "application/json; charset=utf-8",
+            success(result){
+                deferred.resolve(result)
+                IngredientSelection()
+            },
+            error() {
+                deferred.reject("Insertion failed")
+            }
         })
-            .done(deferred.resolve)
-            .fail(function (e) {
-                deferred.reject("Insertion failed");
-            });
         return deferred.promise();
     },
     update: function (key, values) {
         jsonpatchstr = "["
         Object.keys(values).forEach(key => {
-            if (typeof (values[key]) == 'number' || typeof (values[key]) == 'object') {
+            if (typeof (values[key]) == 'number') {
                 jsonpatchstr += `{ \"op\": \"replace\", \"path\": \"/${key}\", \"value\": ${values[key]} },`
+            }
+            else if (typeof (values[key]) == 'object') {
+                jsonpatchstr += `{ \"op\": \"replace\", \"path\": \"/${key}\", \"value\": \"${values[key].toISOString()}\" },`
             }
             else {
                 jsonpatchstr += `{ \"op\": \"replace\", \"path\": \"/${key}\", \"value\": \"${values[key]}\" },`
@@ -73,11 +79,14 @@ const ItemStore = new DevExpress.data.CustomStore({
             dataType: "json",
             data: jsonpatchstr,
             contentType: "application/json-patch+json; charset=utf-8",
+            success(result){
+                deferred.resolve(result)
+                IngredientSelection()
+            },
+            error() {
+                deferred.reject("Update failed")
+            }
         })
-            .done(deferred.resolve)
-            .fail(function (e) {
-                deferred.reject("Update failed");
-            });
         return deferred.promise();
     },
     remove: function (key) {
@@ -86,11 +95,14 @@ const ItemStore = new DevExpress.data.CustomStore({
             url: baseURL + "/foodItems/" + encodeURIComponent(key),
             method: "DELETE",
             contentType: "application/json; charset=utf-8",
+            success(result){
+                deferred.resolve(result)
+                IngredientSelection()
+            },
+            error() {
+                deferred.reject("Deletion failed")
+            }
         })
-            .done(deferred.resolve)
-            .fail(function (e) {
-                deferred.reject("Deletion failed");
-            });
         return deferred.promise();
     },
     byKey: function (key) {
