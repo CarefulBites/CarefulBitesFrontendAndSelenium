@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Threading;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -107,33 +108,12 @@ public class UnitTest1 {
         sort?.Click();
     }
 
-    [TestMethod]
-    public void Test4AClickDropdown()
-    {
-        _driver?.SwitchTo().ActiveElement();
-        var dropDown = _driver?.FindElement(By.Id("user-drop-down-button"));
-
-        Assert.IsNotNull(dropDown);
-
-        dropDown?.Click();
-    }
 
     [TestMethod]
-    public void Test4BChangeTheme()
+    public void Test4AGetStorageGroup()
     {
         _driver?.SwitchTo().ActiveElement();
-        var theme = _driver?.FindElement(By.XPath("//*[contains(@class,'dx-icon-tips')]"));
-
-        Assert.IsNotNull(theme);
-
-        theme?.Click();
-    }
-
-    [TestMethod]
-    public void Test5GetStorageGroup()
-    {
-        _driver?.SwitchTo().ActiveElement();
-        var group = _driver?.FindElement(By.XPath("//*[@id=\"itemGrid\"]/div/div[6]/div/table/tbody/tr[1]/td[1]/div"));
+        var group = _driver?.FindElement(By.XPath("//*[contains(@role,'gridcell')]"));
 
         Assert.IsNotNull(group);
 
@@ -141,7 +121,7 @@ public class UnitTest1 {
     }
 
     [TestMethod]
-    public void Test6GetSort()
+    public void Test4BGetSort()
     {
         _driver?.SwitchTo().ActiveElement();
         var sort = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Column Amount')]"));
@@ -152,7 +132,7 @@ public class UnitTest1 {
     }
 
     [TestMethod]
-    public void Test7GetSearch()
+    public void Test4CGetSearch()
     {
         _driver?.SwitchTo().ActiveElement();
         var search = _driver?.FindElement(By.ClassName("dx-texteditor-input"));
@@ -169,7 +149,77 @@ public class UnitTest1 {
     }
 
     [TestMethod]
-    public void Test8GetRecipes()
+    public void Test5AClickDropdown()
+    {
+        _driver?.SwitchTo().ActiveElement();
+        var dropDown = _driver?.FindElement(By.Id("user-drop-down-button"));
+
+        Assert.IsNotNull(dropDown);
+
+        dropDown?.Click();
+    }
+
+    [TestMethod]
+    public void Test5BchangeTheme()
+    {
+        _driver?.SwitchTo().ActiveElement();
+        var theme = _driver?.FindElement(By.XPath("//*[contains(@class,'dx-icon-tips')]"));
+
+        Assert.IsNotNull(theme);
+
+        theme?.Click();
+    }
+
+    [TestMethod]
+    public void Test5GetItemStorage()
+    {
+        _driver?.SwitchTo().ActiveElement();
+        var group = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Storage Management')]"));
+        Assert.IsNotNull(group);
+
+        group?.Click(); 
+
+        var input = _driver?.FindElement(By.XPath("//*[contains(@name,'name')]"));
+        input.SendKeys("Selenium");
+
+        var create = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Create')]"));
+        create.Click();
+    }
+
+    [TestMethod]
+    public void Test6DeleteItemStorage()
+    {
+        _driver?.SwitchTo().ActiveElement();
+        var group = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Storage Management')]"));
+        Assert.IsNotNull(group);
+
+        group?.Click();
+
+        var dropDown = _driver?.FindElement(By.XPath("//*[contains(@id,'ITEMSTORAGE-FORM-ID')]//*[contains(@class,'dx-lookup-field')]"));
+        dropDown.Click();
+        dropDown.Click();
+
+        var itemStorage = _driver?.FindElement(By.XPath("//div[@class='dx-scrollview-content']//div[@class='dx-item dx-list-item']//*[contains(text(), 'Selenium')]"));
+        itemStorage.Click();
+
+        var delete = _driver?.FindElement(By.XPath("//*[contains(@id,'ITEMSTORAGE-FORM-ID')]//*[contains(@aria-label,'Delete')]"));
+        delete.Click();
+
+        var yesButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Yes')]"));
+        yesButton?.Click();
+        yesButton?.Click();
+
+        var deleteAllButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Delete All')]"));
+        deleteAllButton?.Click();
+        deleteAllButton?.Click();
+
+        Thread.Sleep(1000);
+    }
+
+ 
+
+    [TestMethod]
+    public void Test7GetRecipes()
     {
         _driver?.SwitchTo().ActiveElement();
         var foodTab = _driver?.FindElement(By.XPath("//*[contains(@class,'dx-icon-food')]"));
@@ -195,7 +245,7 @@ public class UnitTest1 {
     }
 
     [TestMethod]
-    public void Test9GetCards()
+    public void Test8GetCards()
     {
         _driver?.SwitchTo().ActiveElement();
         var cards = _driver?.FindElement(By.Id("cards"));
@@ -209,6 +259,8 @@ public class UnitTest1 {
         Thread.Sleep(100);
 
         popup?.Click();
+
+        Thread.Sleep(1000);
     }
 
     [TestMethod]
