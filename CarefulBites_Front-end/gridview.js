@@ -184,15 +184,21 @@ const popupContentTemplateItemStorageFormDeleteOrMove = function () {
                                     type: 'danger',
                                     useSubmitBehavior: false,
                                     onClick() {
-                                        $.ajax({
-                                            url: baseURL + "/itemStorages/" + encodeURIComponent(deleteStorageId) + '?destinationId=-1',
-                                            dataType: 'json',
-                                            method: "DELETE",
-                                            contentType: "application/json; charset=utf-8",
-                                            success(result) {
-                                                location.reload()
+                                        var result = DevExpress.ui.dialog.confirm("<p>Are you sure you wish to delete all items in the storage? This action is irreversible.</p>", "Delete Storage")
+                                        result.done(function (dialogResult) {
+                                            if (dialogResult) {
+                                                $.ajax({
+                                                    url: baseURL + "/itemStorages/" + encodeURIComponent(deleteStorageId) + '?destinationId=-1',
+                                                    dataType: 'json',
+                                                    method: "DELETE",
+                                                    contentType: "application/json; charset=utf-8",
+                                                    success(result) {
+                                                        location.reload()
+                                                    }
+                                                })
                                             }
                                         })
+                                        
                                     }
                                 },
                             },]
@@ -316,7 +322,7 @@ const popupContentTemplateItemStorageForm = function () {
                                     const flatItems = $('#itemGrid').dxDataGrid("instance").getDataSource()._items.flatMap(item => item.items)
                                     var match = flatItems.find(item => item.itemStorageId === key)
 
-                                    var result = DevExpress.ui.dialog.confirm("<p>Are you sure?</p>", "Confirm changes")
+                                    var result = DevExpress.ui.dialog.confirm("<p>Are you sure?</p>", "Delete Storage")
                                     result.done(function (dialogResult) {
                                         if (dialogResult) {
                                             if (match !== 'undefined') {
