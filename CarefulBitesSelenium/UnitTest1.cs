@@ -259,6 +259,8 @@ public class UnitTest1 {
         Thread.Sleep(100);
 
         popup?.Click();
+
+        Thread.Sleep(1000);
     }
 
     [TestMethod]
