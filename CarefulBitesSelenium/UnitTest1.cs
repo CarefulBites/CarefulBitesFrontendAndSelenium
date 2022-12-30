@@ -24,10 +24,13 @@ public class UnitTest1 {
     public static void Setup(TestContext context) {
     
     var options = new ChromeOptions();
-    options.AddArgument("--window-size=1920,1080");
-    options.AddArgument("--start-maximized");
+
+
+    
 
 #if RELEASE
+    options.AddArgument("--window-size=1920,1080");
+    options.AddArgument("--start-maximized");
     options.AddArgument("--headless");
 #endif
 
@@ -83,6 +86,8 @@ public class UnitTest1 {
         Assert.IsNotNull(login);
 
         loginPassword?.SendKeys("Admin");
+
+        Thread.Sleep(100);
 
         var loginButton = _driver?.FindElement(By.XPath("//*[@id=\"POPUP-LOGIN-BUTTON\"]"));
 
@@ -201,30 +206,55 @@ public class UnitTest1 {
 
         Assert.IsNotNull(popup);
 
-        popup?.Click();
+        Thread.Sleep(100);
 
-        //Thread.Sleep(1000);
+        popup?.Click();
     }
 
-    //[TestMethod]
-    //public void Test9GetAccountPage()
-    //{
-    //    _driver?.SwitchTo().ActiveElement();
-    //    var loginButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
+    [TestMethod]
+    public void TestALogOut()
+    {
+        _driver?.SwitchTo().ActiveElement();
 
-    //    Assert.IsNotNull(loginButton);
+        var closePopup = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Close')]"));
 
-    //    loginButton?.Click();
-    //}
+        Assert.IsNotNull(closePopup);
 
-    //[TestMethod]
-    //public void Test91CreateAccount()
-    //{
-    //    _driver?.SwitchTo().ActiveElement();
-    //    var loginButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
+        Thread.Sleep(250);
 
-    //    Assert.IsNotNull(loginButton);
+        closePopup?.Click();
 
-    //    loginButton?.Click();
-    //}
+        _driver?.SwitchTo().ActiveElement();
+
+        var dropDown = _driver?.FindElement(By.Id("user-drop-down-button"));
+
+        Assert.IsNotNull(dropDown);
+
+        dropDown?.Click();
+        
+        var logOut = _driver?.FindElement(By.XPath("//*[contains(@class,'dx-icon-runner')]"));
+
+        Assert.IsNotNull(logOut);
+
+        logOut?.Click();
+    }
+
+    [TestMethod]
+    public void TestBGetAccountPage() {
+        _driver?.SwitchTo().ActiveElement();
+        
+        var loginButton = _driver?.FindElement(By.XPath("//*[@id=\"LOGIN-BUTTON\"]"));
+
+        Assert.IsNotNull(loginButton);
+
+        loginButton?.Click();
+
+        _driver?.SwitchTo().ActiveElement();
+
+        var createAccount = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
+
+        Assert.IsNotNull(createAccount);
+
+        createAccount?.Click();
+    }
 }
