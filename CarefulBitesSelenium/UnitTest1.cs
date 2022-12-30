@@ -1,4 +1,5 @@
 using System;
+using System.ComponentModel;
 using System.Threading;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -133,6 +134,50 @@ public class UnitTest1 {
         Assert.IsNotNull(group);
 
         group?.Click();
+    }
+
+    [TestMethod]
+    public void Test5BGetItemStorage()
+    {
+        _driver?.SwitchTo().ActiveElement();
+        var group = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Storage Management')]"));
+        Assert.IsNotNull(group);
+
+        group?.Click(); 
+
+        var input = _driver?.FindElement(By.XPath("//*[contains(@name,'name')]"));
+        input.SendKeys("Selenium");
+
+        var create = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Create')]"));
+        create.Click();
+    }
+
+    [TestMethod]
+    public void Test5CDeleteItemStorage()
+    {
+        _driver?.SwitchTo().ActiveElement();
+        var group = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Storage Management')]"));
+        Assert.IsNotNull(group);
+
+        group?.Click();
+
+        var dropDown = _driver?.FindElement(By.XPath("//*[contains(@id,'ITEMSTORAGE-FORM-ID')]//*[contains(@class,'dx-lookup-field')]"));
+        dropDown.Click();
+        dropDown.Click();
+
+        var itemStorage = _driver?.FindElement(By.XPath("//div[@class='dx-scrollview-content']//div[@class='dx-item dx-list-item']//*[contains(text(), 'Selenium')]"));
+        itemStorage.Click();
+
+        var delete = _driver?.FindElement(By.XPath("//*[contains(@id,'ITEMSTORAGE-FORM-ID')]//*[contains(@aria-label,'Delete')]"));
+        delete.Click();
+
+        var yesButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Yes')]"));
+        yesButton?.Click();
+        yesButton?.Click();
+
+        var deleteAllButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Delete All')]"));
+        deleteAllButton?.Click();
+        deleteAllButton?.Click();
     }
 
     [TestMethod]
