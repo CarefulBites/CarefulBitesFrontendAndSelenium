@@ -319,7 +319,7 @@ const popupContentTemplateItemStorageForm = function () {
                                     var result = DevExpress.ui.dialog.confirm("<p>Are you sure?</p>", "Confirm changes")
                                     result.done(function (dialogResult) {
                                         if (dialogResult) {
-                                            if (match !== 'undefined') {
+                                            if (typeof(match) !== 'undefined') {
                                                 console.log('Do something')
                                                 ItemStorageDictDelete = ItemStorageDict
                                                 delete ItemStorageDictDelete[deleteStorageId]
