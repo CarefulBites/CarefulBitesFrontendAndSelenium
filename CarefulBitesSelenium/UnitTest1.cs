@@ -80,13 +80,13 @@ public class UnitTest1 {
 
         Assert.IsNotNull(login);
 
-        login?.SendKeys("Admin");
+        login?.SendKeys("Selenium");
 
         var loginPassword = _driver?.FindElement(By.XPath("//*[contains(@name,'password')]"));
 
         Assert.IsNotNull(login);
 
-        loginPassword?.SendKeys("Admin");
+        loginPassword?.SendKeys("Selenium1234");
 
         Thread.Sleep(100);
 
