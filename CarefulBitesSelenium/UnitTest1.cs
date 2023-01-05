@@ -206,12 +206,8 @@ public class UnitTest1 {
         delete.Click();
 
         var yesButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Yes')]"));
+        Thread.Sleep(400);
         yesButton?.Click();
-        yesButton?.Click();
-
-        var deleteAllButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Delete All')]"));
-        deleteAllButton?.Click();
-        deleteAllButton?.Click();
 
         Thread.Sleep(1000);
     }
