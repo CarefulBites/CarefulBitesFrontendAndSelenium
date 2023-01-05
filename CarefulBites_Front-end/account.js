@@ -115,6 +115,10 @@ $(() => {
                   type: "required",
                   message: "Username is required",
                 },
+                {
+                  type: 'stringLength',
+                  min: 3,
+                }
               ],
             },
             {
@@ -291,6 +295,11 @@ $(() => {
                     return sendRequest(params.value);
                   },
                 },
+                {
+                  type: 'stringLength',
+                  min: 3,
+                  message: 'Your username must be at least 3 characters long'
+                }
               ],
             },
             {
