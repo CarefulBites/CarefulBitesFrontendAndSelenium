@@ -65,7 +65,7 @@ public class UnitTest1 {
     [TestMethod]
     public void Test1GetLoginModal() {
         _driver?.SwitchTo().ActiveElement();
-        var loginButton = _driver?.FindElement(By.XPath("//*[@id=\"LOGIN-BUTTON\"]"));
+        var loginButton = _driver?.FindElement(By.Id("LOGIN-BUTTON"));
 
         Assert.IsNotNull(loginButton);
 
@@ -90,7 +90,7 @@ public class UnitTest1 {
 
         Thread.Sleep(100);
 
-        var loginButton = _driver?.FindElement(By.XPath("//*[@id=\"POPUP-LOGIN-BUTTON\"]"));
+        var loginButton = _driver?.FindElement(By.Id("POPUP-LOGIN-BUTTON"));
 
         Assert.IsNotNull(loginButton);
 
@@ -225,19 +225,17 @@ public class UnitTest1 {
         (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", filter);
         Thread.Sleep(10);
 
-        var recipes = _driver?.FindElement(By.XPath("//div[@id='ingredientSelection']//*[@class='dx-texteditor-input']"));
+        var recipes = _driver?.FindElement(By.Id("ingredientSelectionBox"));
         
         Assert.IsNotNull(recipes);
         
         recipes?.Click();
 
-        var selectedIngredient = _driver?.FindElement(By.XPath("//div[@class='dx-scrollview-content']//div[@class='dx-item dx-list-item']//*[contains(@class,'dx-checkbox-icon')]"));
+        var selectedIngredient = _driver?.FindElement(By.XPath("//div[@class='dx-item dx-list-item']//*[contains(text(), 'Milk')]"));
 
         Assert.IsNotNull(selectedIngredient); 
 
         selectedIngredient?.Click();
-
-        //Thread.Sleep(2000);
     }
 
     [TestMethod]
