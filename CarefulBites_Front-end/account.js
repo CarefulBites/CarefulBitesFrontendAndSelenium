@@ -118,6 +118,9 @@ $(() => {
                 {
                   type: 'stringLength',
                   min: 3,
+                  elementAttr: {
+                    id: 'username'
+                  },
                 }
               ],
             },
@@ -126,6 +129,9 @@ $(() => {
               caption: "Password",
               colSpan: 2,
               editorOptions: {
+                elementAttr: {
+                  id: 'password'
+                },
                 mode: "password",
                 onEnterKey: function (e) {
                   console.log(e)

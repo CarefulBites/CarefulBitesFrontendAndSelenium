@@ -115,28 +115,3 @@ function GetRandomCards() {
       ).appendTo($('#randomCards'));
   });
 };
-
-$(function () {
-  $("#amountSelection").dxTagBox({
-    items: Numbers,
-    onValueChanged: function (e) {
-      var element = document.getElementById("randomCards");
-      element.innerHTML = "";
-      amount = e.value[0];
-      GetRandomMeals(amount);
-    },
-  });
-});
-
-const Numbers = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10'
-]
