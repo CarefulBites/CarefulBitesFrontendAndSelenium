@@ -39,11 +39,15 @@ const ItemStore = new DevExpress.data.CustomStore({
         return deferred.promise();
     },
     insert: function (values) {
+        data = {
+            item1: values,
+            item2: []
+        }
         var deferred = $.Deferred();
         $.ajax({
             url: baseURL + "/foodItems",
             method: 'POST',
-            data: JSON.stringify(values),
+            data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             success(result){
                 deferred.resolve(result)
