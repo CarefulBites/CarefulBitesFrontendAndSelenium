@@ -67,12 +67,9 @@ public class UnitTest1 {
     {
         _driver?.SwitchTo().ActiveElement();
 
-        var scroll = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//*[contains(@aria-label,'Details')]"));
-        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
-
         Thread.Sleep(1000);
 
-        var popup = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
+        var popup = _driver?.FindElement(By.XPath("//*[@id='randomCards']//*[@role='button']"));
         Assert.IsNotNull(popup);
         Thread.Sleep(100);
         popup?.Click();
