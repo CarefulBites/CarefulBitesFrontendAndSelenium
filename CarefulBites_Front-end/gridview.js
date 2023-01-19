@@ -5,15 +5,15 @@ const ItemStore = new DevExpress.data.CustomStore({
         const deferred = $.Deferred();
         const args = {};
         [
-            'skip',
-            'take',
-            'requireTotalCount',
-            'requireGroupCount',
-            'sort',
-            'filter',
-            'totalSummary',
-            'group',
-            'groupSummary',
+            'skip', //The number of data objects to be skipped from the result set's start. In conjunction with take, used to implement paging.
+            'take', //The number of data objects to be loaded. In conjunction with skip, used to implement paging.
+            'requireTotalCount', //Indicates whether the total count of data objects is needed.
+            'requireGroupCount', //Indicates whether a top-level group count is required. Used in conjunction with the filter, take, skip, requireTotalCount, and group settings.
+            'sort', //A sort expression.
+            'filter', //A filter expression.
+            'totalSummary',//Contains summary definitions with the following structure, where summaryType can be "sum", "avg", "min", "max" or "count":
+            'group', //Defines grouping levels to be applied to the data. 
+            'groupSummary', //Contains group summary definitions with the following structure, where summaryType can be "sum", "avg", "min", "max" or "count":
         ].forEach((i) => {
             if (i in loadOptions && isNotEmpty(loadOptions[i])) {
                 args[i] = JSON.stringify(loadOptions[i]);
@@ -49,7 +49,7 @@ const ItemStore = new DevExpress.data.CustomStore({
             method: 'POST',
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
-            success(result){
+            success(result) {
                 deferred.resolve(result)
                 IngredientSelection()
             },
@@ -83,7 +83,7 @@ const ItemStore = new DevExpress.data.CustomStore({
             dataType: "json",
             data: jsonpatchstr,
             contentType: "application/json-patch+json; charset=utf-8",
-            success(result){
+            success(result) {
                 deferred.resolve(result)
                 IngredientSelection()
             },
@@ -99,7 +99,7 @@ const ItemStore = new DevExpress.data.CustomStore({
             url: baseURL + "/foodItems/" + encodeURIComponent(key),
             method: "DELETE",
             contentType: "application/json; charset=utf-8",
-            success(result){
+            success(result) {
                 deferred.resolve(result)
                 IngredientSelection()
             },
@@ -174,7 +174,7 @@ const popupContentTemplateItemStorageFormDeleteOrMove = function () {
                             }
 
                         }
-                    ]
+                        ]
                     },
                     {
                         itemType: 'group',
@@ -323,7 +323,7 @@ const popupContentTemplateItemStorageForm = function () {
                                     var result = DevExpress.ui.dialog.confirm("<p>Are you sure?</p>", "Confirm changes")
                                     result.done(function (dialogResult) {
                                         if (dialogResult) {
-                                            if (typeof(match) !== 'undefined') {
+                                            if (typeof (match) !== 'undefined') {
                                                 console.log('Do something')
                                                 ItemStorageDictDelete = ItemStorageDict
                                                 delete ItemStorageDictDelete[deleteStorageId]
@@ -355,7 +355,7 @@ let itemTemplateAndCategoriesFormData = {
     itemTemplateId: -1,
     categoryIds: []
 };
-const popupContentTemplateTemplateAndCategories = function() {
+const popupContentTemplateTemplateAndCategories = function () {
     return $('<div>').append(
         $('<div />').attr('id', 'ADD-FROM-TEMPLATE-FORM-ID').dxForm({
             labelMode: 'floating',
@@ -363,7 +363,7 @@ const popupContentTemplateTemplateAndCategories = function() {
             showColonAfterLabel: false,
             labelLocation: 'left',
             colcount: 1,
-            items:[{
+            items: [{
                 itemType: 'group',
                 caption: 'Step 1',
                 items: [{
@@ -380,7 +380,7 @@ const popupContentTemplateTemplateAndCategories = function() {
                         },
                     }
                 },
-            ]
+                ]
             },
             {
                 itemType: 'group',
@@ -410,21 +410,21 @@ const popupContentTemplateTemplateAndCategories = function() {
                         type: 'success',
                         useSubmitBehavior: true,
                         onClick(e) {
-                            
+
                             templateAndCategoriesPopup.hide()
                             $('#itemGrid').dxDataGrid("instance").addRow();
                         }
                     },
                 },]
             },
-        ]
+            ]
         })
     )
 };
 $(() => {
     ItemStorageDict = []
     ItemStorageDictDelete = []
-    
+
     $.ajax({
         url: baseURL + "/itemStorages/?userId=" + sessionStorage.getItem('CurrentUserId'),
         method: 'GET',
@@ -545,7 +545,7 @@ $(() => {
                                 }
                             }
                         },
-                        onInitNewRow: function(e) {
+                        onInitNewRow: function (e) {
                             if (itemTemplateAndCategoriesFormData.itemTemplateId != -1) {
                                 Template = $.ajax({
                                     url: baseURL + "/itemTemplates/" + itemTemplateAndCategoriesFormData.itemTemplateId,
@@ -629,7 +629,7 @@ $(() => {
                                 caption: (screen.width > 580) ? 'Amount' : 'Amt.',
                                 width: (screen.width > 580) ? 82 : 62,
                                 allowSorting: false,
-                                allowFiltering: false,                                
+                                allowFiltering: false,
                                 placeholder: 'The amount left of the item',
                                 cellTemplate: function (container, options) {
                                     container.addClass('reduce-right-gap').text(options.text);
@@ -910,18 +910,26 @@ $(() => {
 });
 
 function GetCards() {
-    const popupContentTemplate = function () {
 
+    const popupContentTemplate = function () {
+        ingredientsString = `<h6>Ingredients</h6>`
+        for (var i = 1; i <= 20; i++) {
+            var ingredient = $.trim(CardsById["strIngredient" + i]);
+            var measure = $.trim(CardsById["strMeasure" + i]);
+            if (ingredient !== "" && measure !== "") {
+                ingredientsString = ingredientsString + `<p>${ingredient} - ${measure}</p>`;
+            }
+        }
         const scrollView = $('<div />');
         scrollView.append(
             $(`<p>Meal: <span>${CardsById.strMeal}</span></p>`),
             $(`<p>Origin: <span>${CardsById.strArea}</span></p>`),
             $(`<p>Tags: <span>${CardsById.strTags}<span></p>`),
             $(`<p>Category: <span>${CardsById.strCategory}<span></p>`),
-            $(`<p>Video: <span>${CardsById.strYoutube}<span></p>`),
-            $(`<p>Source: <span>${CardsById.strSource}</span></p>`),
-            $(`<p>Ingredients: <span>${CardsById.strIngredient1}<span><span>${" " + CardsById.strMeasure1}<span><span>${" " + CardsById.strIngredient2}<span><span>${" " + CardsById.strMeasure2}<span><span>${" " + CardsById.strIngredient3}<span><span>${" " + CardsById.strMeasure3}<span><span>${" " + CardsById.strIngredient4}<span><span>${" " + CardsById.strMeasure4}<span><span>${" " + CardsById.strIngredient5}<span><span>${" " + CardsById.strMeasure5}<span><span>${" " + CardsById.strIngredient6}<span><span>${" " + CardsById.strMeasure6}<span><span>${" " + CardsById.strIngredient7}<span><span>${" " + CardsById.strMeasure7}<span><span>${" " + CardsById.strIngredient8}<span><span>${" " + CardsById.strMeasure8}<span><span>${" " + CardsById.strIngredient9}<span><span>${" " + CardsById.strMeasure9}<span><span>${" " + CardsById.strIngredient10}<span><span>${" " + CardsById.strMeasure10}<span><span>${" " + CardsById.strIngredient11}<span><span>${" " + CardsById.strMeasure11}<span><span>${" " + CardsById.strIngredient12}<span><span>${" " + CardsById.strMeasure12}<span><span>${" " + CardsById.strIngredient13}<span><span>${" " + CardsById.strMeasure13}<span><span>${" " + CardsById.strIngredient14}<span><span>${" " + CardsById.strMeasure14}<span><span>${" " + CardsById.strIngredient15}<span><span>${" " + CardsById.strMeasure15}<span><span>${" " + CardsById.strIngredient16}<span><span>${" " + CardsById.strMeasure16}<span><span>${" " + CardsById.strIngredient17}<span><span>${" " + CardsById.strMeasure17}<span><span>${" " + CardsById.strIngredient18}<span><span>${" " + CardsById.strMeasure18}<span><span>${" " + CardsById.strIngredient19}<span><span>${" " + CardsById.strMeasure19}<span><span>${" " + CardsById.strIngredient20}<span><span>${" " + CardsById.strMeasure20}<span>`),
-            $(`<p>Instructions: <span>${CardsById.strInstructions}<span></p>`),
+            $(`<p>Video: <a href="${CardsById.strYoutube}">${CardsById.strYoutube}</a></p>`),
+            $(`<p>Source: <a href="${CardsById.strSource}">${CardsById.strSource}</a></p>`),
+            $(ingredientsString),
+            $(`<br><h6>Instructions</h6><p><span style="white-space: pre-wrap">${CardsById.strInstructions}<span></p>`),
         );
         scrollView.dxScrollView({
             width: '100%',
