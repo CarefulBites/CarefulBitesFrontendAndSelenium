@@ -100,9 +100,9 @@ function GetRandomCards() {
     }],
   }).dxPopup('instance');
 
-  RandomCards.forEach((currentCard) => {
+  $(RandomCards).each(function(index, currentCard) {
     if (currentCard.strMeal.length > 28) {
-      currentCard.strMeal = currentCard.strMeal.substring(0, 26) + "..."
+        currentCard.strMeal = currentCard.strMeal.substring(0, 26) + "..."
     }
 
     $('<li>')
@@ -113,6 +113,9 @@ function GetRandomCards() {
           .addClass('button-info mt-0 recipe-button-2')
           .dxButton({
             text: 'Details',
+            elementAttr: {
+              id: 'DETAILS-' + index,
+          },
             onClick() {
               GetRandomMealById(currentCard.idMeal)
               popup.option({
@@ -124,28 +127,3 @@ function GetRandomCards() {
       ).appendTo($('#randomCards'));
   });
 };
-
-$(function () {
-  $("#amountSelection").dxTagBox({
-    items: Numbers,
-    onValueChanged: function (e) {
-      var element = document.getElementById("randomCards");
-      element.innerHTML = "";
-      amount = e.value[0];
-      GetRandomMeals(amount);
-    },
-  });
-});
-
-const Numbers = [
-  '1',
-  '2',
-  '3',
-  '4',
-  '5',
-  '6',
-  '7',
-  '8',
-  '9',
-  '10'
-]

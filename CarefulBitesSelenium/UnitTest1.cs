@@ -62,10 +62,31 @@ public class UnitTest1 {
         _driver?.Dispose();
     }
 
+    //[TestMethod]
+    //public void Test1ARandomRecipes()
+    //{
+
+    //    Thread.Sleep(1000);
+    //    var scroll = _driver?.FindElement(By.Id("DETAILS-0"));
+    //    (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
+
+
+    //    var popup = _driver?.FindElement(By.Id("DETAILS-0"));
+    //    Assert.IsNotNull(popup);
+    //    Thread.Sleep(100);
+    //    popup?.Click();
+
+    //    var closePopup = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Close')]"));
+    //    Assert.IsNotNull(closePopup);
+    //    Thread.Sleep(250);
+    //    closePopup?.Click();
+    //    Thread.Sleep(1000);
+    //}
+
     [TestMethod]
     public void Test1GetLoginModal() {
         _driver?.SwitchTo().ActiveElement();
-        var loginButton = _driver?.FindElement(By.XPath("//*[@id=\"LOGIN-BUTTON\"]"));
+        var loginButton = _driver?.FindElement(By.Id("LOGIN-BUTTON"));
 
         Assert.IsNotNull(loginButton);
 
@@ -90,7 +111,7 @@ public class UnitTest1 {
 
         Thread.Sleep(100);
 
-        var loginButton = _driver?.FindElement(By.XPath("//*[@id=\"POPUP-LOGIN-BUTTON\"]"));
+        var loginButton = _driver?.FindElement(By.Id("POPUP-LOGIN-BUTTON"));
 
         Assert.IsNotNull(loginButton);
 
@@ -212,7 +233,78 @@ public class UnitTest1 {
         Thread.Sleep(1000);
     }
 
- 
+    [TestMethod]
+    public void Test7AddItem()
+    {
+        var addItemButton = _driver?.FindElement(By.Id("add-item-button"));
+        Assert.IsNotNull(addItemButton);
+        addItemButton?.Click();
+
+        var addItemButton2 = _driver?.FindElement(By.XPath("//*[@aria-label='+ Add Item']//*[contains(text(), '+ Add Item')]"));
+        addItemButton2.Click();
+        addItemButton2.Click();
+
+        var inputName = _driver?.FindElement(By.XPath("//*[@class='dx-form-group-content']//div[@id='itemName']//*[@role='textbox']"));
+        inputName.SendKeys("Garlic");
+
+        var inputAmountTextbox = _driver?.FindElement(By.XPath("//*[@class='dx-form-group-content']//div[@id='amount']//input[@type='text']"));
+        inputAmountTextbox.SendKeys("1");
+
+        var selectUnit = _driver?.FindElement(By.XPath("//*[@class='dx-form-group-content']//div[@id='unit']//input[@role='combobox']"));
+        selectUnit.Click();
+        var selectedUnit = selectUnit.FindElement(By.XPath("//div[@class='dx-item dx-list-item']//*[contains(text(), 'kg')]"));
+        selectedUnit.Click();
+
+        var selectStorage = _driver?.FindElement(By.XPath("//*[@class='dx-form-group-content']//div[@id='addItemStorage']//input[@role='combobox']"));
+        selectStorage.Click();
+        var selectedStorage = selectStorage.FindElement(By.XPath("//div[@class='dx-item dx-list-item']//*[contains(text(), 'Fridge')]"));
+        selectedStorage.Click();
+
+        var scroll = _driver?.FindElement(By.XPath("//*[contains(text(), 'Save')]"));
+        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
+
+        Thread.Sleep(500);
+
+        var saveItemButton = _driver.FindElement(By.XPath("//div[@role='button']//span[contains(text(), 'Save')]"));
+        saveItemButton.Click();
+    }
+
+    [TestMethod]
+    public void Test7BUpdateItem()
+    {
+        Thread.Sleep(500);
+        var updateButton = _driver?.FindElement(By.XPath("//*[contains(@aria-rowindex, '5')]//*[contains(@aria-label, 'Edit')]"));
+        Assert.IsNotNull(updateButton);
+        updateButton.Click();
+
+        var inputAmountTextbox = _driver?.FindElement(By.XPath("//*[@class='dx-form-group-content']//div[@id='amount']//input[@type='text']"));
+        inputAmountTextbox.Clear();
+        inputAmountTextbox.SendKeys("2");
+
+        var scroll = _driver?.FindElement(By.XPath("//*[contains(text(), 'Save')]"));
+        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
+
+        Thread.Sleep(500);
+
+        var saveItemButton = _driver.FindElement(By.XPath("//div[@role='button']//span[contains(text(), 'Save')]"));
+        saveItemButton.Click();
+
+        Thread.Sleep(500);
+    }
+
+    [TestMethod]
+    public void Test7CDeleteItem()
+    {
+        var updateButton = _driver?.FindElement(By.XPath("//*[contains(@aria-rowindex, '5')]//*[contains(@aria-label, 'Delete')]"));
+        Assert.IsNotNull(updateButton);
+        updateButton.Click();
+
+        var yesButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Yes')]"));
+        Assert.IsNotNull(yesButton);
+        yesButton.Click();
+        yesButton.Click();
+    }
+
 
     [TestMethod]
     public void Test7GetRecipes()
@@ -225,19 +317,17 @@ public class UnitTest1 {
         (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", filter);
         Thread.Sleep(10);
 
-        var recipes = _driver?.FindElement(By.XPath("//div[@id='ingredientSelection']//*[@class='dx-texteditor-input']"));
+        var recipes = _driver?.FindElement(By.Id("ingredientSelectionBox"));
         
         Assert.IsNotNull(recipes);
         
         recipes?.Click();
 
-        var selectedIngredient = _driver?.FindElement(By.XPath("//div[@class='dx-scrollview-content']//div[@class='dx-item dx-list-item']//*[contains(@class,'dx-checkbox-icon')]"));
+        var selectedIngredient = _driver?.FindElement(By.XPath("//div[@class='dx-item dx-list-item']//*[contains(text(), 'Milk')]"));
 
         Assert.IsNotNull(selectedIngredient); 
 
         selectedIngredient?.Click();
-
-        //Thread.Sleep(2000);
     }
 
     [TestMethod]
@@ -246,7 +336,6 @@ public class UnitTest1 {
         _driver?.SwitchTo().ActiveElement();
         var cards = _driver?.FindElement(By.Id("cards"));
         (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", cards);
-        //Thread.Sleep(1000);
 
         var popup = _driver?.FindElement(By.XPath("//ul[@id='cards']//div[@role='button']"));
 
@@ -297,12 +386,11 @@ public class UnitTest1 {
 
         loginButton?.Click();
 
-        _driver?.SwitchTo().ActiveElement();
+        var createAccountButton = _driver?.FindElement(By.Id("POPUP-CREATEACCOUNT-BUTTON"));
 
-        var createAccount = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
+        Assert.IsNotNull(createAccountButton);
 
-        Assert.IsNotNull(createAccount);
-
-        createAccount?.Click();
+        createAccountButton?.Click();
+        createAccountButton?.Click();
     }
 }
