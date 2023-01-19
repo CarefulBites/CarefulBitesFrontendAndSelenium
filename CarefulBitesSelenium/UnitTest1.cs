@@ -65,6 +65,8 @@ public class UnitTest1 {
     [TestMethod]
     public void Test1ARandomRecipes()
     {
+
+        Thread.Sleep(1000);
         var scroll = _driver?.FindElement(By.Id("DETAILS-0"));
         (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
 
