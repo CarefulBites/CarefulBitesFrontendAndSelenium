@@ -490,7 +490,12 @@ $(() => {
                             {
                                 dataField: 'name',
                                 dataType: 'string',
-                                placeholder: 'Name of item e.g Milk'
+                                placeholder: 'Name of item e.g Milk',
+                                editorOptions: {
+                                    elementAttr: {
+                                        id: 'itemName'
+                                    },
+                                }
                             },
                             {
                                 dataField: 'amount',
@@ -502,6 +507,11 @@ $(() => {
                                 placeholder: 'The amount left of the item',
                                 cellTemplate: function (container, options) {
                                     container.addClass('reduce-right-gap').text(options.text);
+                                },
+                                editorOptions: {
+                                    elementAttr: {
+                                        id: 'amount'
+                                    },
                                 }
                             },
                             {
@@ -532,6 +542,9 @@ $(() => {
                                 editorOptions: {
                                     displayExpr: 'text',
                                     valueExpr: 'value',
+                                    elementAttr: {
+                                        id: 'unit'
+                                    },
                                     items: [
                                         { value: 0, text: 'kg' },
                                         { value: 1, text: 'L' },
@@ -549,24 +562,44 @@ $(() => {
                                     displayExpr: 'name',
                                     valueExpr: 'itemStorageId'
                                 },
+                                editorOptions: {
+                                    elementAttr: {
+                                        id: 'addItemStorage'
+                                    },
+                                }
                             },
                             {
                                 dataField: 'caloriesPer',
                                 dataType: 'number',
-                                visible: false
+                                visible: false,
+                                editorOptions: {
+                                    elementAttr: {
+                                        id: 'caloriesPer'
+                                    },
+                                }
                             },
                             {
                                 dataField: 'openDate',
                                 dataType: 'date',
                                 placeholder: '...',
-                                width: 120
+                                width: 120,
+                                editorOptions: {
+                                    elementAttr: {
+                                        id: 'openDate'
+                                    },
+                                }
                             },
                             {
                                 dataField: 'expirationDate',
                                 dataType: 'date',
                                 caption: 'Exp. Date',
                                 placeholder: '...',
-                                width: 120
+                                width: 120,
+                                editorOptions: {
+                                    elementAttr: {
+                                        id: 'expirationDate'
+                                    },
+                                }
                             },
                             {
                                 dataField: 'daysAfterOpen',
@@ -574,7 +607,12 @@ $(() => {
                                 caption: 'DFAO',
                                 placeholder: 'Days fresh when opened',
                                 allowFiltering: false,
-                                width: 80
+                                width: 80,
+                                editorOptions: {
+                                    elementAttr: {
+                                        id: 'daysAfterOpen'
+                                    },
+                                }
                             },
                             {
                                 caption: 'FDL',
