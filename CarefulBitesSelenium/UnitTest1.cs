@@ -55,7 +55,6 @@ public class UnitTest1 {
 #endif
 
         _driver.Navigate().GoToUrl(url);
-        Thread.Sleep(2000);
     }
 
     [ClassCleanup]
@@ -66,7 +65,7 @@ public class UnitTest1 {
     [TestMethod]
     public void Test1ARandomRecipes()
     {
-
+        _driver?.SwitchTo().ActiveElement();
         var scroll = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
         (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
 
