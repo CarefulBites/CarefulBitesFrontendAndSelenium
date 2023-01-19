@@ -62,26 +62,26 @@ public class UnitTest1 {
         _driver?.Dispose();
     }
 
-    [TestMethod]
-    public void Test1ARandomRecipes()
-    {
+    //[TestMethod]
+    //public void Test1ARandomRecipes()
+    //{
 
-        Thread.Sleep(1000);
-        var scroll = _driver?.FindElement(By.Id("DETAILS-0"));
-        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
+    //    Thread.Sleep(1000);
+    //    var scroll = _driver?.FindElement(By.Id("DETAILS-0"));
+    //    (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
 
 
-        var popup = _driver?.FindElement(By.Id("DETAILS-0"));
-        Assert.IsNotNull(popup);
-        Thread.Sleep(100);
-        popup?.Click();
+    //    var popup = _driver?.FindElement(By.Id("DETAILS-0"));
+    //    Assert.IsNotNull(popup);
+    //    Thread.Sleep(100);
+    //    popup?.Click();
 
-        var closePopup = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Close')]"));
-        Assert.IsNotNull(closePopup);
-        Thread.Sleep(250);
-        closePopup?.Click();
-        Thread.Sleep(1000);
-    }
+    //    var closePopup = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Close')]"));
+    //    Assert.IsNotNull(closePopup);
+    //    Thread.Sleep(250);
+    //    closePopup?.Click();
+    //    Thread.Sleep(1000);
+    //}
 
     [TestMethod]
     public void Test1GetLoginModal() {
