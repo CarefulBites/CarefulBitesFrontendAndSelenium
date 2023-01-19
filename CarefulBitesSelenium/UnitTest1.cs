@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel;
-using System.IO;
 using System.Threading;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -67,12 +66,15 @@ public class UnitTest1 {
     public void Test1ARandomRecipes()
     {
         _driver?.SwitchTo().ActiveElement();
+        var scroll = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
+        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
+
 
         var popup = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
         Assert.IsNotNull(popup);
         Thread.Sleep(100);
         popup?.Click();
-        
+
         var closePopup = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Close')]"));
         Assert.IsNotNull(closePopup);
         Thread.Sleep(250);
@@ -383,12 +385,11 @@ public class UnitTest1 {
 
         loginButton?.Click();
 
-        _driver?.SwitchTo().ActiveElement();
+        var createAccountButton = _driver?.FindElement(By.Id("POPUP-CREATEACCOUNT-BUTTON"));
 
-        var createAccount = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
+        Assert.IsNotNull(createAccountButton);
 
-        Assert.IsNotNull(createAccount);
-
-        createAccount?.Click();
+        createAccountButton?.Click();
+        createAccountButton?.Click();
     }
 }
