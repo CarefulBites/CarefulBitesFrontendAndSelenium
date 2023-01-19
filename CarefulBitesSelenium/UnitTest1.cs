@@ -62,27 +62,27 @@ public class UnitTest1 {
         _driver?.Dispose();
     }
 
-    //[TestMethod]
-    //public void Test1ARandomRecipes()
-    //{
-    //    _driver?.SwitchTo().ActiveElement();
+    [TestMethod]
+    public void Test1ARandomRecipes()
+    {
+        _driver?.SwitchTo().ActiveElement();
 
-    //    var scroll = _driver?.FindElement(By.XPath("//ul[@id='randomCards']"));
-    //    (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
+        var scroll = _driver?.FindElement(By.XPath("//ul[@id='randomCards']"));
+        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
 
-    //    Thread.Sleep(500);
+        Thread.Sleep(1000);
 
-    //    var popup = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
-    //    Assert.IsNotNull(popup);
-    //    Thread.Sleep(100);
-    //    popup?.Click();
-        
-    //    var closePopup = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Close')]"));
-    //    Assert.IsNotNull(closePopup);
-    //    Thread.Sleep(250);
-    //    closePopup?.Click();
-    //    Thread.Sleep(1000);
-    //}
+        var popup = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
+        Assert.IsNotNull(popup);
+        Thread.Sleep(100);
+        popup?.Click();
+
+        var closePopup = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Close')]"));
+        Assert.IsNotNull(closePopup);
+        Thread.Sleep(250);
+        closePopup?.Click();
+        Thread.Sleep(1000);
+    }
 
     [TestMethod]
     public void Test1GetLoginModal() {
