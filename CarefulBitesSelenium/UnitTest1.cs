@@ -65,9 +65,11 @@ public class UnitTest1 {
     [TestMethod]
     public void Test1ARandomRecipes()
     {
-        _driver?.SwitchTo().ActiveElement();
 
         Thread.Sleep(1000);
+        _driver?.SwitchTo().ActiveElement();
+
+
 
         var popup = _driver?.FindElement(By.XPath("//*[@id='randomCards']//*[@role='button']"));
         Assert.IsNotNull(popup);
