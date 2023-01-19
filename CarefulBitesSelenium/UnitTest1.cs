@@ -66,10 +66,11 @@ public class UnitTest1 {
     public void Test1ARandomRecipes()
     {
 
-        Thread.Sleep(5000);
-        _driver?.SwitchTo().ActiveElement();
+        var scroll = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
+        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
 
-        var popup = _driver?.FindElement(By.XPath("//*[@id='randomCards']//*[@role='button']"));
+
+        var popup = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
         Assert.IsNotNull(popup);
         Thread.Sleep(100);
         popup?.Click();
