@@ -47,24 +47,33 @@ function GetRandomMealById(id) {
 
 function GetRandomCards() {
   const popupContentTemplate = function () {
-    const scrollView = $('<div />');
-    scrollView.append(
-      $(`<p>Meal: <span>${RandomCardsById.strMeal}</span></p>`),
-      $(`<p>Origin: <span>${RandomCardsById.strArea}</span></p>`),
-      $(`<p>Tags: <span>${RandomCardsById.strTags}<span></p>`),
-      $(`<p>Category: <span>${RandomCardsById.strCategory}<span></p>`),
-      $(`<p>Video: <span>${RandomCardsById.strYoutube}<span></p>`),
-      $(`<p>Source: <span>${RandomCardsById.strSource}</span></p>`),
-      $(`<p>Ingredients: <span>${RandomCardsById.strIngredient1}<span><span>${" " + RandomCardsById.strMeasure1}<span><span>${" " + RandomCardsById.strIngredient2}<span><span>${" " + RandomCardsById.strMeasure2}<span><span>${" " + RandomCardsById.strIngredient3}<span><span>${" " + RandomCardsById.strMeasure3}<span><span>${" " + RandomCardsById.strIngredient4}<span><span>${" " + RandomCardsById.strMeasure4}<span><span>${" " + RandomCardsById.strIngredient5}<span><span>${" " + RandomCardsById.strMeasure5}<span><span>${" " + RandomCardsById.strIngredient6}<span><span>${" " + RandomCardsById.strMeasure6}<span><span>${" " + RandomCardsById.strIngredient7}<span><span>${" " + RandomCardsById.strMeasure7}<span><span>${" " + RandomCardsById.strIngredient8}<span><span>${" " + RandomCardsById.strMeasure8}<span><span>${" " + RandomCardsById.strIngredient9}<span><span>${" " + RandomCardsById.strMeasure9}<span><span>${" " + RandomCardsById.strIngredient10}<span><span>${" " + RandomCardsById.strMeasure10}<span><span>${" " + RandomCardsById.strIngredient11}<span><span>${" " + RandomCardsById.strMeasure11}<span><span>${" " + RandomCardsById.strIngredient12}<span><span>${" " + RandomCardsById.strMeasure12}<span><span>${" " + RandomCardsById.strIngredient13}<span><span>${" " + RandomCardsById.strMeasure13}<span><span>${" " + RandomCardsById.strIngredient14}<span><span>${" " + RandomCardsById.strMeasure14}<span><span>${" " + RandomCardsById.strIngredient15}<span><span>${" " + RandomCardsById.strMeasure15}<span><span>${" " + RandomCardsById.strIngredient16}<span><span>${" " + RandomCardsById.strMeasure16}<span><span>${" " + RandomCardsById.strIngredient17}<span><span>${" " + RandomCardsById.strMeasure17}<span><span>${" " + RandomCardsById.strIngredient18}<span><span>${" " + RandomCardsById.strMeasure18}<span><span>${" " + RandomCardsById.strIngredient19}<span><span>${" " + RandomCardsById.strMeasure19}<span><span>${" " + RandomCardsById.strIngredient20}<span><span>${" " + RandomCardsById.strMeasure20}<span>`),
-      $(`<p>Instructions: <span>${RandomCardsById.strInstructions}<span></p>`),
-    );
-    scrollView.dxScrollView({
-      width: '100%',
-      height: '100%',
-    });
+        ingredientsString = `<br><h6>Ingredients</h6>`
+        for (var i = 1; i <= 20; i++) {
+            var ingredient = $.trim(RandomCardsById["strIngredient" + i]);
+            var measure = $.trim(RandomCardsById["strMeasure" + i]);
+            if (ingredient !== "" && measure !== "") {
+                ingredientsString = ingredientsString + `<p>${ingredient} - ${measure}</p>`;
+            }
+        }
+        const scrollView = $('<div />');
+        scrollView.append(
+            $(`<h6>Information</h6>`),
+            $(`<p>Meal: <span>${RandomCardsById.strMeal}</span></p>`),
+            $(`<p>Origin: <span>${RandomCardsById.strArea}</span></p>`),
+            $(`<p>Tags: <span>${RandomCardsById.strTags}<span></p>`),
+            $(`<p>Category: <span>${RandomCardsById.strCategory}<span></p>`),
+            $(`<p>Video: <a href="${RandomCardsById.strYoutube}">${RandomCardsById.strYoutube}</a></p>`),
+            $(`<p>Source: <a href="${RandomCardsById.strSource}">${RandomCardsById.strSource}</a></p>`),
+            $(ingredientsString),
+            $(`<br><h6>Instructions</h6><p><span style="white-space: pre-wrap">${RandomCardsById.strInstructions}<span></p>`),
+        );
+        scrollView.dxScrollView({
+            width: '100%',
+            height: '100%',
+        });
 
-    return scrollView;
-  };
+        return scrollView;
+    };
 
   const popup = $('#randomPopup').dxPopup({
     contentTemplate: popupContentTemplate,

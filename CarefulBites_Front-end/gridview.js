@@ -912,7 +912,7 @@ $(() => {
 function GetCards() {
 
     const popupContentTemplate = function () {
-        ingredientsString = `<h6>Ingredients</h6>`
+        ingredientsString = `<br><h6>Ingredients</h6>`
         for (var i = 1; i <= 20; i++) {
             var ingredient = $.trim(CardsById["strIngredient" + i]);
             var measure = $.trim(CardsById["strMeasure" + i]);
@@ -922,6 +922,7 @@ function GetCards() {
         }
         const scrollView = $('<div />');
         scrollView.append(
+            $(`<h6>Information</h6>`),
             $(`<p>Meal: <span>${CardsById.strMeal}</span></p>`),
             $(`<p>Origin: <span>${CardsById.strArea}</span></p>`),
             $(`<p>Tags: <span>${CardsById.strTags}<span></p>`),
