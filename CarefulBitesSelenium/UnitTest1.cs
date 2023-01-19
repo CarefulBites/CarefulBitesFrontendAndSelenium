@@ -62,25 +62,25 @@ public class UnitTest1 {
         _driver?.Dispose();
     }
 
-    [TestMethod]
-    public void Test1ARandomRecipes()
-    {
+    //[TestMethod]
+    //public void Test1ARandomRecipes()
+    //{
 
-        var scroll = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
-        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
+    //    var scroll = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
+    //    (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
 
 
-        var popup = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
-        Assert.IsNotNull(popup);
-        Thread.Sleep(100);
-        popup?.Click();
+    //    var popup = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
+    //    Assert.IsNotNull(popup);
+    //    Thread.Sleep(100);
+    //    popup?.Click();
 
-        var closePopup = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Close')]"));
-        Assert.IsNotNull(closePopup);
-        Thread.Sleep(250);
-        closePopup?.Click();
-        Thread.Sleep(1000);
-    }
+    //    var closePopup = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Close')]"));
+    //    Assert.IsNotNull(closePopup);
+    //    Thread.Sleep(250);
+    //    closePopup?.Click();
+    //    Thread.Sleep(1000);
+    //}
 
     [TestMethod]
     public void Test1GetLoginModal() {
@@ -385,12 +385,41 @@ public class UnitTest1 {
 
         loginButton?.Click();
 
-        _driver?.SwitchTo().ActiveElement();
+        var createAccountButton = _driver?.FindElement(By.Id("POPUP-CREATEACCOUNT-BUTTON"));
 
-        var createAccount = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Create Account')]"));
+        Assert.IsNotNull(createAccountButton);
 
-        Assert.IsNotNull(createAccount);
+        createAccountButton?.Click();
+        createAccountButton?.Click();
 
-        createAccount?.Click();
+        Thread.Sleep(1000);
+    }
+
+    [TestMethod]
+    public void TestCRandomRecipes()
+    {
+
+        var logo = _driver?.FindElement(By.ClassName("logo"));
+
+        Assert.IsNotNull(logo);
+
+        logo?.Click();
+
+        Thread.Sleep(1000);
+
+        var scroll = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
+        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
+
+
+        var popup = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
+        Assert.IsNotNull(popup);
+        Thread.Sleep(100);
+        popup?.Click();
+
+        var closePopup = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Close')]"));
+        Assert.IsNotNull(closePopup);
+        Thread.Sleep(250);
+        closePopup?.Click();
+        Thread.Sleep(1000);
     }
 }
