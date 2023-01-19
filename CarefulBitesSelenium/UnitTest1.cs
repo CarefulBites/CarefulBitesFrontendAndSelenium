@@ -67,7 +67,7 @@ public class UnitTest1 {
     {
         _driver?.SwitchTo().ActiveElement();
 
-        var scroll = _driver?.FindElement(By.XPath("//ul[@id='randomCards']"));
+        var scroll = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
         (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
 
         Thread.Sleep(1000);
