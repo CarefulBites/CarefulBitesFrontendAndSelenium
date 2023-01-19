@@ -66,7 +66,7 @@ public class UnitTest1 {
     public void Test1ARandomRecipes()
     {
 
-        Thread.Sleep(1000);
+        Thread.Sleep(5000);
         _driver?.SwitchTo().ActiveElement();
 
         var popup = _driver?.FindElement(By.XPath("//*[@id='randomCards']//*[@role='button']"));
