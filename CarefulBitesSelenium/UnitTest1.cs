@@ -69,8 +69,6 @@ public class UnitTest1 {
         Thread.Sleep(1000);
         _driver?.SwitchTo().ActiveElement();
 
-
-
         var popup = _driver?.FindElement(By.XPath("//*[@id='randomCards']//*[@role='button']"));
         Assert.IsNotNull(popup);
         Thread.Sleep(100);
