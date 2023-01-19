@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using System.IO;
 using System.Threading;
 using Microsoft.VisualStudio.TestPlatform.PlatformAbstractions.Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -60,6 +61,23 @@ public class UnitTest1 {
     [ClassCleanup]
     public static void TearDown() {
         _driver?.Dispose();
+    }
+
+    [TestMethod]
+    public void Test1ARandomRecipes()
+    {
+        _driver?.SwitchTo().ActiveElement();
+
+        var popup = _driver?.FindElement(By.XPath("//ul[@id='randomCards']//div[@role='button']"));
+        Assert.IsNotNull(popup);
+        Thread.Sleep(100);
+        popup?.Click();
+        
+        var closePopup = _driver?.FindElement(By.XPath("//*[contains(@aria-label,'Close')]"));
+        Assert.IsNotNull(closePopup);
+        Thread.Sleep(250);
+        closePopup?.Click();
+        Thread.Sleep(1000);
     }
 
     [TestMethod]
@@ -212,7 +230,78 @@ public class UnitTest1 {
         Thread.Sleep(1000);
     }
 
- 
+    [TestMethod]
+    public void Test7AddItem()
+    {
+        var addItemButton = _driver?.FindElement(By.Id("add-item-button"));
+        Assert.IsNotNull(addItemButton);
+        addItemButton?.Click();
+
+        var addItemButton2 = _driver?.FindElement(By.XPath("//*[@aria-label='+ Add Item']//*[contains(text(), '+ Add Item')]"));
+        addItemButton2.Click();
+        addItemButton2.Click();
+
+        var inputName = _driver?.FindElement(By.XPath("//*[@class='dx-form-group-content']//div[@id='itemName']//*[@role='textbox']"));
+        inputName.SendKeys("Garlic");
+
+        var inputAmountTextbox = _driver?.FindElement(By.XPath("//*[@class='dx-form-group-content']//div[@id='amount']//input[@type='text']"));
+        inputAmountTextbox.SendKeys("1");
+
+        var selectUnit = _driver?.FindElement(By.XPath("//*[@class='dx-form-group-content']//div[@id='unit']//input[@role='combobox']"));
+        selectUnit.Click();
+        var selectedUnit = selectUnit.FindElement(By.XPath("//div[@class='dx-item dx-list-item']//*[contains(text(), 'kg')]"));
+        selectedUnit.Click();
+
+        var selectStorage = _driver?.FindElement(By.XPath("//*[@class='dx-form-group-content']//div[@id='addItemStorage']//input[@role='combobox']"));
+        selectStorage.Click();
+        var selectedStorage = selectStorage.FindElement(By.XPath("//div[@class='dx-item dx-list-item']//*[contains(text(), 'Fridge')]"));
+        selectedStorage.Click();
+
+        var scroll = _driver?.FindElement(By.XPath("//*[contains(text(), 'Save')]"));
+        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
+
+        Thread.Sleep(500);
+
+        var saveItemButton = _driver.FindElement(By.XPath("//div[@role='button']//span[contains(text(), 'Save')]"));
+        saveItemButton.Click();
+    }
+
+    [TestMethod]
+    public void Test7BUpdateItem()
+    {
+        Thread.Sleep(500);
+        var updateButton = _driver?.FindElement(By.XPath("//*[contains(@aria-rowindex, '5')]//*[contains(@aria-label, 'Edit')]"));
+        Assert.IsNotNull(updateButton);
+        updateButton.Click();
+
+        var inputAmountTextbox = _driver?.FindElement(By.XPath("//*[@class='dx-form-group-content']//div[@id='amount']//input[@type='text']"));
+        inputAmountTextbox.Clear();
+        inputAmountTextbox.SendKeys("2");
+
+        var scroll = _driver?.FindElement(By.XPath("//*[contains(text(), 'Save')]"));
+        (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", scroll);
+
+        Thread.Sleep(500);
+
+        var saveItemButton = _driver.FindElement(By.XPath("//div[@role='button']//span[contains(text(), 'Save')]"));
+        saveItemButton.Click();
+
+        Thread.Sleep(500);
+    }
+
+    [TestMethod]
+    public void Test7CDeleteItem()
+    {
+        var updateButton = _driver?.FindElement(By.XPath("//*[contains(@aria-rowindex, '5')]//*[contains(@aria-label, 'Delete')]"));
+        Assert.IsNotNull(updateButton);
+        updateButton.Click();
+
+        var yesButton = _driver?.FindElement(By.XPath("//*[contains(@aria-label, 'Yes')]"));
+        Assert.IsNotNull(yesButton);
+        yesButton.Click();
+        yesButton.Click();
+    }
+
 
     [TestMethod]
     public void Test7GetRecipes()
@@ -244,7 +333,6 @@ public class UnitTest1 {
         _driver?.SwitchTo().ActiveElement();
         var cards = _driver?.FindElement(By.Id("cards"));
         (_driver as IJavaScriptExecutor)?.ExecuteScript("arguments[0].scrollIntoView(true);", cards);
-        //Thread.Sleep(1000);
 
         var popup = _driver?.FindElement(By.XPath("//ul[@id='cards']//div[@role='button']"));
 
