@@ -41,7 +41,7 @@ const ItemStore = new DevExpress.data.CustomStore({
     insert: function (values) {
         data = {
             item1: values,
-            item2: []
+            item2: itemTemplateAndCategoriesFormData.categoryIds
         }
         var deferred = $.Deferred();
         $.ajax({
@@ -346,14 +346,85 @@ const popupContentTemplateItemStorageForm = function () {
                         },
                     ]
             }]
-
         })
-    );
+    )
 };
 
+
+let itemTemplateAndCategoriesFormData = {
+    itemTemplateId: -1,
+    categoryIds: []
+};
+const popupContentTemplateTemplateAndCategories = function() {
+    return $('<div>').append(
+        $('<div />').attr('id', 'ADD-FROM-TEMPLATE-FORM-ID').dxForm({
+            labelMode: 'floating',
+            formData: itemTemplateAndCategoriesFormData,
+            showColonAfterLabel: false,
+            labelLocation: 'left',
+            colcount: 1,
+            items:[{
+                itemType: 'group',
+                caption: 'Step 1',
+                items: [{
+                    caption: 'Select a Template',
+                    editorType: 'dxLookup',
+                    editorOptions: {
+                        placeholder: 'Choose a Template',
+                        dataSource: Object.values(ItemTemplates),
+                        displayExpr: 'name',
+                        valueExpr: 'itemTemplateId',
+                        showCancelButton: true,
+                        onValueChanged: function (e) {
+                            itemTemplateAndCategoriesFormData.itemTemplateId = e.value;
+                        },
+                    }
+                },
+            ]
+            },
+            {
+                itemType: 'group',
+                caption: 'Step 2',
+                items: [{
+                    caption: 'Select Categories',
+                    editorType: 'dxTagBox',
+                    editorOptions: {
+                        placeholder: 'Select Categories',
+                        dataSource: Object.values(ItemCategories),
+                        valueExpr: "categoryId",
+                        displayExpr: "name",
+                        showSelectionControls: true,
+                        onValueChanged: function (e) {
+                            itemTemplateAndCategoriesFormData.categoryIds = e.value;
+                        }
+                    }
+                }]
+            },
+            {
+                itemType: 'group',
+                items: [{
+                    itemType: 'button',
+                    horizontalAlignment: 'center',
+                    buttonOptions: {
+                        text: '+ Add Item',
+                        type: 'success',
+                        useSubmitBehavior: true,
+                        onClick(e) {
+                            
+                            templateAndCategoriesPopup.hide()
+                            $('#itemGrid').dxDataGrid("instance").addRow();
+                        }
+                    },
+                },]
+            },
+        ]
+        })
+    )
+};
 $(() => {
     ItemStorageDict = []
     ItemStorageDictDelete = []
+    
     $.ajax({
         url: baseURL + "/itemStorages/?userId=" + sessionStorage.getItem('CurrentUserId'),
         method: 'GET',
@@ -366,6 +437,37 @@ $(() => {
             }, {});
         }
     })
+
+    ItemTemplates = []
+    $.ajax({
+        url: baseURL + "/itemTemplates",
+        method: 'GET',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        success: function (data) {
+            ItemTemplates = data.reduce((obj, item) => {
+                obj[item.itemTemplateId] = item;
+                return obj;
+            }, {});
+        }
+    })
+
+    ItemCategories = []
+    $.ajax({
+        url: baseURL + "/categories",
+        method: 'GET',
+        contentType: "application/json; charset=utf-8",
+        async: false,
+        success: function (data) {
+            ItemCategories = data.reduce((obj, item) => {
+                obj[item.categoryId] = item;
+                return obj;
+            }, {});
+
+            console.log(ItemCategories)
+        }
+    })
+
     $("#tabs").dxTabPanel({
         animationEnabled: true,
         items: [
@@ -443,6 +545,25 @@ $(() => {
                                 }
                             }
                         },
+                        onInitNewRow: function(e) {
+                            if (itemTemplateAndCategoriesFormData.itemTemplateId != -1) {
+                                Template = $.ajax({
+                                    url: baseURL + "/itemTemplates/" + itemTemplateAndCategoriesFormData.itemTemplateId,
+                                    method: 'GET',
+                                    contentType: "application/json; charset=utf-8",
+                                    async: false,
+                                    success: function (data) {
+                                        return data
+                                    }
+                                })
+                                e.data.name = Template.responseJSON.name
+                                e.data.caloriesPer = Template.responseJSON.caloriesPer
+                                e.data.amount = Template.responseJSON.amount
+                                e.data.unit = Template.responseJSON.unit
+                                e.data.daysAfterOpen = Template.responseJSON.daysAfterOpen
+                                e.data.itemTypeId = Template.responseJSON.itemTypeId
+                            }
+                        },
                         toolbar: {
                             items: [{
                                 widget: "dxButton",
@@ -470,7 +591,8 @@ $(() => {
                                     icon: 'plus',
                                     type: 'add-item',
                                     onClick: () => {
-                                        $('#itemGrid').dxDataGrid("instance").addRow();
+                                        templateAndCategoriesPopup.show();
+                                        // $('#itemGrid').dxDataGrid("instance").addRow();
                                     }
                                 }
                             },
@@ -727,6 +849,21 @@ $(() => {
         container: '.dx-viewport',
         showTitle: true,
         title: 'Move or Delete All',
+        visible: false,
+        dragEnabled: false,
+        hideOnOutsideClick: true,
+        showCloseButton: false,
+    }).dxPopup('instance');
+
+    templateAndCategoriesPopup = $('#POPUP-ADD-WITH-TEMPLATE-AND-CATEGORIES').dxPopup({
+        contentTemplate: popupContentTemplateTemplateAndCategories,
+        width: '80vw',
+        maxWidth: 500,
+        height: '80vh',
+        maxHeight: 500,
+        container: '.dx-viewport',
+        showTitle: true,
+        title: 'Add Item',
         visible: false,
         dragEnabled: false,
         hideOnOutsideClick: true,
