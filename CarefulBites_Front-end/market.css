@@ -1,0 +1,88 @@
+body {
+    background-color: transparent;
+}
+
+#map {
+    height: 250pt;
+}
+
+#save_user {
+    margin-top: 65pt;
+    width: 120pt;
+    height: 25pt;
+}
+
+#left_box {
+    margin-bottom: 25pt;
+
+}
+
+.picture_frame {
+    width: 120pt;
+    height: 120pt;
+    background-color: gray;
+    display: block;
+}
+
+.color_me {
+
+    background-color: blue;
+    border: 2px yellow solid;
+
+}
+
+.top>* {
+
+    margin-left: 20pt;
+}
+
+.divider {
+
+    margin-bottom: 20pt;
+}
+
+.fl {
+    float: left;
+
+}
+
+* {
+    box-sizing: border-box;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul li {
+    border: 1px solid rgb(34, 70, 45);
+    margin-top: -1px;
+    /* Prevent double borders */
+    background-color: rgb(72, 189, 107);
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    color: black;
+    display: block;
+    position: relative;
+    border-radius: 30px 30px 30px 5px;
+}
+
+ul li:hover {
+    background-color: rgb(141, 224, 166);
+}
+
+.choose {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    right: 0%;
+    padding: 12px 16px;
+    transform: translate(0%, -50%);
+}
+
+.close:hover {
+    background: #bbb;
+}

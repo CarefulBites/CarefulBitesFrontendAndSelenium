@@ -1,4 +1,25 @@
 let deleteStorageId = null
+update_col = function () {
+    color = sessionStorage.getItem("userinfo")
+    const el = document.getElementById('my_market_iframe')
+    if (el == undefined || el == "null") {
+        return;
+    }
+    if (color == "chocolate") {
+
+        let all_p = el.querySelectorAll(".col_change");
+        all_p.forEach(p => {
+            p.style.color = "#ffffff";
+        });
+    }
+    if (color == "milk") {
+
+        let all_p = el.querySelectorAll(".change");
+        all_p.forEach(p => {
+            p.style.color = "#000000";
+        });
+    }
+}
 const ItemStore = new DevExpress.data.CustomStore({
     key: 'itemId',
     load(loadOptions) {
@@ -805,6 +826,23 @@ $(() => {
                     console.log(recipes)
                     IngredientSelection()
                 }
+            },
+            {
+                title: 'Market',
+                icon: 'group',
+                template: function (itemData, itemIndex, element) {
+                    const mak = $("<div id=\"market\">");
+                    const frame = $("<iframe id=\"my_market_iframe\" frameBorder=\"0\">");
+                    frame.attr('src', "./market.html");
+                    mak.append(frame);
+                    mak.append($("</iframe>"));
+
+                    mak.append($("<script>update_col()</script>"));
+
+                    mak.appendTo(element);
+                }
+
+
             }]
     });
     data = sessionStorage.getItem("userinfo")
@@ -814,6 +852,7 @@ $(() => {
     if (data == "milk") {
         DevExpress.ui.themes.current("material.blue.light");
     }
+
     const actions = [
         {
             id: 1,
@@ -837,6 +876,7 @@ $(() => {
                     DevExpress.ui.themes.current("material.blue.light");
                     sessionStorage.setItem("userinfo", "milk")
                 }
+
                 $.ajax({
                     url: baseURL + "/users/" + encodeURIComponent(id),
                     type: "patch",
@@ -1004,3 +1044,27 @@ function IngredientSelection() {
         },
     });
 };
+/*
+async function loadIframe(searchString) {
+    return searchString.length;
+}
+txtInput.addEventListener("keyup", async e => {
+    const searchString = e.target.value;
+    total_length = await getStringSize(searchString);
+    if (total_length > 3) {
+
+        console.log(searchString);
+    }
+}, false);
+
+*/
+function loadIframe() {
+    console.log("loaded")
+    window.addEventListener("load", () => {
+        console.log("somtimg")
+    }, false);
+}
+
+
+
+
