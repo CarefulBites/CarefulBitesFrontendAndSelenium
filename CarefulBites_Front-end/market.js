@@ -144,7 +144,7 @@ function Save() {
             let output_data = user + ";" + amount + ";" + food_item + ";" + map_latitude + "," + map_longitude
 
             sessionStorage.setItem("data_output", output_data)
-
+            GiveAways();
         })
 }
 
@@ -175,14 +175,14 @@ function Giveaway_click(val) {
 }
 
 function GiveAways() {
-    let name_data = [["Adele", "1", "Cheese", "red", "55.6498944,12.461670482"], ["Jonatan", "2", "Egg", "green", "55.737852481384074,12.02612400054931838"], ["Billy", "1", "salad", "green", "55.6536118142508,11.868837453902158"], ["Calvin", "1", "beef", "yellow", "55.65478232088006,12.294387817382812"], ["Bob", "1", "chees", "red", "55.65478232088006,12.294387817382812"], ["Cindy", "4", "tomato", "yellow", "55.65478232088006,12.294387817382812"]];
-    let new_givaway_data = sessionStorage.getItem("output_data")
 
+    let name_data = [["Adele", "1", "Cheese", "red", "55.6498944,12.461670482"], ["Jonatan", "2", "Egg", "green", "55.737852481384074,12.02612400054931838"], ["Billy", "1", "salad", "green", "55.6536118142508,11.868837453902158"], ["Calvin", "1", "beef", "yellow", "55.65478232088006,12.294387817382812"], ["Bob", "1", "chees", "red", "55.65478232088006,12.294387817382812"], ["Cindy", "4", "tomato", "yellow", "55.65478232088006,12.294387817382812"]];
+    let new_givaway_data = sessionStorage.getItem("data_output")
+    console.log(new_givaway_data)
     if (new_givaway_data != undefined && new_givaway_data != null) {
         new_givaway = new_givaway_data.split(";");
-        name_data.push([new_givaway[0], new_givaway[1], new_givaway[2], "Green", new_givaway[3]])
+        name_data.unshift([new_givaway[0], new_givaway[1], new_givaway[2], "green", new_givaway[3]]);
     }
-
     const GiveAwaysList_div = document.getElementById("give_aways");
     GiveAwaysList_div.innerHTML = "";
     let box;

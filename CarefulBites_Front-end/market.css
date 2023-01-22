@@ -12,7 +12,7 @@ body {
     height: 25pt;
 }
 
-#left_box {
+.marg_bot {
     margin-bottom: 25pt;
 
 }
@@ -87,6 +87,17 @@ ul li {
     background: #bbb;
 }
 
+#give_aways a {
+    text-decoration: none;
+    color: black;
+
+}
+
+#give_aways a:hover {
+    color: rgb(44, 44, 44);
+
+}
+
 
 #give_aways .col_red {
     border: 1px solid rgb(163, 14, 3);
@@ -101,7 +112,7 @@ ul li {
 #give_aways .col_green {
     border: 1px solid rgb(34, 70, 45);
     background-color: rgb(72, 189, 107);
-    color: black;
+
 }
 
 #give_aways .col_green:hover {
@@ -111,7 +122,7 @@ ul li {
 #give_aways .col_yellow {
     border: 1px solid rgb(207, 177, 43);
     background-color: #ebcc43;
-    color: rgb(48, 48, 48);
+
 }
 
 #give_aways .col_yellow:hover {
