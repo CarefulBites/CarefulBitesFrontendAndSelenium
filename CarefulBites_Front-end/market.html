@@ -37,70 +37,69 @@
 
     <div class="container">
 
+        <div class="marg_bot col-sm-7">
+            <form action="javascript:Save()">
 
-        <form action="javascript:Save()">
-            <div id="left_box" class=" col-sm-4">
-                <div class="row-sm-4">
-                    <label for="f_date" class="col_change">date of making:</label><br>
-                </div>
-                <div class="row-sm-4">
-                    <input type="date" id="f_date" name="f_date"><br><br>
-                </div>
-                <div class="row-sm-4">
-                    <label for="f_date_until" class="col_change">until date:</label><br>
-                </div>
-                <div class="row-sm-4">
-                    <input type="date" id="f_date_until" name="f_date_until"><br><br>
-                </div>
-                <div class="row-sm-4">
-                    <label for="f_browser" class="col_change">Choose item:</label>
-                </div>
-                <div class="row-sm-4">
-                    <input list="browser" name="f_browser" id="f_browser">
-                    <datalist id="browser">
-                        <option value="Milk">
-                        <option value="Egg">
-                        <option value="Cheese">
-                        <option value="and more...">
-                    </datalist>
-                </div>
-                <div class="row-sm-4">
-                    <label for="f_amount" class="col_change">Amount to give:</label><br>
-                </div>
-                <div class="row-sm-4">
-                    <input type="number" id="f_amount" name="f_amount"><br>
-                </div>
-                <div class="row-sm-4">
-                    <label for="f_disc" class="col_change">Description of project:</label><br>
-                </div>
-                <div class="row-sm-4">
-                    <textarea id="f_disc" name="f_disc" cols="40" rows="5"></textarea>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="picture_frame">
-                    <p>IMAGE</p>
-                </div>
-                <p class="form_error"></p>
-                <div class="row-sm-4">
-                    <div class="position-relative bottom-0 end-0">
-                        <input id="save_giveaway" type="submit" value="Add To Market" class="btn btn-primary">
+                <div class="row-sm">
+                    <div class=" col-sm-4">
+                        <div class="row-sm-4">
+                            <label for="f_date" class="col_change">date of making:</label><br>
+                        </div>
+                        <div class="row-sm-4">
+                            <input type="date" id="f_date" name="f_date"><br><br>
+                        </div>
+                        <div class="row-sm-4">
+                            <label for="f_date_until" class="col_change">until date:</label><br>
+                        </div>
+                        <div class="row-sm-4">
+                            <input type="date" id="f_date_until" name="f_date_until"><br><br>
+                        </div>
+                    </div>
+                    <div class=" col-sm-4">
+                        <div class="row-sm-4">
+                            <label for="f_browser" class="col_change">Choose item:</label>
+                        </div>
+                        <div class="row-sm-4">
+                            <input list="browser" name="f_browser" id="f_browser">
+                            <datalist id="browser">
+                                <option value="Milk">
+                                <option value="Egg">
+                                <option value="Cheese">
+                                <option value="and more...">
+                            </datalist>
+                        </div>
+                        <div class="row-sm-4">
+                            <label for="f_amount" class="col_change">Amount to give:</label><br>
+                        </div>
+                        <div class="row-sm-4">
+                            <input type="number" id="f_amount" name="f_amount"><br>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+                <div class="row-sm-4">
 
-        <div class="col-sm-4">
-            <form action="javascript:Save()">
-                <input type="text" id="f_find" name="f_find">
-                <input id="shearch" type="submit" value="Look for food" class="btn btn-primary">
+                    <div class="col-sm-2">
+                        <div class="picture_frame">
+                            <p>IMAGE</p>
+                        </div>
+                        <p class="form_error"></p>
+                        <div class="row-sm-4">
+                            <div class="position-relative bottom-0 end-0">
+                                <input id="save_giveaway" type="submit" value="Add To Market" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-7">
+
+                        <label for="f_disc" class="col_change">Description of project:</label><br>
+
+                        <textarea id="f_disc" name="f_disc" cols="40" rows="5"></textarea>
+
+                    </div>
+                </div>
             </form>
-
-            <ul>
-                <div id="give_aways"></div>
-            </ul>
-
         </div>
+
         <div class="col-sm-4">
             <p class="col_change">
                 Hvad er Lorem Ipsum?
@@ -116,7 +115,19 @@
                 Aldus
                 PageMaker, som også indeholdt en udgave af Lorem Ipsum.
             </p>
+
+            <form action="javascript:Save()" class="marg_bot">
+
+                <input type="text" id="f_find" name="f_find">
+                <input id="shearch" type="submit" value="Look for food" class="btn btn-primary">
+            </form>
+
+            <ul>
+                <div id="give_aways"></div>
+            </ul>
+
         </div>
+
     </div>
     <script src="./gridview.js">
         update_col()
