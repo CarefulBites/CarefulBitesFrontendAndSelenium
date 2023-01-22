@@ -135,16 +135,19 @@ function Save() {
         .then(response => response.json())
         .then(j => {
             let adress_data = j[0].display_name;
-            let user = document.getElementById("f_user").value;
             let date_a = document.getElementById("f_date").value;
             let date_b = document.getElementById("f_date_until").value;
-            let items = document.getElementById("f_browser").value;
+            let food_item = document.getElementById("f_browser").value;
             let amount = document.getElementById("f_amount").value;
-            let output_data = user + "," + date_a + "," + date_b + "," + items + "," + "," + items + adress_data;
+            //let output_data = date_a + "," + date_b + "," + items + "," + "," + items + adress_data;
+            let user = sessionStorage.getItem("CurrentUser");
+            let output_data = user + ";" + amount + ";" + food_item + ";" + map_latitude + "," + map_longitude
 
-            document.getElementById("data_output").innerHTML = output_data;
+            sessionStorage.setItem("data_output", output_data)
+
         })
 }
+
 update_col = function () {
     color = sessionStorage.getItem("userinfo")
     if (color == "chocolate") {
@@ -162,3 +165,40 @@ update_col = function () {
         });
     }
 }
+update_col()
+
+function Giveaway_click(val) {
+    let data = val.split(",");
+    map_latitude = data[0];
+    map_longitude = data[1];
+    SetTo();
+}
+
+function GiveAways() {
+    let name_data = [["Adele", "1", "Cheese", "red", "55.6498944,12.461670482"], ["Jonatan", "2", "Egg", "green", "55.737852481384074,12.02612400054931838"], ["Billy", "1", "salad", "green", "55.6536118142508,11.868837453902158"], ["Calvin", "1", "beef", "yellow", "55.65478232088006,12.294387817382812"], ["Bob", "1", "chees", "red", "55.65478232088006,12.294387817382812"], ["Cindy", "4", "tomato", "yellow", "55.65478232088006,12.294387817382812"]];
+    let new_givaway_data = sessionStorage.getItem("output_data")
+
+    if (new_givaway_data != undefined && new_givaway_data != null) {
+        new_givaway = new_givaway_data.split(";");
+        name_data.push([new_givaway[0], new_givaway[1], new_givaway[2], "Green", new_givaway[3]])
+    }
+
+    const GiveAwaysList_div = document.getElementById("give_aways");
+    GiveAwaysList_div.innerHTML = "";
+    let box;
+    for (let index = 0; index < name_data.length; index++) {
+        let element = name_data[index];
+
+        let p = element[0] + " " + element[1] + " " + element[2];
+        let coler = element[3];
+        box = document.createElement("li");
+        box.classList.add('col_' + coler);
+        box.onclick = "Giveaway_click()";
+        box.innerHTML = "<a onclick=\"Giveaway_click(\' " + element[4] + "\')\" href=\"javascript:void(0);\">" + p + "<span class=\"choose\">&raquo;</span></a>";
+
+        GiveAwaysList_div.appendChild(box);
+    }
+}
+GiveAways();
+
+
