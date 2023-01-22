@@ -58,9 +58,9 @@
                 <div class="row-sm-4">
                     <input list="browser" name="f_browser" id="f_browser">
                     <datalist id="browser">
-                        <option value="Melk">
+                        <option value="Milk">
                         <option value="Egg">
-                        <option value="Chees">
+                        <option value="Cheese">
                         <option value="and more...">
                     </datalist>
                 </div>
@@ -70,7 +70,12 @@
                 <div class="row-sm-4">
                     <input type="number" id="f_amount" name="f_amount"><br>
                 </div>
-
+                <div class="row-sm-4">
+                    <label for="f_disc" class="col_change">Description of project:</label><br>
+                </div>
+                <div class="row-sm-4">
+                    <textarea id="f_disc" name="f_disc" cols="40" rows="5"></textarea>
+                </div>
             </div>
             <div class="col-sm-4">
                 <div class="picture_frame">
@@ -79,7 +84,7 @@
                 <p class="form_error"></p>
                 <div class="row-sm-4">
                     <div class="position-relative bottom-0 end-0">
-                        <input id="save_user" type="submit" value="Add To Market" class="btn btn-primary">
+                        <input id="save_giveaway" type="submit" value="Add To Market" class="btn btn-primary">
                     </div>
                 </div>
             </div>
@@ -90,28 +95,28 @@
                 <input type="text" id="f_find" name="f_find">
                 <input id="shearch" type="submit" value="Look for food" class="btn btn-primary">
             </form>
+
             <ul>
-                <li>Adele<span class="choose">&raquo;</span></li>
-                <li>Agnes<span class="choose">&raquo;</span></li>
-
-                <li>Billy<span class="choose">&raquo;</span></li>
-                <li>Bob<span class="choose">&raquo;</span></li>
-
-                <li>Calvin<span class="choose">&raquo;</span></li>
-                <li>Christina<span class="choose">&raquo;</span></li>
-                <li>Cindy<span class="choose">&raquo;</span></li>
+                <div id="give_aways"></div>
             </ul>
-        </div>
-        <p class="col_change">
-            Hvad er Lorem Ipsum?
 
-            Lorem Ipsum er ganske enkelt fyldtekst fra print- og typografiindustrien. Lorem Ipsum har været standard
-            fyldtekst siden 1500-tallet, hvor en ukendt trykker sammensatte en tilfældig spalte for at trykke en bog til
-            sammenligning af forskellige skrifttyper. Lorem Ipsum har ikke alene overlevet fem århundreder, men har også
-            vundet indpas i elektronisk typografi uden væsentlige ændringer. Sætningen blev gjordt kendt i 1960'erne med
-            lanceringen af Letraset-ark, som indeholdt afsnit med Lorem Ipsum, og senere med layoutprogrammer som Aldus
-            PageMaker, som også indeholdt en udgave af Lorem Ipsum.
-        </p>
+        </div>
+        <div class="col-sm-4">
+            <p class="col_change">
+                Hvad er Lorem Ipsum?
+
+                Lorem Ipsum er ganske enkelt fyldtekst fra print- og typografiindustrien. Lorem Ipsum har været standard
+                fyldtekst siden 1500-tallet, hvor en ukendt trykker sammensatte en tilfældig spalte for at trykke en bog
+                til
+                sammenligning af forskellige skrifttyper. Lorem Ipsum har ikke alene overlevet fem århundreder, men har
+                også
+                vundet indpas i elektronisk typografi uden væsentlige ændringer. Sætningen blev gjordt kendt i 1960'erne
+                med
+                lanceringen af Letraset-ark, som indeholdt afsnit med Lorem Ipsum, og senere med layoutprogrammer som
+                Aldus
+                PageMaker, som også indeholdt en udgave af Lorem Ipsum.
+            </p>
+        </div>
     </div>
     <script src="./gridview.js">
         update_col()

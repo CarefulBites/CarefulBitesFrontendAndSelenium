@@ -57,22 +57,22 @@ ul {
 }
 
 ul li {
-    border: 1px solid rgb(34, 70, 45);
+
     margin-top: -1px;
     /* Prevent double borders */
-    background-color: rgb(72, 189, 107);
+
     padding: 12px;
     text-decoration: none;
     font-size: 18px;
-    color: black;
+
+
     display: block;
     position: relative;
     border-radius: 30px 30px 30px 5px;
+
 }
 
-ul li:hover {
-    background-color: rgb(141, 224, 166);
-}
+
 
 .choose {
     cursor: pointer;
@@ -85,4 +85,35 @@ ul li:hover {
 
 .close:hover {
     background: #bbb;
+}
+
+
+#give_aways .col_red {
+    border: 1px solid rgb(163, 14, 3);
+    background-color: rgb(219, 88, 12);
+    color: rgb(129, 129, 129);
+}
+
+#give_aways .col_red:hover {
+    background-color: rgb(252, 216, 187);
+}
+
+#give_aways .col_green {
+    border: 1px solid rgb(34, 70, 45);
+    background-color: rgb(72, 189, 107);
+    color: black;
+}
+
+#give_aways .col_green:hover {
+    background-color: rgb(141, 224, 166);
+}
+
+#give_aways .col_yellow {
+    border: 1px solid rgb(207, 177, 43);
+    background-color: #ebcc43;
+    color: rgb(48, 48, 48);
+}
+
+#give_aways .col_yellow:hover {
+    background-color: rgb(248, 247, 194);
 }
