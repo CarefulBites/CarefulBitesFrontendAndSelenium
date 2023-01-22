@@ -105,6 +105,7 @@ function FindLocation() {
 
 }
 function SetTo() {
+    update_col()
     if (marker) {
         map.removeLayer(marker);
         map.removeLayer(circle);
@@ -143,4 +144,21 @@ function Save() {
 
             document.getElementById("data_output").innerHTML = output_data;
         })
+}
+update_col = function () {
+    color = sessionStorage.getItem("userinfo")
+    if (color == "chocolate") {
+
+        let all_p = document.querySelectorAll(".col_change");
+        all_p.forEach(p => {
+            p.style.color = "#ffffff";
+        });
+    }
+    if (color == "milk") {
+
+        let all_p = document.querySelectorAll(".col_change");
+        all_p.forEach(p => {
+            p.style.color = "#000000";
+        });
+    }
 }
