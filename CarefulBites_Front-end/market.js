@@ -55,7 +55,6 @@ main_fun = function () {
 
         SetTo();
     }
-
 }
 function success(pos) {
 
@@ -87,6 +86,7 @@ function FindLocation() {
 
 }
 function SetTo() {
+    update_col()
     //clear map
     if (marker) {
         map.removeLayer(marker);
