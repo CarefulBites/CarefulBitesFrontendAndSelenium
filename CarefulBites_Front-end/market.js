@@ -1,35 +1,20 @@
-//$("pos_button").click(function () {
-//   $.post("demo_test.asp", function (data, status) {
-//       alert("Data: " + data + "\nStatus: " + status);
-//   });
-//});
+
 let map = undefined;
 let map_latitude = 0;
 let map_longitude = 0;
 let marker, circle, zoomed;
 let accuracy = 0;
 
-/*
-var closebtns = document.getElementsByClassName("close");
-var i;
 
-for (i = 0; i < closebtns.length; i++) {
-    closebtns[i].addEventListener("click", function () {
-        this.parentElement.style.display = 'none';
-    });
-}
-*/
 
 main_fun = function () {
+    // Sets map data source and associates with map
     const selectElement = document.getElementById('map');
-    //const map_cord = selectElement.getElementsByClassName('.leaflet-map-pane');
+
     map = L.map('map');
     let temp_lat = 0;
     let temp_lon = 0;
-    //map.on('moveend', function (e) {
-    //   let bounds = map.getBounds();
-    //    console.log(bounds);
-    //});
+
     map.addEventListener('mousemove', function (ev) {
         temp_lat = ev.latlng.lat;
         temp_lon = ev.latlng.lng;
@@ -40,13 +25,10 @@ main_fun = function () {
         event.preventDefault();
         document.getElementById("fLat").innerHTML = temp_lat;
         document.getElementById("lLong").innerHTML = temp_lon;
-        // Add marker
-        // L.marker([lat, lng], ....).addTo(map);
-        //alert(lat + ' - ' + lng);
+
         map_latitude = temp_lat;
         map_longitude = temp_lon;
         SetTo();
-
 
         return false; // To disable default popup.
     });
@@ -57,11 +39,11 @@ main_fun = function () {
         maxZoom: 19,
         attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     }).addTo(map);
-    // Sets map data source and associates with map
 
     let location_test = sessionStorage.getItem("location_update");
 
-    if (location_test == null || location_test != undefined) {
+    if (location_test == null || location_test == undefined) {
+
         map.setView([51.505, -0.09], 13);
         navigator.geolocation.watchPosition(success, error);
     } else {
@@ -73,7 +55,6 @@ main_fun = function () {
 
         SetTo();
     }
-
 }
 function success(pos) {
 
@@ -106,6 +87,7 @@ function FindLocation() {
 }
 function SetTo() {
     update_col()
+    //clear map
     if (marker) {
         map.removeLayer(marker);
         map.removeLayer(circle);
@@ -165,7 +147,7 @@ update_col = function () {
         });
     }
 }
-update_col()
+
 
 function Giveaway_click(val) {
     let data = val.split(",");
@@ -182,6 +164,9 @@ function GiveAways() {
     if (new_givaway_data != undefined && new_givaway_data != null) {
         new_givaway = new_givaway_data.split(";");
         name_data.unshift([new_givaway[0], new_givaway[1], new_givaway[2], "green", new_givaway[3]]);
+    } else {
+        //mayb temporay as map need only reaload when data_output is not set
+
     }
     const GiveAwaysList_div = document.getElementById("give_aways");
     GiveAwaysList_div.innerHTML = "";
@@ -199,6 +184,7 @@ function GiveAways() {
         GiveAwaysList_div.appendChild(box);
     }
 }
+update_col()
 GiveAways();
 
 
